@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string-array name="sections">
+        <item>分類</item>
+        <item>嚴選餐廳</item>
+        <item>熱門餐廳</item>
+        <item>熱門食記</item>
+    </string-array>
+</resources>
