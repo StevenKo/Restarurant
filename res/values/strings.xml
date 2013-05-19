@@ -12,5 +12,11 @@
     <string name="menu_aboutus">關於我們</string>
     <string name="menu_recommend">為App評分</string>
     <string name="menu_search">搜索</string>
+    
+    <string name="my_collection">我的收藏</string>
+    <string name="my_recommend">我要推薦</string>
+    <string name="locaiotn_search">依地點找餐廳</string>
+    <string name="category_search">依類別找餐廳</string>
+    <string name="near_food">附近美食</string>
 
 </resources>

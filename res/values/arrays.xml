@@ -4,7 +4,7 @@
     <string-array name="sections">
         <item>分類</item>
         <item>嚴選餐廳</item>
-        <item>熱門餐廳</item>
-        <item>熱門食記</item>
+        <item>精選餐廳</item>
+        <item>精選食記</item>
     </string-array>
 </resources>

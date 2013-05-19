@@ -13,6 +13,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.restaurant.fragment.CategoryTabFragment;
 import com.restaurant.fragment.GridRestaurantsFragment;
+import com.restaurant.fragment.IndexRestaurantFragment;
 import com.viewpagerindicator.TitlePageIndicator;
 
 public class MainActivity extends SherlockFragmentActivity {
@@ -87,9 +88,14 @@ public class MainActivity extends SherlockFragmentActivity {
         @Override
         public Fragment getItem(int position) {
             Fragment kk = new Fragment();
-            if (position == 0) {
+            switch (position) {
+            case 0:
                 kk = CategoryTabFragment.newInstance();
-            } else {
+                break;
+            case 1:
+                kk = IndexRestaurantFragment.newInstance();
+                break;
+            default:
                 kk = GridRestaurantsFragment.newInstance(1);
             }
             return kk;
