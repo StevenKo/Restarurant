@@ -1,4 +1,5 @@
 package com.restaurant.adapter;
+
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -13,20 +14,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.restaurant.collection.R;
-import com.restaurant.entity.PsuedoRestaurant;
+import com.restaurant.collection.entity.Note;
 import com.tool.imageload.ImageLoader;
 
+public class NoteGridViewAdapter extends BaseAdapter {
 
-public class GridViewAdapter extends BaseAdapter {
+    private final Activity        activity;
+    private final ArrayList<Note> data;
+    private static LayoutInflater inflater = null;
+    public ImageLoader            imageLoader;
 
-    private final Activity                    activity;
-    private final ArrayList<PsuedoRestaurant> data;
-    private static LayoutInflater             inflater = null;
-    public ImageLoader                        imageLoader;
-
-    public GridViewAdapter(Activity a, ArrayList<PsuedoRestaurant> restaurants) {
+    public NoteGridViewAdapter(Activity a, ArrayList<Note> notes) {
         activity = a;
-        data = restaurants;
+        data = notes;
         inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageLoader = new ImageLoader(activity.getApplicationContext(), 70);
 
@@ -52,9 +52,9 @@ public class GridViewAdapter extends BaseAdapter {
         int height = display.getHeight(); // deprecated
 
         if (width > 480) {
-            vi = inflater.inflate(R.layout.item_gridview_restaurant, null);
+            vi = inflater.inflate(R.layout.item_gridview_note, null);
         } else {
-            vi = inflater.inflate(R.layout.item_gridview_restaurant_small, null);
+            vi = inflater.inflate(R.layout.item_gridview_note, null);
         }
 
         vi.setClickable(true);

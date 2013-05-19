@@ -12,6 +12,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.restaurant.fragment.CategoryTabFragment;
+import com.restaurant.fragment.GridEatNoteFragment;
 import com.restaurant.fragment.GridRestaurantsFragment;
 import com.restaurant.fragment.IndexRestaurantFragment;
 import com.viewpagerindicator.TitlePageIndicator;
@@ -95,8 +96,12 @@ public class MainActivity extends SherlockFragmentActivity {
             case 1:
                 kk = IndexRestaurantFragment.newInstance();
                 break;
-            default:
+            case 2:
                 kk = GridRestaurantsFragment.newInstance(1);
+                break;
+            case 3:
+                kk = GridEatNoteFragment.newInstance(1);
+                break;
             }
             return kk;
         }

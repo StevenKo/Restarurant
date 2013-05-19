@@ -14,17 +14,18 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.restaurant.adapter.RestaurantGridViewAdapter;
+import com.restaurant.adapter.NoteGridViewAdapter;
 import com.restaurant.collection.R;
+import com.restaurant.collection.entity.Note;
 import com.restaurant.customized.view.LoadMoreGridView;
 import com.restaurant.entity.PsuedoRestaurant;
 
 @SuppressLint("ValidFragment")
-public class GridRestaurantsFragment extends Fragment {
+public class GridEatNoteFragment extends Fragment {
 
-    private final ArrayList<PsuedoRestaurant> restaurants     = new ArrayList<PsuedoRestaurant>();
+    private final ArrayList<Note>             notes           = new ArrayList<Note>();
     private LoadMoreGridView                  myGrid;
-    private RestaurantGridViewAdapter                   myGridViewAdapter;
+    private NoteGridViewAdapter               myGridViewAdapter;
     private LinearLayout                      progressLayout;
     private LinearLayout                      loadmoreLayout;
     private LinearLayout                      layoutReload;
@@ -35,12 +36,12 @@ public class GridRestaurantsFragment extends Fragment {
     private Boolean                           checkLoad       = true;
     private final ArrayList<PsuedoRestaurant> moreRestaurants = new ArrayList<PsuedoRestaurant>();
 
-    public GridRestaurantsFragment() {
+    public GridEatNoteFragment() {
 
     }
 
-    public static final GridRestaurantsFragment newInstance(int content_order) {
-        GridRestaurantsFragment f = new GridRestaurantsFragment();
+    public static final GridEatNoteFragment newInstance(int content_order) {
+        GridEatNoteFragment f = new GridEatNoteFragment();
         Bundle bdl = new Bundle();
         bdl.putInt("contentOrder", content_order);
         f.setArguments(bdl);
@@ -78,7 +79,7 @@ public class GridRestaurantsFragment extends Fragment {
             public void onClick(View arg0) {
                 progressLayout.setVisibility(View.VISIBLE);
                 layoutReload.setVisibility(View.GONE);
-                new DownloadRestaurantsTask().execute();
+                new DownloadNotesTask().execute();
             }
         });
 
@@ -87,7 +88,7 @@ public class GridRestaurantsFragment extends Fragment {
             loadmoreLayout.setVisibility(View.GONE);
             myGrid.setAdapter(myGridViewAdapter);
         } else {
-            new DownloadRestaurantsTask().execute();
+            new DownloadNotesTask().execute();
         }
 
         return myFragmentView;
@@ -99,7 +100,7 @@ public class GridRestaurantsFragment extends Fragment {
 
     }
 
-    private class DownloadRestaurantsTask extends AsyncTask {
+    private class DownloadNotesTask extends AsyncTask {
 
         @Override
         protected void onPreExecute() {
@@ -109,10 +110,12 @@ public class GridRestaurantsFragment extends Fragment {
 
         @Override
         protected Object doInBackground(Object... params) {
-            restaurants.add(new PsuedoRestaurant());
-            restaurants.add(new PsuedoRestaurant());
-            restaurants.add(new PsuedoRestaurant());
-            restaurants.add(new PsuedoRestaurant());
+            notes.add(new Note());
+            notes.add(new Note());
+            notes.add(new Note());
+            notes.add(new Note());
+            notes.add(new Note());
+            notes.add(new Note());
             return null;
         }
 
@@ -122,10 +125,10 @@ public class GridRestaurantsFragment extends Fragment {
             progressLayout.setVisibility(View.GONE);
             loadmoreLayout.setVisibility(View.GONE);
 
-            if (restaurants != null && restaurants.size() != 0) {
+            if (notes != null && notes.size() != 0) {
                 try {
                     layoutReload.setVisibility(View.GONE);
-                    myGridViewAdapter = new RestaurantGridViewAdapter(getActivity(), restaurants);
+                    myGridViewAdapter = new NoteGridViewAdapter(getActivity(), notes);
                     myGrid.setAdapter(myGridViewAdapter);
                 } catch (Exception e) {
 
