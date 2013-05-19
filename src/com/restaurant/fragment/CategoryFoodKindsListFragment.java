@@ -1,11 +1,13 @@
 package com.restaurant.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
 
 import com.restaurant.adapter.ListAdapter;
+import com.restaurant.collection.CategoryActivity;
 
 public class CategoryFoodKindsListFragment extends ListFragment {
 
@@ -35,7 +37,11 @@ public class CategoryFoodKindsListFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-
+        Intent intent = new Intent(getActivity(), CategoryActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("CategoryId", 1);
+        intent.putExtras(bundle);
+        getActivity().startActivity(intent);
     }
 
 }

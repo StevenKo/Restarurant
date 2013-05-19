@@ -12,16 +12,16 @@ import android.widget.TextView;
 import com.restaurant.collection.R;
 
 @SuppressLint("ValidFragment")
-public class CategoryTabFragment extends Fragment {
+public class IndexCategoryTabFragment extends Fragment {
 
     private FragmentTabHost mTabHost;
 
-    public CategoryTabFragment() {
+    public IndexCategoryTabFragment() {
 
     }
 
-    public static final CategoryTabFragment newInstance() {
-        CategoryTabFragment f = new CategoryTabFragment();
+    public static final IndexCategoryTabFragment newInstance() {
+        IndexCategoryTabFragment f = new IndexCategoryTabFragment();
         return f;
     }
 
@@ -36,8 +36,8 @@ public class CategoryTabFragment extends Fragment {
         mTabHost = new FragmentTabHost(getActivity());
         mTabHost.setup(getActivity(), getChildFragmentManager(), R.layout.fragment_tabhost);
 
-        setupTab(GridRestaurantsFragment.class, "餐廳列表", "View1");
-        setupTab(GridEatNoteFragment.class, "食記列表", "View2");
+        setupTab(CategoryAreasListFragment.class, "依縣市", "View1");
+        setupTab(CategoryFoodKindsListFragment.class, "依類別", "View2");
 
         return mTabHost;
     }

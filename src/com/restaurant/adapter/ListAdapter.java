@@ -40,7 +40,7 @@ public class ListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View vi = convertView;
         if (convertView == null)
-            vi = inflater.inflate(R.layout.fragment_city_list, null);
+            vi = inflater.inflate(R.layout.item_listview_category, null);
         ImageView image = (ImageView) vi.findViewById(R.id.image_list);
         TextView text = (TextView) vi.findViewById(R.id.text_list);
         text.setText(data[position]);
