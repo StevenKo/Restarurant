@@ -14,11 +14,10 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.restaurant.adapter.GridViewAdapter;
 import com.restaurant.collection.R;
 import com.restaurant.customized.view.LoadMoreGridView;
 import com.restaurant.entity.PsuedoRestaurant;
-
-import con.restaurant.adapter.GridViewAdapter;
 
 @SuppressLint("ValidFragment")
 public class GridRestaurantsFragment extends Fragment {

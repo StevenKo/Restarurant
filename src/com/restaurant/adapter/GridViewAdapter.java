@@ -1,5 +1,4 @@
-package con.restaurant.adapter;
-
+package com.restaurant.adapter;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -16,6 +15,7 @@ import android.widget.TextView;
 import com.restaurant.collection.R;
 import com.restaurant.entity.PsuedoRestaurant;
 import com.tool.imageload.ImageLoader;
+
 
 public class GridViewAdapter extends BaseAdapter {
 

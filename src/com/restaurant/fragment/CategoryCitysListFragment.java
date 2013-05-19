@@ -4,7 +4,8 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
-import con.restaurant.adapter.ListAdapter;
+
+import com.restaurant.adapter.ListAdapter;
 
 public class CategoryCitysListFragment extends ListFragment {
 

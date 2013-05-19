@@ -1,4 +1,4 @@
-package con.restaurant.adapter;
+package com.restaurant.adapter;
 
 import android.app.Activity;
 import android.content.Context;
