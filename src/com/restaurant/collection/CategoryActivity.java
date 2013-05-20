@@ -17,6 +17,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.restaurant.collection.entity.Area;
 import com.restaurant.collection.entity.Category;
+import com.restaurant.collection.entity.Type;
 import com.restaurant.fragment.CategoryTabFragment;
 import com.viewpagerindicator.TitlePageIndicator;
 
@@ -35,6 +36,8 @@ public class CategoryActivity extends SherlockFragmentActivity {
 	private Category category;
 	private ArrayList<Area> categoryAreas;
 	private FragmentPagerAdapter adapter;
+	private Type type;
+	private ArrayList<Area> typeAreas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,16 +50,22 @@ public class CategoryActivity extends SherlockFragmentActivity {
         mBundle = this.getIntent().getExtras();
         int areaId = mBundle.getInt("AreaId");
         int categoryId = mBundle.getInt("CategoryId");
+        int typeId = mBundle.getInt("TypeId");
         if(areaId!=0){
         	area = Area.getArea(areaId);
         	areaCategories = Category.getAreaCategories(areaId);
             ab.setTitle(area.getName());
             adapter = new CategoryPagerAdapter(getSupportFragmentManager(), areaCategories);
-        }else{
+        }else if (categoryId!=0){
         	category = Category.getCategory(categoryId);
             categoryAreas = Area.getCategoryAreas(categoryId);
             ab.setTitle(category.getName());
             adapter = new AreaPagerAdapter(getSupportFragmentManager(), categoryAreas);
+        }else{
+        	type = Type.getType(typeId);
+        	typeAreas = Area.getTypeAreas(typeId);
+        	ab.setTitle(type.getName());
+        	adapter = new AreaPagerAdapter(getSupportFragmentManager(), typeAreas);
         }
 
         pager = (ViewPager) findViewById(R.id.pager);

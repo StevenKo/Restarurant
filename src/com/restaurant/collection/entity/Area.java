@@ -1,6 +1,7 @@
 package com.restaurant.collection.entity;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -73,6 +74,29 @@ public class Area {
                 if(ship_category_id == category_id)
                 {
                 	newlist.add(getArea(area_id));
+                }
+                
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return newlist;
+	}
+	
+	public static ArrayList<Area> getTypeAreas(int type_id){
+		TreeMap map = new TreeMap<Integer, Boolean>();
+		ArrayList<Area> newlist = new ArrayList<Area>();
+		JSONArray jArray;
+        try {
+            jArray = new JSONArray(Type.ship_message.toString());
+            for (int i = 0; i < jArray.length(); i++) {
+                int ship_area_id = jArray.getJSONObject(i).getInt("area_id");
+                int ship_type_id = jArray.getJSONObject(i).getInt("type_id");
+                
+                if(ship_type_id == type_id && !map.containsKey(ship_area_id))
+                {
+                	newlist.add(getArea(ship_area_id));
+                	map.put(ship_area_id, true);
                 }
                 
             }
