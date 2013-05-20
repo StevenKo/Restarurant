@@ -38,6 +38,7 @@ public class IndexCategoryTabFragment extends Fragment {
 
         setupTab(CategoryAreasListFragment.class, "依縣市", "View1");
         setupTab(CategoryFoodKindsListFragment.class, "依類別", "View2");
+        setupTab(CategoryFoodTypesFragment.class, "依料理", "View2");
 
         return mTabHost;
     }
