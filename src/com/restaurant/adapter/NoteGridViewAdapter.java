@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.restaurant.collection.R;
+import com.restaurant.collection.RestaurantIntroActivity;
+import com.restaurant.collection.RestaurantNoteActivity;
 import com.restaurant.collection.entity.Note;
 import com.tool.imageload.ImageLoader;
 
@@ -63,7 +66,8 @@ public class NoteGridViewAdapter extends BaseAdapter {
 
             @Override
             public void onClick(View v) {
-
+            	Intent intent = new Intent(activity, RestaurantNoteActivity.class);
+            	activity.startActivity(intent);
             }
 
         });

@@ -10,7 +10,7 @@ public class Note {
     String link;
     
     public Note(){
-    	this(1,1,"","","","");
+    	this(1,1,"","","","http://www.wretch.cc/blog/yui888888888/7030513");
     }
     
     public Note(int id, int restaurant_id,String title, String intro, String pic_url, String link){
