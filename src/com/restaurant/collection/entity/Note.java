@@ -3,17 +3,19 @@ package com.restaurant.collection.entity;
 public class Note {
 	
 	int id;
+	int restaurant_id;
 	String title;
     String intro;
     String pic_url;
     String link;
     
     public Note(){
-    	this(1,"","","","");
+    	this(1,1,"","","","");
     }
     
-    public Note(int id, String title, String intro, String pic_url, String link){
+    public Note(int id, int restaurant_id,String title, String intro, String pic_url, String link){
     	this.id = id;
+    	this.restaurant_id = restaurant_id;
     	this.title = title;
     	this.intro = intro;
     	this.pic_url = pic_url;
@@ -22,6 +24,10 @@ public class Note {
     
     public int getId(){
     	return id;
+    }
+    
+    public int getRestaurant(){
+    	return restaurant_id;
     }
     
     public String getTitle(){
