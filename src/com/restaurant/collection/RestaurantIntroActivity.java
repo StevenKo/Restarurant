@@ -1,19 +1,23 @@
 package com.restaurant.collection;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.RelativeLayout;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.restaurant.fragment.CategoryTabFragment;
 import com.restaurant.fragment.RestaurantPhotoFragment;
 import com.viewpagerindicator.CirclePageIndicator;
 
 public class RestaurantIntroActivity extends SherlockFragmentActivity {
     private ViewPager pager;
+	private RelativeLayout watch_notes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +33,28 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
 
         CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(pager);
+        
+        findViews();
+        setViews();
+        
     }
 
-    class PhotoPagerAdapter extends FragmentPagerAdapter {
+    private void setViews() {
+    	watch_notes.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(RestaurantIntroActivity.this, RestaurantNotesActivity.class);
+                startActivity(intent);
+            }
+        });
+	}
+
+	private void findViews() {
+		watch_notes = (RelativeLayout)findViewById(R.id.watch_notes);
+	}
+
+	class PhotoPagerAdapter extends FragmentPagerAdapter {
 
         public PhotoPagerAdapter(FragmentManager fm) {
             super(fm);

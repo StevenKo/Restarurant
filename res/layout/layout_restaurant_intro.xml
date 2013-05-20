@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         />
-    <RelativeLayout  android:id="@+id/my_collection"
+    <RelativeLayout  android:id="@+id/watch_notes"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
