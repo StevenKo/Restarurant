@@ -59,4 +59,36 @@ public class Category {
 
         return newlist;
     }
+	
+	public static Category getCategory(int id){
+		ArrayList<Category> cs = getCategories();
+		for (Category category : cs){
+			if (category.getId() == id)
+				return category;
+		}
+		return null;
+	}
+	
+	public static ArrayList<Category> getAreaCategories(int area_id){
+		ArrayList<Category> newlist = new ArrayList<Category>();
+		JSONArray jArray;
+        try {
+            jArray = new JSONArray(Area.ship_message.toString());
+            for (int i = 0; i < jArray.length(); i++) {
+                int ship_area_id = jArray.getJSONObject(i).getInt("area_id");
+                int category_id = jArray.getJSONObject(i).getInt("category_id");
+                
+                if(ship_area_id == area_id)
+                {
+                	newlist.add(getCategory(category_id));
+                }
+                
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return newlist;
+	}
+
+	
 }

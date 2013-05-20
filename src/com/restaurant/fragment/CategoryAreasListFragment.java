@@ -39,7 +39,7 @@ public class CategoryAreasListFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
         Intent intent = new Intent(getActivity(), CategoryActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putInt("AreaId", 1);
+        bundle.putInt("AreaId", RestaurantAPI.getAreas().get(position).getId());
         intent.putExtras(bundle);
         getActivity().startActivity(intent);
     }

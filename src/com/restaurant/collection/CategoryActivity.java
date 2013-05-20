@@ -15,6 +15,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.restaurant.collection.entity.Area;
 import com.restaurant.collection.entity.Category;
 import com.restaurant.fragment.CategoryTabFragment;
 import com.viewpagerindicator.TitlePageIndicator;
@@ -28,24 +29,35 @@ public class CategoryActivity extends SherlockFragmentActivity {
     private static final int    ID_MAP      = 4;
     private AlertDialog.Builder aboutUsDialog;
     private ViewPager           pager;
+	private Bundle mBundle;
+	private Area area;
+	private ArrayList<Category> areaCategories;
+	private Category category;
+	private ArrayList<Area> categoryAreas;
+	private FragmentPagerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.simple_titles);
-
+        
         final ActionBar ab = getSupportActionBar();
-        ab.setTitle("台北");
         ab.setDisplayHomeAsUpEnabled(true);
-
-        ArrayList<Category> categories = new ArrayList<Category>();
-        categories.add(new Category());
-        categories.add(new Category());
-        categories.add(new Category());
-        categories.add(new Category());
-        categories.add(new Category());
-
-        FragmentPagerAdapter adapter = new CategoryPagerAdapter(getSupportFragmentManager(), categories);
+        
+        mBundle = this.getIntent().getExtras();
+        int areaId = mBundle.getInt("AreaId");
+        int categoryId = mBundle.getInt("CategoryId");
+        if(areaId!=0){
+        	area = Area.getArea(areaId);
+        	areaCategories = Category.getAreaCategories(areaId);
+            ab.setTitle(area.getName());
+            adapter = new CategoryPagerAdapter(getSupportFragmentManager(), areaCategories);
+        }else{
+        	category = Category.getCategory(categoryId);
+            categoryAreas = Area.getCategoryAreas(categoryId);
+            ab.setTitle(category.getName());
+            adapter = new AreaPagerAdapter(getSupportFragmentManager(), categoryAreas);
+        }
 
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(adapter);
@@ -80,6 +92,33 @@ public class CategoryActivity extends SherlockFragmentActivity {
         @Override
         public int getCount() {
             return categories.size();
+        }
+    }
+    
+    class AreaPagerAdapter extends FragmentPagerAdapter {
+
+        ArrayList<Area> areas;
+
+        public AreaPagerAdapter(FragmentManager fm, ArrayList<Area> areas) {
+            super(fm);
+            this.areas = areas;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            Fragment kk = new Fragment();
+            kk = CategoryTabFragment.newInstance();
+            return kk;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return areas.get(position).getName();
+        }
+
+        @Override
+        public int getCount() {
+            return areas.size();
         }
     }
 

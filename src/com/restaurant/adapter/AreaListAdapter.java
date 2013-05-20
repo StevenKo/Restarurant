@@ -17,7 +17,6 @@ import com.restaurant.collection.entity.Area;
 public class AreaListAdapter extends BaseAdapter {
 
     private final Activity        activity;
-    // private final ArrayList<String> data;
     private final  ArrayList<Area>       data;
     private static LayoutInflater inflater = null;
 
@@ -46,12 +45,6 @@ public class AreaListAdapter extends BaseAdapter {
             vi = inflater.inflate(R.layout.item_listview_category, null);
         TextView text = (TextView) vi.findViewById(R.id.text_list);
         text.setText(data.get(position).getName());
-
-        // try {
-        // image.setImageResource(images[position]);
-        // } catch (Exception e) {
-        // image.setVisibility(View.GONE);
-        // }
 
         return vi;
     }
