@@ -6,8 +6,9 @@ import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
 
-import com.restaurant.adapter.ListAdapter;
+import com.restaurant.adapter.CategoryListAdapter;
 import com.restaurant.collection.CategoryActivity;
+import com.restaurant.collection.api.RestaurantAPI;
 
 public class CategoryFoodKindsListFragment extends ListFragment {
 
@@ -29,8 +30,7 @@ public class CategoryFoodKindsListFragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        String[] test = { "中式", "西式", "法式" };
-        ListAdapter adapter = new ListAdapter(getActivity(), test);
+        CategoryListAdapter adapter = new CategoryListAdapter(getActivity(), RestaurantAPI.getCategories());
         setListAdapter(adapter);
 
     }

@@ -6,8 +6,9 @@ import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
 
-import com.restaurant.adapter.ListAdapter;
+import com.restaurant.adapter.AreaListAdapter;
 import com.restaurant.collection.CategoryActivity;
+import com.restaurant.collection.api.RestaurantAPI;
 
 public class CategoryAreasListFragment extends ListFragment {
 
@@ -29,8 +30,7 @@ public class CategoryAreasListFragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        String[] test = { "台北", "台中", "高雄" };
-        ListAdapter adapter = new ListAdapter(getActivity(), test);
+        AreaListAdapter adapter = new AreaListAdapter(getActivity(), RestaurantAPI.getAreas());
         setListAdapter(adapter);
 
     }
