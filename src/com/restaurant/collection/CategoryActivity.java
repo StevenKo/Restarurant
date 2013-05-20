@@ -149,6 +149,9 @@ public class CategoryActivity extends SherlockFragmentActivity {
 
         int itemId = item.getItemId();
         switch (itemId) {
+        case android.R.id.home:
+            finish();
+            break;
         case ID_SETTING: // setting
             break;
         case ID_RESPONSE: // response
@@ -156,7 +159,6 @@ public class CategoryActivity extends SherlockFragmentActivity {
         case ID_ABOUT_US:
             break;
         case ID_GRADE:
-
             break;
         case ID_MAP:
             Intent intent = new Intent(CategoryActivity.this, MapActivity.class);

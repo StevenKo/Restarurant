@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.MenuItem;
 import com.restaurant.fragment.RestaurantPhotoFragment;
 import com.viewpagerindicator.CirclePageIndicator;
 
@@ -71,6 +72,18 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
         public int getCount() {
             return 5;
         }
+    }
+	
+	@Override
+    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+
+        int itemId = item.getItemId();
+        switch (itemId) {
+        case android.R.id.home:
+            finish();
+            break;
+        }
+        return true;
     }
 
 }

@@ -58,6 +58,9 @@ public class MyCollectionActivity extends SherlockFragmentActivity{
 
         int itemId = item.getItemId();
         switch (itemId) {
+        case android.R.id.home:
+            finish();
+            break;
         case ID_MAP:
             Intent intent = new Intent(MyCollectionActivity.this, MapActivity.class);
             startActivity(intent);
