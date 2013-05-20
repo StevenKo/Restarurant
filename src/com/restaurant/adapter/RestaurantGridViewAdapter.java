@@ -3,6 +3,8 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +14,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.restaurant.collection.CategoryActivity;
 import com.restaurant.collection.R;
+import com.restaurant.collection.RestaurantIntroActivity;
 import com.restaurant.entity.PsuedoRestaurant;
 import com.tool.imageload.ImageLoader;
 
@@ -63,6 +67,8 @@ public class RestaurantGridViewAdapter extends BaseAdapter {
 
             @Override
             public void onClick(View v) {
+            	Intent intent = new Intent(activity, RestaurantIntroActivity.class);
+            	activity.startActivity(intent);
 
             }
 
