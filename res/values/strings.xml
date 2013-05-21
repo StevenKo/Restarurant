@@ -17,6 +17,7 @@
     <string name="my_recommend">我要推薦</string>
     <string name="locaiotn_search">依地點找餐廳</string>
     <string name="category_search">依類別找餐廳</string>
+    <string name="foodtype_search">依料理找餐廳</string>
     <string name="near_food">附近美食</string>
     
     <string name="fake_note">\[食記\]人氣一品之歷久不衰Buffet之王!! 喜來登十二廚自助餐廳近美食</string>
