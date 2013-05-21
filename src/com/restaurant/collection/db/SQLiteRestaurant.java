@@ -15,7 +15,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 
-public class SQLiteLyric extends SQLiteOpenHelper {
+public class SQLiteRestaurant extends SQLiteOpenHelper {
 
     private static final String DB_NAME          = "kosrestaurant.sqlite"; // 資料庫名稱
     private static final int    DATABASE_VERSION = 1;                // 資料庫版本
@@ -51,7 +51,7 @@ public class SQLiteLyric extends SQLiteOpenHelper {
     }
 
 
-    public SQLiteLyric(Context context) {
+    public SQLiteRestaurant(Context context) {
         super(context, DB_NAME, null, DATABASE_VERSION);
         ctx = context;
 

@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
+import com.restaurant.collection.db.SQLiteRestaurant;
 import com.restaurant.fragment.RestaurantPhotoFragment;
 import com.viewpagerindicator.CirclePageIndicator;
 
@@ -25,6 +26,7 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
 	private ImageButton direction_button;
 	private ImageButton place_button;
 	private ImageButton favorite_button;
+	private int restaurantId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +85,14 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
     	favorite_button.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-            	
+            	restaurantId = 1;
+            	SQLiteRestaurant db = new SQLiteRestaurant(RestaurantIntroActivity.this);
+            	if (db.isRestaurantCollected(restaurantId)){
+            		favorite_button.setImageResource( R.drawable.icon_heart_grey );
+            	}else{
+            		favorite_button.setImageResource( R.drawable.icon_heart );
+            	}
+            
             }
         });
 	}

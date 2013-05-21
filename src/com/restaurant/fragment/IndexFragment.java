@@ -1,6 +1,9 @@
 package com.restaurant.fragment;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -93,6 +96,24 @@ public final class IndexFragment extends Fragment {
             @Override
             public void onClick(View v) {
             	mListener.onFoodtypeSearchClicked();
+            }
+        });
+    	my_recommend.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            	Builder a = new AlertDialog.Builder(getActivity()).setTitle("推薦餐廳").setIcon(R.drawable.icon)
+                .setPositiveButton("我要推薦", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).setNegativeButton("下次再推薦", null);
+            	
+            	LayoutInflater inflater = getActivity().getLayoutInflater();
+            	LinearLayout recomendLayout = (LinearLayout) inflater.inflate(R.layout.commend_dialog,null);
+            	a.setView(recomendLayout);
+            	a.show();
+            	
             }
         });
     }
