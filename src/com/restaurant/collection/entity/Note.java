@@ -26,8 +26,11 @@ public class Note {
     	return id;
     }
     
-    public int getRestaurant(){
+    public int getRestaurantId(){
     	return restaurant_id;
+    }
+    public String getPicUrl(){
+    	return pic_url;
     }
     
     public String getTitle(){
