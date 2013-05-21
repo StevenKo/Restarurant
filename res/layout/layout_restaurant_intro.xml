@@ -44,19 +44,23 @@
                 <ImageButton 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/share"/>
+                android:src="@drawable/share"
+                android:id="@+id/share_button"/>
                 <ImageButton 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/directions"/>
+                android:src="@drawable/directions"
+                android:id="@+id/direction_button"/>
                 <ImageButton 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/place"/>
+                android:src="@drawable/place"
+                android:id="@+id/place_button"/>
                 <ImageButton 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/favorite"/>
+                android:src="@drawable/favorite"
+                android:id="@+id/favorite_button"/>
             </LinearLayout>
         <ScrollView android:layout_width="fill_parent"
             android:layout_height="fill_parent">

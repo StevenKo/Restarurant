@@ -4,5 +4,5 @@
 android:drawable="@drawable/icon_heart" />
 <item android:state_pressed="true"
  android:drawable="@drawable/icon_heart" />
-<item android:drawable="@drawable/icon_heart_gray" />
+<item android:drawable="@drawable/icon_heart_grey" />
 </selector>
