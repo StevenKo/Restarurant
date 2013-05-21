@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.restaurant.collection.MainActivity;
 import com.restaurant.collection.R;
 
 @SuppressLint("ValidFragment")
@@ -41,6 +42,11 @@ public class IndexCategoryTabFragment extends Fragment {
         setupTab(CategoryFoodTypesFragment.class, "依料理", "View3");
 
         return mTabHost;
+    }
+    
+    
+	public void setTabHostCurrent (int i){
+    	mTabHost.setCurrentTab(i);
     }
 
     private void setupTab(Class<?> ccls, String name, String nameSpec) {

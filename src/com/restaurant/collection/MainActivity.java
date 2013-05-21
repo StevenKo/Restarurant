@@ -1,5 +1,6 @@
 package com.restaurant.collection;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -15,15 +16,19 @@ import com.restaurant.fragment.IndexCategoryTabFragment;
 import com.restaurant.fragment.GridEatNoteFragment;
 import com.restaurant.fragment.GridRestaurantsFragment;
 import com.restaurant.fragment.IndexFragment;
+import com.restaurant.fragment.IndexFragment.OnButtonClickedListener;
 import com.viewpagerindicator.TitlePageIndicator;
 
-public class MainActivity extends SherlockFragmentActivity {
+@SuppressLint("NewApi")
+public class MainActivity extends SherlockFragmentActivity implements OnButtonClickedListener{
 
     private static final int    ID_SETTING  = 0;
     private static final int    ID_RESPONSE = 1;
     private static final int    ID_ABOUT_US = 2;
     private static final int    ID_GRADE    = 3;
     private static final int    ID_SEARCH   = 5;
+    FragmentPagerAdapter adapter;
+
 
     private String[]            sectionTitles;
     private ViewPager           pager;
@@ -36,7 +41,7 @@ public class MainActivity extends SherlockFragmentActivity {
 
         sectionTitles = getResources().getStringArray(R.array.sections);
 
-        FragmentPagerAdapter adapter = new SectionPagerAdapter(getSupportFragmentManager());
+        adapter = new SectionPagerAdapter(getSupportFragmentManager());
 
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(adapter);
@@ -83,7 +88,11 @@ public class MainActivity extends SherlockFragmentActivity {
     }
 
     class SectionPagerAdapter extends FragmentPagerAdapter {
-        public SectionPagerAdapter(FragmentManager fm) {
+    	
+    	Fragment indexCategoryTabFragment;
+    	
+
+		public SectionPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -92,8 +101,12 @@ public class MainActivity extends SherlockFragmentActivity {
             Fragment kk = new Fragment();
             switch (position) {
             case 0:
-                kk = IndexCategoryTabFragment.newInstance();
-                break;
+            	if (indexCategoryTabFragment == null){
+            		indexCategoryTabFragment =  IndexCategoryTabFragment.newInstance();
+            		return indexCategoryTabFragment;
+            	}else{
+            		return indexCategoryTabFragment;
+            	}
             case 1:
                 kk = IndexFragment.newInstance();
                 break;
@@ -138,5 +151,24 @@ public class MainActivity extends SherlockFragmentActivity {
                     }
                 });
     }
+
+	@Override
+	public void onCategorySearchClicked() {
+		pager.setCurrentItem(0);
+		((IndexCategoryTabFragment)adapter.getItem(0)).setTabHostCurrent(0);
+	}
+
+	@Override
+	public void onLocationSearchClicked() {
+		pager.setCurrentItem(0);
+		((IndexCategoryTabFragment)adapter.getItem(0)).setTabHostCurrent(1);
+		
+	}
+
+	@Override
+	public void onFoodtypeSearchClicked() {
+		pager.setCurrentItem(0);
+		((IndexCategoryTabFragment)adapter.getItem(0)).setTabHostCurrent(2);
+	}
 
 }

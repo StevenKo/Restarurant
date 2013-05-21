@@ -51,7 +51,7 @@
         android:layout_marginBottom="5dp"
         >
         
-        <LinearLayout android:id="@+id/my_travel_season"
+        <LinearLayout android:id="@+id/category_search"
              android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
@@ -73,7 +73,7 @@
                 android:text="@string/category_search"
                 />
         </LinearLayout>
-        <LinearLayout android:id="@+id/my_setting"
+        <LinearLayout android:id="@+id/location_search"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
@@ -96,7 +96,7 @@
                 android:text="@string/locaiotn_search"
                 />
         </LinearLayout>
-        <LinearLayout android:id="@+id/my_setting"
+        <LinearLayout android:id="@+id/foodtype_search"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
@@ -132,7 +132,7 @@
         android:layout_marginBottom="20dp"
         android:layout_marginTop="5dp"
         >
-        <LinearLayout android:id="@+id/my_collection"
+        <LinearLayout android:id="@+id/my_recommend"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
@@ -155,7 +155,7 @@
                 />
         </LinearLayout>
         
-        <LinearLayout android:id="@+id/my_travel_theme"
+        <LinearLayout android:id="@+id/near_food"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"

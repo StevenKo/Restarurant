@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.restaurant.collection.MainActivity;
 import com.restaurant.collection.R;
 
 @SuppressLint("ValidFragment")
@@ -41,6 +42,8 @@ public class CategoryTabFragment extends Fragment {
 
         return mTabHost;
     }
+    
+    
 
     private void setupTab(Class<?> ccls, String name, String nameSpec) {
 
