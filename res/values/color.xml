@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="pager_background">#F2F2F2</color> <!-- affect listview -->
+    <color name="pager_background">#424242</color> <!-- affect listview -->
     <color name="main_color_grey_dark">#dddddd</color>
-    <color name="main_background">#E3E3E3</color>
+    <color name="main_background">#424242</color>
     
     
     

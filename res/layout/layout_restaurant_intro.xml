@@ -21,7 +21,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="@drawable/my_novel_selector"
+            android:background="@drawable/restaurant_selector"
             android:clickable="true"
             android:padding="15dp"
             >

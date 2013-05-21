@@ -40,6 +40,7 @@ public class MainActivity extends SherlockFragmentActivity {
 
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(adapter);
+        
 
         TitlePageIndicator indicator = (TitlePageIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(pager);
