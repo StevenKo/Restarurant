@@ -13,19 +13,21 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.restaurant.adapter.NoteGridViewAdapter;
+import com.restaurant.collection.api.RestaurantAPI;
 import com.restaurant.collection.entity.Note;
 import com.restaurant.customized.view.LoadMoreGridView;
 
 
 public class RestaurantNotesActivity extends SherlockActivity{
 	
-    private final ArrayList<Note>             notes           = new ArrayList<Note>();
+    private ArrayList<Note>             notes           = new ArrayList<Note>();
     private NoteGridViewAdapter               myGridViewAdapter;
 	private LinearLayout progressLayout;
 	private LinearLayout loadmoreLayout;
 	private LinearLayout layoutReload;
 	private Button buttonReload;
 	private LoadMoreGridView myGrid;
+	private int restaurantId;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,9 @@ public class RestaurantNotesActivity extends SherlockActivity{
         ab.setTitle("餐廳食記");
         ab.setDisplayHomeAsUpEnabled(true);
         
+        Bundle mBundle = this.getIntent().getExtras();
+        restaurantId = mBundle.getInt("ResturantId");
+        restaurantId = 1;
         findAndSetViews();
         
         
@@ -87,12 +92,7 @@ public class RestaurantNotesActivity extends SherlockActivity{
 
         @Override
         protected Object doInBackground(Object... params) {
-            notes.add(new Note());
-            notes.add(new Note());
-            notes.add(new Note());
-            notes.add(new Note());
-            notes.add(new Note());
-            notes.add(new Note());
+            notes = RestaurantAPI.getRestaurantNotes(restaurantId,1);
             return null;
         }
 

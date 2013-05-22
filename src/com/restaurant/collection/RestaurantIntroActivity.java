@@ -1,6 +1,10 @@
 package com.restaurant.collection;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,6 +29,7 @@ import com.restaurant.collection.api.RestaurantAPI;
 import com.restaurant.collection.db.SQLiteRestaurant;
 import com.restaurant.collection.entity.Restaurant;
 import com.restaurant.fragment.RestaurantPhotoFragment;
+import com.restaurant.gps.util.GPSTracker;
 import com.viewpagerindicator.CirclePageIndicator;
 
 public class RestaurantIntroActivity extends SherlockFragmentActivity {
@@ -44,6 +49,8 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
     private LinearLayout                      layoutReload;
     private Button                            buttonReload;
 	private Restaurant restaurant;
+	private double latitude;
+	private double longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,13 +74,27 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
         indicator.setViewPager(pager);
         
         findViews();
-        setViews();
+        getCurrentLocation();
         
         new DownloadRestaurantTask().execute();
         
     }
     
-    private class DownloadRestaurantTask extends AsyncTask {
+    private void getCurrentLocation() {
+    	GPSTracker mGPS = new GPSTracker(this);
+
+    	if(mGPS.canGetLocation() ){
+
+    		latitude =mGPS.getLatitude();
+    		longitude=mGPS.getLongitude();
+
+    	}else{
+    	// can't get the location
+    	}
+		
+	}
+
+	private class DownloadRestaurantTask extends AsyncTask {
 
 
 		@Override
@@ -91,24 +112,26 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
         @Override
         protected void onPostExecute(Object result) {
         	progressLayout.setVisibility(View.GONE);
-//        	address_text.setText(restaurant.getAddress());
-//    		opentime_text.setText(restaurant.getOpenTime());
-//    		price_text.setText(restaurant.getPrice());
-//    		restaurant_intro_text.setText(restaurant.getIntroduction());
-//    		official_btn.setOnClickListener(new OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                	Uri uri = Uri.parse(restaurant.getOfficailLink());
-//                	Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-//                	startActivity(intent);
-//                }
-//            });
+    		setViews();
             super.onPostExecute(result);
 
         }
     }
 
     private void setViews() {
+    	
+    	address_text.setText(restaurant.getAddress());
+		opentime_text.setText(restaurant.getOpenTime());
+		price_text.setText(restaurant.getPrice());
+		restaurant_intro_text.setText(restaurant.getIntroduction());
+		official_btn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            	Uri uri = Uri.parse(restaurant.getOfficailLink());
+            	Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            	startActivity(intent);
+            }
+        });
 
     	share_btn.setOnClickListener(new OnClickListener() {
             @Override
@@ -119,10 +142,11 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
             	startActivity(intent); 
             }
         });
+    	share_btn.isClickable();
     	place_button.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-            	Uri uri = Uri.parse("geo:0,0?q=22.99948365856307,72.60040283203125(Maninagar)");
+            	Uri uri = Uri.parse("geo:0,0?q="+restaurant.getX()+","+restaurant.getY()+"(Maninagar)");
 				Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 				startActivity(intent);
             }
@@ -131,7 +155,7 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
             @Override
             public void onClick(View v) {
             	Intent intent = new Intent(Intent.ACTION_VIEW,
-            			Uri.parse("http://maps.google.com/maps?saddr="+23.0094408+","+72.5988541+"&daddr="+22.99948365856307+","+72.60040283203125));
+            			Uri.parse("http://maps.google.com/maps?saddr="+latitude+","+longitude+"&daddr="+restaurant.getX()+","+restaurant.getY()));
             			startActivity(intent);
             }
         });
@@ -203,6 +227,9 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
         case ID_NOTE:
         	Intent intent = new Intent();
             intent.setClass(RestaurantIntroActivity.this, RestaurantNotesActivity.class);
+            Bundle bundle = new Bundle();
+        	bundle.putInt("ResturantId", restaurant.getId());
+        	intent.putExtras(bundle);
             startActivity(intent);
             break;
         }
