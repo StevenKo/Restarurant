@@ -38,6 +38,9 @@ public class CategoryActivity extends SherlockFragmentActivity {
 	private FragmentPagerAdapter adapter;
 	private Type type;
 	private ArrayList<Area> typeAreas;
+	private int areaId = 0;
+	private int categoryId = 0;
+	private int typeId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +51,9 @@ public class CategoryActivity extends SherlockFragmentActivity {
         ab.setDisplayHomeAsUpEnabled(true);
         
         mBundle = this.getIntent().getExtras();
-        int areaId = mBundle.getInt("AreaId");
-        int categoryId = mBundle.getInt("CategoryId");
-        int typeId = mBundle.getInt("TypeId");
+        areaId = mBundle.getInt("AreaId");
+        categoryId = mBundle.getInt("CategoryId");
+        typeId = mBundle.getInt("TypeId");
         if(areaId!=0){
         	area = Area.getArea(areaId);
         	areaCategories = Category.getAreaCategories(areaId);
@@ -89,7 +92,7 @@ public class CategoryActivity extends SherlockFragmentActivity {
         @Override
         public Fragment getItem(int position) {
             Fragment kk = new Fragment();
-            kk = CategoryTabFragment.newInstance();
+            kk = CategoryTabFragment.newInstance(areaId, categories.get(position).getId(), typeId, false, false);
             return kk;
         }
 
@@ -116,7 +119,7 @@ public class CategoryActivity extends SherlockFragmentActivity {
         @Override
         public Fragment getItem(int position) {
             Fragment kk = new Fragment();
-            kk = CategoryTabFragment.newInstance();
+            kk = CategoryTabFragment.newInstance(areas.get(position).getId(), categoryId, typeId,false, false);
             return kk;
         }
 

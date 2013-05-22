@@ -17,18 +17,18 @@ import android.widget.TextView;
 import com.restaurant.collection.CategoryActivity;
 import com.restaurant.collection.R;
 import com.restaurant.collection.RestaurantIntroActivity;
-import com.restaurant.entity.PsuedoRestaurant;
+import com.restaurant.collection.entity.Restaurant;
 import com.tool.imageload.ImageLoader;
 
 
 public class RestaurantGridViewAdapter extends BaseAdapter {
 
     private final Activity                    activity;
-    private final ArrayList<PsuedoRestaurant> data;
+    private final ArrayList<Restaurant> data;
     private static LayoutInflater             inflater = null;
     public ImageLoader                        imageLoader;
 
-    public RestaurantGridViewAdapter(Activity a, ArrayList<PsuedoRestaurant> restaurants) {
+    public RestaurantGridViewAdapter(Activity a, ArrayList<Restaurant> restaurants) {
         activity = a;
         data = restaurants;
         inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

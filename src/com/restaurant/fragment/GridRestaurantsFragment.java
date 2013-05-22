@@ -16,13 +16,15 @@ import android.widget.Toast;
 
 import com.restaurant.adapter.RestaurantGridViewAdapter;
 import com.restaurant.collection.R;
+import com.restaurant.collection.api.RestaurantAPI;
+import com.restaurant.collection.db.SQLiteRestaurant;
+import com.restaurant.collection.entity.Restaurant;
 import com.restaurant.customized.view.LoadMoreGridView;
-import com.restaurant.entity.PsuedoRestaurant;
 
 @SuppressLint("ValidFragment")
 public class GridRestaurantsFragment extends Fragment {
 
-    private final ArrayList<PsuedoRestaurant> restaurants     = new ArrayList<PsuedoRestaurant>();
+    private ArrayList<Restaurant> restaurants     = new ArrayList<Restaurant>();
     private LoadMoreGridView                  myGrid;
     private RestaurantGridViewAdapter                   myGridViewAdapter;
     private LinearLayout                      progressLayout;
@@ -30,26 +32,39 @@ public class GridRestaurantsFragment extends Fragment {
     private LinearLayout                      layoutReload;
     private Button                            buttonReload;
 
-    private int                               intOrder;
     private int                               myPage          = 1;
     private Boolean                           checkLoad       = true;
-    private final ArrayList<PsuedoRestaurant> moreRestaurants = new ArrayList<PsuedoRestaurant>();
+    private final ArrayList<Restaurant> moreRestaurants = new ArrayList<Restaurant>();
+	private int area_id;
+	private int category_id;
+	private int type_id;
+	private boolean is_collection;
+	private boolean is_selected;
 
     public GridRestaurantsFragment() {
 
     }
-
-    public static final GridRestaurantsFragment newInstance(int content_order) {
+    
+    public static final GridRestaurantsFragment newInstance(int area_id, int category_id, int type_id, boolean is_collection, boolean is_selected) {
         GridRestaurantsFragment f = new GridRestaurantsFragment();
         Bundle bdl = new Bundle();
-        bdl.putInt("contentOrder", content_order);
+        bdl.putInt("AreaId", area_id);
+        bdl.putInt("CategoryId", category_id);
+        bdl.putInt("TypeId", type_id);
+        bdl.putBoolean("IsCollection", is_selected);
+        bdl.putBoolean("IsSelected", is_selected);
         f.setArguments(bdl);
         return f;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        intOrder = getArguments().getInt("contentOrder");
+        area_id = getArguments().getInt("AreaId");
+		category_id = getArguments().getInt("CategoryId");
+		type_id = getArguments().getInt("TypeId");
+		is_collection = getArguments().getBoolean("IsCollection");
+		is_selected = getArguments().getBoolean("IsSelected");
         super.onCreate(savedInstanceState);
     }
 
@@ -109,10 +124,19 @@ public class GridRestaurantsFragment extends Fragment {
 
         @Override
         protected Object doInBackground(Object... params) {
-            restaurants.add(new PsuedoRestaurant());
-            restaurants.add(new PsuedoRestaurant());
-            restaurants.add(new PsuedoRestaurant());
-            restaurants.add(new PsuedoRestaurant());
+        	
+        	
+        	if(area_id !=0 && category_id != 0){
+        		restaurants = RestaurantAPI.getAreaCategoryRestaurants(area_id, category_id, 1);
+        	}else if(area_id != 0 && type_id != 0){
+//        		restaurants = RestaurantAPI.getAreaTypeRestaurants(area_id, category_id, 1);
+        	}else if(is_collection){
+        		SQLiteRestaurant db = new SQLiteRestaurant(getActivity());
+        		restaurants = db.getAllRestaurants();
+        	}else if(is_selected){
+//        		restaurants = RestaurantAPI.getSelectedRestaurants(area_id, category_id, 1);
+        	}
+       
             return null;
         }
 

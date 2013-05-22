@@ -16,14 +16,15 @@ import android.widget.Toast;
 
 import com.restaurant.adapter.NoteGridViewAdapter;
 import com.restaurant.collection.R;
+import com.restaurant.collection.api.RestaurantAPI;
+import com.restaurant.collection.db.SQLiteRestaurant;
 import com.restaurant.collection.entity.Note;
 import com.restaurant.customized.view.LoadMoreGridView;
-import com.restaurant.entity.PsuedoRestaurant;
 
 @SuppressLint("ValidFragment")
 public class GridEatNoteFragment extends Fragment {
 
-    private final ArrayList<Note>             notes           = new ArrayList<Note>();
+    private ArrayList<Note>             notes           = new ArrayList<Note>();
     private LoadMoreGridView                  myGrid;
     private NoteGridViewAdapter               myGridViewAdapter;
     private LinearLayout                      progressLayout;
@@ -31,26 +32,39 @@ public class GridEatNoteFragment extends Fragment {
     private LinearLayout                      layoutReload;
     private Button                            buttonReload;
 
-    private int                               intOrder;
     private int                               myPage          = 1;
     private Boolean                           checkLoad       = true;
-    private final ArrayList<PsuedoRestaurant> moreRestaurants = new ArrayList<PsuedoRestaurant>();
+    private final ArrayList<Note> moreNotes = new ArrayList<Note>();
+    private int area_id;
+	private int category_id;
+	private int type_id;
+	private boolean is_collection;
+	private boolean is_selected;
 
     public GridEatNoteFragment() {
 
     }
-
-    public static final GridEatNoteFragment newInstance(int content_order) {
-        GridEatNoteFragment f = new GridEatNoteFragment();
+    
+    public static final GridEatNoteFragment newInstance(int area_id, int category_id, int type_id, boolean is_collection, boolean is_selected) {
+    	GridEatNoteFragment f = new GridEatNoteFragment();
         Bundle bdl = new Bundle();
-        bdl.putInt("contentOrder", content_order);
+        bdl.putInt("AreaId", area_id);
+        bdl.putInt("CategoryId", category_id);
+        bdl.putInt("TypeId", type_id);
+        bdl.putBoolean("IsCollection", is_selected);
+        bdl.putBoolean("IsSelected", is_selected);
         f.setArguments(bdl);
         return f;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        intOrder = getArguments().getInt("contentOrder");
+    	area_id = getArguments().getInt("AreaId");
+		category_id = getArguments().getInt("CategoryId");
+		type_id = getArguments().getInt("TypeId");
+		is_collection = getArguments().getBoolean("IsCollection");
+		is_selected = getArguments().getBoolean("IsSelected");
         super.onCreate(savedInstanceState);
     }
 
@@ -110,12 +124,16 @@ public class GridEatNoteFragment extends Fragment {
 
         @Override
         protected Object doInBackground(Object... params) {
-            notes.add(new Note());
-            notes.add(new Note());
-            notes.add(new Note());
-            notes.add(new Note());
-            notes.add(new Note());
-            notes.add(new Note());
+        	if(area_id !=0 && category_id != 0){
+//        		notes = RestaurantAPI.get(area_id, category_id, 1);
+        	}else if(area_id != 0 && type_id != 0){
+//        		restaurants = RestaurantAPI.getAreaTypeRestaurants(area_id, category_id, 1);
+        	}else if(is_collection){
+        		SQLiteRestaurant db = new SQLiteRestaurant(getActivity());
+        		notes = db.getAllNotes();
+        	}else if(is_selected){
+//        		restaurants = RestaurantAPI.getSelectedRestaurants(area_id, category_id, 1);
+        	}
             return null;
         }
 
@@ -152,7 +170,7 @@ public class GridEatNoteFragment extends Fragment {
         @Override
         protected Object doInBackground(Object... params) {
 
-            moreRestaurants.clear();
+        	moreNotes.clear();
 
             return null;
         }
@@ -162,7 +180,7 @@ public class GridEatNoteFragment extends Fragment {
             super.onPostExecute(result);
             loadmoreLayout.setVisibility(View.GONE);
 
-            if (moreRestaurants != null && moreRestaurants.size() != 0) {
+            if (moreNotes != null && moreNotes.size() != 0) {
                 myGridViewAdapter.notifyDataSetChanged();
             } else {
                 checkLoad = false;

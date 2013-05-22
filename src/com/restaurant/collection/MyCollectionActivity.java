@@ -81,7 +81,7 @@ public class MyCollectionActivity extends SherlockFragmentActivity{
         @Override
         public Fragment getItem(int position) {
             Fragment kk = new Fragment();
-            kk = CategoryTabFragment.newInstance();
+            kk = CategoryTabFragment.newInstance(0,0,0,true,false);
             return kk;
         }
 
