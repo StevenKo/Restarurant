@@ -124,16 +124,20 @@ public class GridEatNoteFragment extends Fragment {
 
         @Override
         protected Object doInBackground(Object... params) {
-        	if(area_id !=0 && category_id != 0){
-//        		notes = RestaurantAPI.get(area_id, category_id, 1);
-        	}else if(area_id != 0 && type_id != 0){
-//        		restaurants = RestaurantAPI.getAreaTypeRestaurants(area_id, category_id, 1);
-        	}else if(is_collection){
-        		SQLiteRestaurant db = new SQLiteRestaurant(getActivity());
-        		notes = db.getAllNotes();
-        	}else if(is_selected){
-//        		restaurants = RestaurantAPI.getSelectedRestaurants(area_id, category_id, 1);
-        	}
+        	notes.add(new Note());
+        	notes.add(new Note());
+        	notes.add(new Note());
+        	notes.add(new Note());
+//        	if(area_id !=0 && category_id != 0){
+////        		notes = RestaurantAPI.get(area_id, category_id, 1);
+//        	}else if(area_id != 0 && type_id != 0){
+////        		restaurants = RestaurantAPI.getAreaTypeRestaurants(area_id, category_id, 1);
+//        	}else if(is_collection){
+//        		SQLiteRestaurant db = new SQLiteRestaurant(getActivity());
+//        		notes = db.getAllNotes();
+//        	}else if(is_selected){
+////        		restaurants = RestaurantAPI.getSelectedRestaurants(area_id, category_id, 1);
+//        	}
             return null;
         }
 

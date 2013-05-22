@@ -1,14 +1,18 @@
 package com.restaurant.collection;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,6 +20,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.restaurant.collection.db.SQLiteRestaurant;
 import com.restaurant.collection.entity.Note;
 
 public class RestaurantNoteActivity extends SherlockActivity{
@@ -27,6 +32,10 @@ public class RestaurantNoteActivity extends SherlockActivity{
 	private TextView articleTextTitle;
 	private WebView webArticle;
 	private Note note;
+	private ImageButton share_btn;
+	private ImageButton direction_button;
+	private ImageButton place_button;
+	private ImageButton favorite_button;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +57,7 @@ public class RestaurantNoteActivity extends SherlockActivity{
         new DownloadArticleTask().execute();
     }
 	
-	@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
 
-        menu.add(0, ID_COLLECT, 1, getResources().getString(R.string.menu_search)).setIcon(R.drawable.custom_checkbox)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        return true;
-    }
 	
 	 private void setViews() {
 	   webArticle.getSettings().setSupportZoom(true);
@@ -66,6 +69,44 @@ public class RestaurantNoteActivity extends SherlockActivity{
     	    }
     	});
        webArticle.setWebChromeClient(new WebChromeClient());
+       
+       share_btn.setOnClickListener(new OnClickListener() {
+           @Override
+           public void onClick(View v) {
+           	Intent intent = new Intent(Intent.ACTION_SEND);
+           	intent.setType("text/plain");
+           	intent.putExtra(android.content.Intent.EXTRA_TEXT, "News for you!");
+           	startActivity(intent); 
+           }
+       });
+   	place_button.setOnClickListener(new OnClickListener() {
+           @Override
+           public void onClick(View v) {
+           	Uri uri = Uri.parse("geo:0,0?q=22.99948365856307,72.60040283203125(Maninagar)");
+				Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+				startActivity(intent);
+           }
+       });
+   	direction_button.setOnClickListener(new OnClickListener() {
+           @Override
+           public void onClick(View v) {
+           	Intent intent = new Intent(Intent.ACTION_VIEW,
+           			Uri.parse("http://maps.google.com/maps?saddr="+23.0094408+","+72.5988541+"&daddr="+22.99948365856307+","+72.60040283203125));
+           			startActivity(intent);
+           }
+       });
+   	favorite_button.setOnClickListener(new OnClickListener() {
+           @Override
+           public void onClick(View v) {
+           	SQLiteRestaurant db = new SQLiteRestaurant(RestaurantNoteActivity.this);
+           	if (db.isRestaurantCollected(note.getId())){
+           		favorite_button.setImageResource( R.drawable.icon_heart_grey );
+           	}else{
+           		favorite_button.setImageResource( R.drawable.icon_heart );
+           	}
+           
+           }
+       });
 	}
 
 	private void findViews() {
@@ -73,6 +114,10 @@ public class RestaurantNoteActivity extends SherlockActivity{
 		 layoutReload = (LinearLayout) findViewById (R.id.layout_reload);
 		 buttonReload = (Button) findViewById (R.id.button_reload);
 		 webArticle = (WebView) findViewById (R.id.web_article);
+		 share_btn = (ImageButton)findViewById(R.id.share_button);
+		 direction_button = (ImageButton)findViewById(R.id.direction_button);
+		 place_button = (ImageButton)findViewById(R.id.place_button);
+		 favorite_button = (ImageButton)findViewById(R.id.favorite_button);
 	}
 	
     private class DownloadArticleTask extends AsyncTask {
