@@ -80,10 +80,23 @@ public class RestaurantGridViewAdapter extends BaseAdapter {
 
         });
 
-        TextView textTitle = (TextView) vi.findViewById(R.id.grid_item_title);
+        TextView title = (TextView) vi.findViewById(R.id.grid_item_title);
         ImageView image = (ImageView) vi.findViewById(R.id.grid_item_image);
-        TextView textAuthor = (TextView) vi.findViewById(R.id.grid_item_author);
-        TextView textDate = (TextView) vi.findViewById(R.id.grid_item_date);
+        TextView foodScore = (TextView) vi.findViewById(R.id.grid_food_score);
+        TextView serviceScore = (TextView) vi.findViewById(R.id.grid_service_score);
+        TextView price = (TextView) vi.findViewById(R.id.grid_item_price);
+        
+        String picUrl = data.get(position).getPicUrl();
+        title.setText(data.get(position).getName());
+        foodScore.setText(data.get(position).getGradeFood());
+        serviceScore.setText(data.get(position).getGradeService());
+        price.setText(data.get(position).getPrice());
+        
+        if (picUrl == null || picUrl.equals("null") ) {
+            image.setImageResource(R.drawable.icon);
+        } else {
+            imageLoader.DisplayImage(picUrl, image);
+        }
 
         return vi;
     }
