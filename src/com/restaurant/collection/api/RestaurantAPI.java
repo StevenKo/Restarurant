@@ -187,34 +187,33 @@ public class RestaurantAPI {
     
    private static Restaurant parseRestaurant(String message, Restaurant restaurant) {
        try {
-           JSONArray jArray;
-           jArray = new JSONArray(message.toString());
-           for (int i = 0; i < jArray.length(); i++) {
+           
+    	   JSONObject jObject = new JSONObject(message.toString());
 
-               int id = jArray.getJSONObject(i).getInt("id");
-               String name = jArray.getJSONObject(i).getString("name");
-               String grade_food = jArray.getJSONObject(i).getString("grade_food");
-               String grade_service = jArray.getJSONObject(i).getString("grade_service");
-               String pic_url = jArray.getJSONObject(i).getString("pic_url");
-               String address = jArray.getJSONObject(i).getString("address");
-               String open_time = jArray.getJSONObject(i).getString("open_time");
-               String official_link = jArray.getJSONObject(i).getString("official_link");
-               String price = jArray.getJSONObject(i).getString("price");
-               String traffic = jArray.getJSONObject(i).getString("traffic");
-               String introduction = jArray.getJSONObject(i).getString("introduction");
-               double x_lan = jArray.getJSONObject(i).getDouble("x_lan");
-               double y_long = jArray.getJSONObject(i).getDouble("y_long");
+               int id = jObject.getInt("id");
+               String name = jObject.getString("name");
+               String grade_food = jObject.getString("grade_food");
+               String grade_service = jObject.getString("grade_service");
+               String pic_url = jObject.getString("pic_url");
+               String address = jObject.getString("address");
+               String open_time = jObject.getString("open_time");
+               String official_link = jObject.getString("official_link");
+               String price = jObject.getString("price");
+               String traffic = jObject.getString("traffic");
+               String introduction = jObject.getString("introduction");
+               double x_lan = jObject.getDouble("x_lan");
+               double y_long = jObject.getDouble("y_long");
                
                int rank = 0;
-               if (!jArray.getJSONObject(i).isNull("rank"))
-                   rank = jArray.getJSONObject(i).getInt("rank");
+               if (!jObject.isNull("rank"))
+                   rank = jObject.getInt("rank");
 
                restaurant = new Restaurant(id, name, grade_food,
                		grade_service, pic_url, address, 
                		open_time, official_link, price, 
                		traffic, introduction, x_lan, y_long);
                
-           }
+           
 
        } catch (JSONException e) {
            e.printStackTrace();
