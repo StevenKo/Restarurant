@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 
+import com.restaurant.collection.MapActivity;
 import com.restaurant.collection.MyCollectionActivity;
 import com.restaurant.collection.R;
 import com.restaurant.collection.RestaurantIntroActivity;
@@ -114,6 +115,13 @@ public final class IndexFragment extends Fragment {
             	a.setView(recomendLayout);
             	a.show();
             	
+            }
+        });
+    	near_food.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            	Intent intent = new Intent(getActivity(), MapActivity.class);
+                startActivity(intent);
             }
         });
     }
