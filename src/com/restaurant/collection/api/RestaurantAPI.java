@@ -55,6 +55,7 @@ public class RestaurantAPI {
         }
     }
     
+    
     public static ArrayList<Restaurant> getAreaRestaurants(int area_id, int page) {
         String message = getMessageFromServer("GET", "/api/v1/restaurants?area_id=" + area_id + "&page=" + page, null, null);
         ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
@@ -76,6 +77,26 @@ public class RestaurantAPI {
     }
     
     
+    public static ArrayList<Restaurant> getTypeRestaurants(int type_id, int page) {
+        String message = getMessageFromServer("GET", "/api/v1/restaurants?type_id=" + type_id + "&page=" + page, null, null);
+        ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+        if (message == null) {
+            return null;
+        } else {
+            return parseRestaurants(message, restaurants);
+        }
+    }
+    
+    public static ArrayList<Restaurant> getAreaTypeRestaurants(int area_id,int type_id, int page) {
+        String message = getMessageFromServer("GET", "/api/v1/restaurants?area_id=" + area_id +"&type_id="+ type_id+ "&page=" + page, null, null);
+        ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+        if (message == null) {
+            return null;
+        } else {
+            return parseRestaurants(message, restaurants);
+        }
+    }
+    
    public static ArrayList<Note> getRestaurantNotes(int restaurant_id, int page) {
        String message = getMessageFromServer("GET", "/api/v1/notes/"+ restaurant_id +"&page=" + page, null, null);
        ArrayList<Note> notes = new ArrayList<Note>();
@@ -88,6 +109,46 @@ public class RestaurantAPI {
    
    public static ArrayList<Note> getAreaNotes(int area_id, int page) {
        String message = getMessageFromServer("GET", "/api/v1/notes?area_id="+ area_id +"&page=" + page, null, null);
+       ArrayList<Note> notes = new ArrayList<Note>();
+       if (message == null) {
+           return null;
+       } else {
+           return parseNotes(message, notes);
+       }
+   }
+   
+   public static ArrayList<Note> getTypeNotes(int type_id, int page) {
+       String message = getMessageFromServer("GET", "/api/v1/notes?type_id="+ type_id +"&page=" + page, null, null);
+       ArrayList<Note> notes = new ArrayList<Note>();
+       if (message == null) {
+           return null;
+       } else {
+           return parseNotes(message, notes);
+       }
+   }
+   
+   public static ArrayList<Note> getCategoryaNotes(int category_id, int page) {
+       String message = getMessageFromServer("GET", "/api/v1/notes?category_id="+ category_id +"&page=" + page, null, null);
+       ArrayList<Note> notes = new ArrayList<Note>();
+       if (message == null) {
+           return null;
+       } else {
+           return parseNotes(message, notes);
+       }
+   }
+   
+   public static ArrayList<Note> getAreaCategoryNotes(int area_id, int category_id,int page) {
+       String message = getMessageFromServer("GET", "/api/v1/notes?area_id="+ area_id  +"&category_id="+ category_id+ "&page=" + page, null, null);
+       ArrayList<Note> notes = new ArrayList<Note>();
+       if (message == null) {
+           return null;
+       } else {
+           return parseNotes(message, notes);
+       }
+   }
+   
+   public static ArrayList<Note> getAreaTypeNotes(int area_id, int type_id,int page) {
+       String message = getMessageFromServer("GET", "/api/v1/notes?area_id="+ area_id  +"&type_id="+ type_id+ "&page=" + page, null, null);
        ArrayList<Note> notes = new ArrayList<Note>();
        if (message == null) {
            return null;
@@ -141,6 +202,8 @@ public class RestaurantAPI {
                String price = jArray.getJSONObject(i).getString("price");
                String traffic = jArray.getJSONObject(i).getString("traffic");
                String introduction = jArray.getJSONObject(i).getString("introduction");
+               double x_lan = jArray.getJSONObject(i).getDouble("x_lan");
+               double y_long = jArray.getJSONObject(i).getDouble("y_long");
                
                int rank = 0;
                if (!jArray.getJSONObject(i).isNull("rank"))
@@ -149,7 +212,7 @@ public class RestaurantAPI {
                restaurant = new Restaurant(id, name, grade_food,
                		grade_service, pic_url, address, 
                		open_time, official_link, price, 
-               		traffic, introduction);
+               		traffic, introduction, x_lan, y_long);
                
            }
 
@@ -171,21 +234,15 @@ public class RestaurantAPI {
                 String grade_food = jArray.getJSONObject(i).getString("grade_food");
                 String grade_service = jArray.getJSONObject(i).getString("grade_service");
                 String pic_url = jArray.getJSONObject(i).getString("pic_url");
-                String address = jArray.getJSONObject(i).getString("address");
-                String open_time = jArray.getJSONObject(i).getString("open_time");
-                String official_link = jArray.getJSONObject(i).getString("official_link");
-                String price = jArray.getJSONObject(i).getString("price");
-                String traffic = jArray.getJSONObject(i).getString("traffic");
-                String introduction = jArray.getJSONObject(i).getString("introduction");
                 
                 int rank = 0;
                 if (!jArray.getJSONObject(i).isNull("rank"))
                     rank = jArray.getJSONObject(i).getInt("rank");
 
                 Restaurant restaurant = new Restaurant(id, name, grade_food,
-                		grade_service, pic_url, address, 
-                		open_time, official_link, price, 
-                		traffic, introduction);
+                		grade_service, pic_url, "", 
+                		"", "", "", 
+                		"", "",0,0);
                 restaurants.add(restaurant);
             }
 

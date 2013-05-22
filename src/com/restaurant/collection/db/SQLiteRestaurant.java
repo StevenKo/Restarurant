@@ -165,9 +165,10 @@ public class SQLiteRestaurant extends SQLiteOpenHelper {
             String  price= cursor.getString(9);
             String  traffic= cursor.getString(10);
             String  introduction= cursor.getString(11);
-           
+            double  x_lan = cursor.getDouble(12);
+            double  y_long = cursor.getDouble(13);
 
-            Restaurant r = new Restaurant( id, name,grade_food,grade_service, pic_url, address,open_time, official_link,price,traffic,introduction );
+            Restaurant r = new Restaurant( id, name,grade_food,grade_service, pic_url, address,open_time, official_link,price,traffic,introduction, x_lan, y_long);
             rs.add(r);
         }
         return rs;

@@ -12,10 +12,13 @@ public class Restaurant {
     String  price;
     String  traffic;
     String  introduction;
+    double	x_lan;
+    double	y_long;
     public Restaurant(){
-    	this(1, "", "", "","","","","","","","");
+    	this(1, "", "", "","","","","","","","", 0, 0);
     }
-    public Restaurant(int id, String name, String grade_food, String grade_service, String pic_url, String address, String open_time, String official_link, String price, String traffic, String introduction ){
+    public Restaurant(int id, String name, String grade_food, String grade_service, String pic_url, String address, 
+    		String open_time, String official_link, String price, String traffic, String introduction, double x_lan, double y_long){
     	this.name = name;
     	this.grade_food = grade_food;
     	this.grade_service = grade_service;
@@ -26,6 +29,8 @@ public class Restaurant {
     	this.price = price;
     	this.traffic = traffic;
     	this.introduction = introduction;
+    	this.x_lan = x_lan;
+    	this.y_long = y_long;
     }
     
     public int getId(){
@@ -70,6 +75,14 @@ public class Restaurant {
     
     public String getIntroduction(){
     	return introduction;
+    }
+    
+    public double getX(){
+    	return x_lan;
+    }
+    
+    public double getY(){
+    	return y_long;
     }
     
 
