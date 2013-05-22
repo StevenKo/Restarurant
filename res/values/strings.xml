@@ -20,6 +20,10 @@
     <string name="foodtype_search">依料理找餐廳</string>
     <string name="near_food">附近美食</string>
     
+    <string name="respond_mail_address">brotherkos@gmail.com</string>
+    <string name="respond_mail_title">意見回餽 from 嚴選餐廳</string>
+    <string name="recommend_url">https://play.google.com/store/apps/developer?id=KosBrother</string>
+    
     <string name="fake_note">\[食記\]人氣一品之歷久不衰Buffet之王!! 喜來登十二廚自助餐廳近美食</string>
     
 
