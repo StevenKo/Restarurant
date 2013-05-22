@@ -125,17 +125,17 @@ public class GridRestaurantsFragment extends Fragment {
         @Override
         protected Object doInBackground(Object... params) {
         	
-        	
-        	if(area_id !=0 && category_id != 0){
-        		restaurants = RestaurantAPI.getAreaCategoryRestaurants(area_id, category_id, 1);
-        	}else if(area_id != 0 && type_id != 0){
-//        		restaurants = RestaurantAPI.getAreaTypeRestaurants(area_id, category_id, 1);
-        	}else if(is_collection){
-        		SQLiteRestaurant db = new SQLiteRestaurant(getActivity());
-        		restaurants = db.getAllRestaurants();
-        	}else if(is_selected){
-//        		restaurants = RestaurantAPI.getSelectedRestaurants(area_id, category_id, 1);
-        	}
+        	restaurants.add(new Restaurant());
+//        	if(area_id !=0 && category_id != 0){
+//        		restaurants = RestaurantAPI.getAreaCategoryRestaurants(area_id, category_id, 1);
+//        	}else if(area_id != 0 && type_id != 0){
+////        		restaurants = RestaurantAPI.getAreaTypeRestaurants(area_id, category_id, 1);
+//        	}else if(is_collection){
+//        		SQLiteRestaurant db = new SQLiteRestaurant(getActivity());
+//        		restaurants = db.getAllRestaurants();
+//        	}else if(is_selected){
+////        		restaurants = RestaurantAPI.getSelectedRestaurants(area_id, category_id, 1);
+//        	}
        
             return null;
         }

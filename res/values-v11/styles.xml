@@ -10,7 +10,8 @@
 	
     <style name="StyledIndicators" parent="android:Theme.Holo.Light">
         <item name="vpiTabPageIndicatorStyle">@style/CustomTabPageIndicator</item>
-        <item name="vpiTitlePageIndicatorStyle">@style/Widget.MyTitlepageIndicator</item>   
+        <item name="vpiTitlePageIndicatorStyle">@style/Widget.MyTitlepageIndicator</item>
+        <item name="vpiCirclePageIndicatorStyle">@style/myCirclePageIndicator</item>   
     </style>
     
     <style name="CustomTabPageIndicator" parent="Widget">
@@ -33,6 +34,13 @@
     <style parent="Widget"
         name="Widget.MyTitlepageIndicator">
         <item name="footerColor">#A40804</item>
+    </style>
+    
+    <style parent="Widget"
+        name="myCirclePageIndicator">
+        <item name="pageColor">#eeeeee</item>
+        <item name="fillColor">#bb2222</item>
+        <item name="strokeColor">#111111</item>
     </style>
 
     <style name="CustomTabPageIndicator.Text" parent="android:TextAppearance.Medium">

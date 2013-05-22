@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.restaurant.collection.CategoryActivity;
 import com.restaurant.collection.R;
 import com.restaurant.collection.RestaurantIntroActivity;
+import com.restaurant.collection.api.RestaurantAPI;
 import com.restaurant.collection.entity.Restaurant;
 import com.tool.imageload.ImageLoader;
 
@@ -67,7 +68,12 @@ public class RestaurantGridViewAdapter extends BaseAdapter {
 
             @Override
             public void onClick(View v) {
+            	
             	Intent intent = new Intent(activity, RestaurantIntroActivity.class);
+            	Bundle bundle = new Bundle();
+            	bundle.putInt("ResturantId", data.get(position).getId());
+            	bundle.putString("ResturantName", data.get(position).getName());
+            	intent.putExtras(bundle);
             	activity.startActivity(intent);
 
             }

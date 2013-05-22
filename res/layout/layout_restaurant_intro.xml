@@ -4,6 +4,42 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
+    <LinearLayout android:id="@+id/layout_progress"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        >
+        <ProgressBar 
+            android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	/>        
+    </LinearLayout>
+    
+    
+	
+    <LinearLayout 
+   	 	android:id="@+id/layout_reload"
+   	 	android:layout_width="fill_parent"
+   	 	android:layout_height="fill_parent"
+     	android:gravity="center"
+     	android:visibility="gone"
+     	android:background="@color/main_color_grey_dark"
+     	>
+	    <TextView 
+	        android:layout_width="wrap_content"
+   	 		android:layout_height="wrap_content"
+   	 		android:text="無法連線"
+   	 		android:textSize="23dp"
+   	 		android:layout_marginLeft="5dp"
+   	 		android:textColor="#6E6E6E"
+	        />
+	    <Button  android:id="@+id/button_reload"
+	       android:layout_width="wrap_content"
+   	 	   android:layout_height="wrap_content"
+   	 	   android:layout_marginLeft="5dp"
+   	 	   android:text="重試"
+	        />
+	</LinearLayout>
  
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
@@ -16,28 +52,9 @@
         android:padding="10dip"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
+        android:background="#000000"
         />
-    <RelativeLayout  android:id="@+id/watch_notes"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@drawable/restaurant_selector"
-            android:clickable="true"
-            android:padding="15dp"
-            >
    
-            <TextView 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="看食記"
-                />
-            <ImageView 
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/icon"
-                android:layout_alignParentRight="true"
-                />  
-        </RelativeLayout> 
             <LinearLayout 
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content">
@@ -68,11 +85,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:orientation="vertical">
-            <TextView 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="十二廚自助餐廳 - 台北喜來登大飯店"
-                />
+
             
             <RelativeLayout android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -93,7 +106,7 @@
                     android:layout_height="wrap_content" 
                     android:layout_toRightOf="@+id/author_tip">
                 <TextView
-                android:id="@+id/grid_item_author"
+                android:id="@+id/address_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2px"
@@ -124,7 +137,7 @@
                     android:layout_height="wrap_content" 
                     android:layout_toRightOf="@+id/author_tip">
                 <TextView
-                android:id="@+id/grid_item_author"
+                android:id="@+id/opentime_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2px"
@@ -154,17 +167,12 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content" 
                     android:layout_toRightOf="@+id/author_tip">
-                <TextView
-                android:id="@+id/grid_item_author"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2px"
-                android:text="www.src.example"
-                android:textSize="20px" 
-                android:textColor="#555555"
-                android:typeface="serif"
-                >
-                </TextView>
+                <Button
+                       android:id="@+id/official_btn"
+                       android:layout_height="wrap_content"
+                       android:layout_width="wrap_content" 
+                       android:text="前往官方網站"
+                    />
                 </RelativeLayout>
             </RelativeLayout>
             <RelativeLayout android:layout_width="wrap_content"
@@ -186,7 +194,7 @@
                     android:layout_height="wrap_content" 
                     android:layout_toRightOf="@+id/author_tip">
                 <TextView
-                android:id="@+id/grid_item_author"
+                android:id="@+id/price_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2px"
@@ -217,7 +225,7 @@
                     android:layout_height="wrap_content" 
                     android:layout_toRightOf="@+id/author_tip">
                 <TextView
-                android:id="@+id/grid_item_author"
+                android:id="@+id/restaurant_intro_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2px"
