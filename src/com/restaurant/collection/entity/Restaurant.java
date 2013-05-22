@@ -19,6 +19,7 @@ public class Restaurant {
     }
     public Restaurant(int id, String name, String grade_food, String grade_service, String pic_url, String address, 
     		String open_time, String official_link, String price, String traffic, String introduction, double x_lan, double y_long){
+    	this.id = id;
     	this.name = name;
     	this.grade_food = grade_food;
     	this.grade_service = grade_service;
