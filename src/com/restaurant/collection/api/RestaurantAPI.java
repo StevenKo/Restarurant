@@ -34,6 +34,16 @@ public class RestaurantAPI {
         return Category.getCategories();
     }
     
+    public static Restaurant getAllRestaurant(){
+    	String message = getMessageFromServer("GET", "/api/v1/restaurants/" , null, null);
+    	Restaurant restaurant = new Restaurant();
+    	if (message == null) {
+            return null;
+        } else {
+            return parseRestaurant(message, restaurant);
+        }
+    }
+    
     
     public static Restaurant getRestaurant(int restaurant_id){
     	String message = getMessageFromServer("GET", "/api/v1/restaurants/"+ restaurant_id , null, null);
@@ -169,12 +179,14 @@ public class RestaurantAPI {
                String intro = jArray.getJSONObject(i).getString("intro");
                String pic_url = jArray.getJSONObject(i).getString("pic_url");
                String link = jArray.getJSONObject(i).getString("link");
+               double x_lan = jArray.getJSONObject(i).getDouble("x_lan");
+               double y_long = jArray.getJSONObject(i).getDouble("y_long");
                
                int rank = 0;
                if (!jArray.getJSONObject(i).isNull("rank"))
                    rank = jArray.getJSONObject(i).getInt("rank");
 
-               Note note = new Note(id, restaurant_id, title, intro, pic_url, link);
+               Note note = new Note(id, restaurant_id, title, intro, pic_url, link, x_lan, y_long);
                notes.add(note);
            }
 
@@ -233,6 +245,8 @@ public class RestaurantAPI {
                 String grade_food = jArray.getJSONObject(i).getString("grade_food");
                 String grade_service = jArray.getJSONObject(i).getString("grade_service");
                 String pic_url = jArray.getJSONObject(i).getString("pic_url");
+                double x_lan = jArray.getJSONObject(i).getDouble("x_lan");
+                double y_long = jArray.getJSONObject(i).getDouble("y_long");
                 
                 int rank = 0;
                 if (!jArray.getJSONObject(i).isNull("rank"))
@@ -241,7 +255,7 @@ public class RestaurantAPI {
                 Restaurant restaurant = new Restaurant(id, name, grade_food,
                 		grade_service, pic_url, "", 
                 		"", "", "", 
-                		"", "",0,0);
+                		"", "",x_lan,y_long);
                 restaurants.add(restaurant);
             }
 
