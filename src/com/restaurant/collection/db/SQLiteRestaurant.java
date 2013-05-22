@@ -37,6 +37,8 @@ public class SQLiteRestaurant extends SQLiteOpenHelper {
         String price  = "price";
         String traffic  = "traffic";
         String introduction  = "introduction";
+        String x = "x";
+        String y = "y";
     }
 
     public interface NoteSchema {
@@ -48,6 +50,8 @@ public class SQLiteRestaurant extends SQLiteOpenHelper {
         String intro    = "intro";
         String pic_url = "singer_name";
         String link = "link";
+        String x = "x";
+        String y = "y";
     }
 
 
@@ -73,7 +77,9 @@ public class SQLiteRestaurant extends SQLiteOpenHelper {
                 + RestaurantSchema.official_link + " TEXT NOT NULL"+ ","
                 + RestaurantSchema.price + " TEXT NOT NULL"+ ","
                 + RestaurantSchema.traffic + " TEXT NOT NULL"+ ","
-                + RestaurantSchema.introduction + " TEXT NOT NULL"+ ");");
+                + RestaurantSchema.introduction + " TEXT NOT NULL"+ ","
+                + RestaurantSchema.x + " REAL NOT NULL"+ ","
+                + RestaurantSchema.y + " REAL NOT NULL"+ ");");
         db.execSQL("CREATE TABLE IF NOT EXISTS " + NoteSchema.TABLE_NAME + " (" 
                 + NoteSchema.id + " INTEGER PRIMARY KEY" + "," 
                 + NoteSchema.note_id + " INTEGER NOT NULL" + ","
@@ -81,7 +87,9 @@ public class SQLiteRestaurant extends SQLiteOpenHelper {
                 + NoteSchema.title + " TEXT NOT NULL" + "," 
         		+ NoteSchema.intro + " TEXT NOT NULL" + ","
                 + NoteSchema.pic_url + " TEXT NOT NULL" + ","
-                + NoteSchema.link + " TEXT NOT NULL"+ ");");
+                + NoteSchema.link + " TEXT NOT NULL" + ","
+                + NoteSchema.x + " TEXT NOT NULL" + ","
+                + NoteSchema.y + " TEXT NOT NULL"+ ");");
         
 
     }
@@ -112,6 +120,8 @@ public class SQLiteRestaurant extends SQLiteOpenHelper {
         args.put(RestaurantSchema.price, r.getPrice());
         args.put(RestaurantSchema.traffic, r.getTraffic());
         args.put(RestaurantSchema.introduction, r.getIntroduction());
+        args.put(RestaurantSchema.x, r.getX());
+        args.put(RestaurantSchema.y, r.getY());
         return db.insert(RestaurantSchema.TABLE_NAME, null, args);
     }
 
@@ -123,6 +133,8 @@ public class SQLiteRestaurant extends SQLiteOpenHelper {
         args.put(NoteSchema.intro, note.getIntro());
         args.put(NoteSchema.pic_url, note.getPicUrl());
         args.put(NoteSchema.link, note.getLink());
+        args.put(RestaurantSchema.x, note.getX());
+        args.put(RestaurantSchema.y, note.getY());
         return db.insert(NoteSchema.TABLE_NAME, null, args);
     }
 
@@ -140,8 +152,9 @@ public class SQLiteRestaurant extends SQLiteOpenHelper {
             String intro = cursor.getString(4);
             String pic_url = cursor.getString(5);
             String link = cursor.getString(6);
-
-            Note note = new Note(id, restaurant_id,title, intro, pic_url, link);
+            Double x = cursor.getDouble(7);
+            Double y = cursor.getDouble(8);
+            Note note = new Note(id, restaurant_id,title, intro, pic_url, link,x,y);
             notes.add(note);
         }
         return notes;
