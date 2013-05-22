@@ -15,31 +15,33 @@
         	/>        
     </LinearLayout>
     
+    <LinearLayout 
+	   	 	android:id="@+id/layout_reload"
+	   	 	android:layout_width="fill_parent"
+	   	 	android:layout_height="fill_parent"
+	     	android:gravity="center"
+	     	android:visibility="gone"
+	     	android:background="@color/main_color_grey_dark"
+	     	>
+		    <TextView 
+		        android:layout_width="wrap_content"
+	   	 		android:layout_height="wrap_content"
+	   	 		android:text="無法連線"
+	   	 		android:textSize="23dp"
+	   	 		android:layout_marginLeft="5dp"
+	   	 		android:textColor="#6E6E6E"
+		        />
+		    <Button  android:id="@+id/button_reload"
+		       android:layout_width="wrap_content"
+	   	 	   android:layout_height="wrap_content"
+	   	 	   android:layout_marginLeft="5dp"
+	   	 	   android:text="重試"
+		        />
+		</LinearLayout>
+    
     
 	
-    <LinearLayout 
-   	 	android:id="@+id/layout_reload"
-   	 	android:layout_width="fill_parent"
-   	 	android:layout_height="fill_parent"
-     	android:gravity="center"
-     	android:visibility="gone"
-     	android:background="@color/main_color_grey_dark"
-     	>
-	    <TextView 
-	        android:layout_width="wrap_content"
-   	 		android:layout_height="wrap_content"
-   	 		android:text="無法連線"
-   	 		android:textSize="23dp"
-   	 		android:layout_marginLeft="5dp"
-   	 		android:textColor="#6E6E6E"
-	        />
-	    <Button  android:id="@+id/button_reload"
-	       android:layout_width="wrap_content"
-   	 	   android:layout_height="wrap_content"
-   	 	   android:layout_marginLeft="5dp"
-   	 	   android:text="重試"
-	        />
-	</LinearLayout>
+   
  
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
@@ -54,31 +56,42 @@
         android:layout_width="fill_parent"
         android:background="#000000"
         />
-   
-            <LinearLayout 
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
-                <ImageButton 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/share"
-                android:id="@+id/share_button"/>
-                <ImageButton 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/directions"
-                android:id="@+id/direction_button"/>
-                <ImageButton 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/place"
-                android:id="@+id/place_button"/>
-                <ImageButton 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/favorite"
-                android:id="@+id/favorite_button"/>
-            </LinearLayout>
+    
+    <RelativeLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        >
+        <LinearLayout 
+           android:layout_width="fill_parent"
+           android:layout_height="wrap_content"
+           android:background="#222222"
+           android:layout_alignParentBottom="true">
+           <ImageButton 
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:src="@drawable/share"
+           android:id="@+id/share_button"
+           android:layout_weight="1"/>
+           <ImageButton 
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:src="@drawable/directions"
+           android:id="@+id/direction_button"
+           android:layout_weight="1"/>
+           <ImageButton 
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:src="@drawable/place"
+           android:id="@+id/place_button"
+           android:layout_weight="1"/>
+           <ImageButton 
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:src="@drawable/favorite"
+           android:id="@+id/favorite_button"
+           android:layout_weight="1"/>
+       </LinearLayout>
+       
         <ScrollView android:layout_width="fill_parent"
             android:layout_height="fill_parent">
         <LinearLayout 
@@ -240,5 +253,9 @@
             
         </LinearLayout>
         </ScrollView>
+        
+    </RelativeLayout>
+   
+      
 
 </LinearLayout>

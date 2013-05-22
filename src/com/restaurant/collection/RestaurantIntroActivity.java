@@ -53,7 +53,7 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
         Bundle mBundle = this.getIntent().getExtras();
         int restaurantId = mBundle.getInt("ResturantId");
         String restaurantName = mBundle.getString("ResturantName");
-        restaurant = new Restaurant(1, restaurantName,"","","","","", "", "", "", "" );
+        restaurant = new Restaurant(1, restaurantName,"","","","","", "", "", "", "", 0, 0 );
         
         final ActionBar ab = getSupportActionBar();
         ab.setTitle(restaurantName);
@@ -91,18 +91,18 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
         @Override
         protected void onPostExecute(Object result) {
         	progressLayout.setVisibility(View.GONE);
-        	address_text.setText(restaurant.getAddress());
-    		opentime_text.setText(restaurant.getOpenTime());
-    		price_text.setText(restaurant.getPrice());
-    		restaurant_intro_text.setText(restaurant.getIntroduction());
-    		official_btn.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                	Uri uri = Uri.parse("http://www.google.com");
-                	Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                	startActivity(intent);
-                }
-            });
+//        	address_text.setText(restaurant.getAddress());
+//    		opentime_text.setText(restaurant.getOpenTime());
+//    		price_text.setText(restaurant.getPrice());
+//    		restaurant_intro_text.setText(restaurant.getIntroduction());
+//    		official_btn.setOnClickListener(new OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                	Uri uri = Uri.parse(restaurant.getOfficailLink());
+//                	Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+//                	startActivity(intent);
+//                }
+//            });
             super.onPostExecute(result);
 
         }
