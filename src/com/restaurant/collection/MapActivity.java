@@ -1,12 +1,17 @@
 package com.restaurant.collection;
 
+import java.util.ArrayList;
+
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
@@ -15,12 +20,20 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.restaurant.adapter.RestaurantGridViewAdapter;
+import com.restaurant.collection.api.RestaurantAPI;
+import com.restaurant.collection.db.SQLiteRestaurant;
+import com.restaurant.collection.entity.Restaurant;
+import com.restaurant.gps.util.GPSTracker;
 
 public class MapActivity extends SherlockFragmentActivity implements OnMarkerClickListener, OnInfoWindowClickListener {
 	
 	private GoogleMap map;
-	static final LatLng HAMBURG = new LatLng(53.558, 9.927);
-	static final LatLng KIEL = new LatLng(53.551, 9.993);
+	private double latitude;
+	private double longitude;
+//	static final LatLng HAMBURG = new LatLng(53.558, 9.927);
+//	static final LatLng KIEL = new LatLng(53.551, 9.993);
+	ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,26 +44,67 @@ public class MapActivity extends SherlockFragmentActivity implements OnMarkerCli
         final ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setTitle("地圖顯示");
+        getCurrentLocation();
         
-        setMap();
+        new DownloadRestaurantsTask().execute();
+        
     }
+    
+    private class DownloadRestaurantsTask extends AsyncTask {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected Object doInBackground(Object... params) {
+        	restaurants = RestaurantAPI.getAllRestaurant();  
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Object result) {
+            super.onPostExecute(result);
+            setMap();
+        }
+    }
+    
+    private void getCurrentLocation() {
+    	GPSTracker mGPS = new GPSTracker(this);
+
+    	if(mGPS.canGetLocation() ){
+
+    		latitude =mGPS.getLatitude();
+    		longitude=mGPS.getLongitude();
+
+    	}else{
+    	// can't get the location
+    	}
+		
+	}
     
     
     
     private void setMap() {
     	if (map!=null){
-    	      Marker kiel = map.addMarker(new MarkerOptions()
-    	          .position(KIEL)
-    	          .title("Kiel")
-    	          .snippet("Kiel is cool")
-    	          .icon(BitmapDescriptorFactory
-    	              .fromResource(R.drawable.ic_launcher)));
-    	      kiel.showInfoWindow();
-    	    }
+    		for(int i=0;i<restaurants.size();i++){
+    			LatLng location = new LatLng(restaurants.get(i).getX(), restaurants.get(i).getY());
+    			
+    			Marker kiel = map.addMarker(new MarkerOptions()
+		  	          .position(location)
+		  	          .title(restaurants.get(i).getName())
+		  	          .icon(BitmapDescriptorFactory
+		  	              .fromResource(R.drawable.ic_launcher)));
+		  	    kiel.showInfoWindow();
+    		}
+    	      
+        }
     	
     	map.setOnMarkerClickListener(this);
     	map.setOnInfoWindowClickListener(this);
-    
+    	map.moveCamera( CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude) , 14.0f) );
 		
 	}
 
@@ -73,6 +127,14 @@ public class MapActivity extends SherlockFragmentActivity implements OnMarkerCli
 	@Override
 	public boolean onMarkerClick(Marker m) {
 		Intent intent = new Intent(this, RestaurantIntroActivity.class);
+		Bundle bundle = new Bundle();
+		for(int i =0 ; i < restaurants.size(); i++){
+			if(restaurants.get(i).getName().equals( m.getTitle())){
+				bundle.putInt("ResturantId", restaurants.get(i).getId());
+		    	bundle.putString("ResturantName", restaurants.get(i).getName());
+			}
+		}
+    	intent.putExtras(bundle);
     	this.startActivity(intent);
 		return false;
 	}

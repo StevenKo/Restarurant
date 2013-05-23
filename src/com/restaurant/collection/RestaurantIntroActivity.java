@@ -59,7 +59,7 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
         Bundle mBundle = this.getIntent().getExtras();
         int restaurantId = mBundle.getInt("ResturantId");
         String restaurantName = mBundle.getString("ResturantName");
-        restaurant = new Restaurant(1, restaurantName,"","","","","", "", "", "", "", 0, 0 );
+        restaurant = new Restaurant(restaurantId, restaurantName,"","","","","", "", "", "", "", 0, 0 );
         
         final ActionBar ab = getSupportActionBar();
         ab.setTitle(restaurantName);

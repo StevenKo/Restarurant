@@ -52,7 +52,7 @@ public class GridRestaurantsFragment extends Fragment {
         bdl.putInt("AreaId", area_id);
         bdl.putInt("CategoryId", category_id);
         bdl.putInt("TypeId", type_id);
-        bdl.putBoolean("IsCollection", is_selected);
+        bdl.putBoolean("IsCollection", is_collection);
         bdl.putBoolean("IsSelected", is_selected);
         f.setArguments(bdl);
         return f;
