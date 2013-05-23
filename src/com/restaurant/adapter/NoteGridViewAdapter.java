@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,6 +68,15 @@ public class NoteGridViewAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
             	Intent intent = new Intent(activity, RestaurantNoteActivity.class);
+            	Bundle bundle = new Bundle();
+            	bundle.putInt("NoteId", data.get(position).getId());
+            	bundle.putInt("RestaurantId", data.get(position).getRestaurantId());
+            	bundle.putString("NoteTitle", data.get(position).getTitle());
+            	bundle.putString("NoteLink", data.get(position).getLink());
+            	bundle.putDouble("NoteX", data.get(position).getX());
+            	bundle.putDouble("NoteY", data.get(position).getY());
+            	bundle.putString("NotePic", data.get(position).getPicUrl());
+            	intent.putExtras(bundle);
             	activity.startActivity(intent);
             }
 

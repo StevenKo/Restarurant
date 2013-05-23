@@ -142,7 +142,7 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
             	startActivity(intent); 
             }
         });
-    	share_btn.isClickable();
+    	
     	place_button.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
