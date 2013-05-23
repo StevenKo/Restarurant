@@ -75,13 +75,13 @@ public class RestaurantAPI {
     }
     
     
-    public static ArrayList<Restaurant> getAreaRestaurants(int area_id, int page) {
-        String message = getMessageFromServer("GET", "/api/v1/restaurants?area_id=" + area_id + "&page=" + page, null, null);
+    public static ArrayList<Restaurant> getAreaRestaurants(int area_id) {
+        String message = getMessageFromServer("GET", "/api/v1/restaurants?area_id=" + area_id, null, null);
         ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
         if (message == null) {
             return null;
         } else {
-            return parseRestaurants(message, restaurants);
+            return parseAllRestaurants(message, restaurants);
         }
     }
     
