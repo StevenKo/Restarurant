@@ -8,7 +8,16 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,13 +43,13 @@ public class RestaurantAPI {
         return Category.getCategories();
     }
     
-    public static Restaurant getAllRestaurant(){
-    	String message = getMessageFromServer("GET", "/api/v1/restaurants/" , null, null);
-    	Restaurant restaurant = new Restaurant();
+    public static ArrayList<Restaurant> getAllRestaurant(){
+    	String message = getMessageFromServer("GET", "/api/v1/restaurants/all" , null, null);
+    	ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
     	if (message == null) {
             return null;
         } else {
-            return parseRestaurant(message, restaurant);
+            return parseAllRestaurants(message, restaurants);
         }
     }
     
@@ -266,6 +275,36 @@ public class RestaurantAPI {
         return restaurants;
     }
     
+    
+    private static ArrayList<Restaurant> parseAllRestaurants(String message, ArrayList<Restaurant> restaurants) {
+        try {
+            JSONArray jArray;
+            jArray = new JSONArray(message.toString());
+            for (int i = 0; i < jArray.length(); i++) {
+
+                int id = jArray.getJSONObject(i).getInt("id");
+                String name = jArray.getJSONObject(i).getString("name");
+                double x_lan = jArray.getJSONObject(i).getDouble("x_lan");
+                double y_long = jArray.getJSONObject(i).getDouble("y_long");
+                
+                int rank = 0;
+                if (!jArray.getJSONObject(i).isNull("rank"))
+                    rank = jArray.getJSONObject(i).getInt("rank");
+
+                Restaurant restaurant = new Restaurant(id, name, "",
+                		"", "", "", 
+                		"", "", "", 
+                		"", "",x_lan,y_long);
+                restaurants.add(restaurant);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return restaurants;
+    }
+    
     private static String getMessageFromServer(String requestMethod, String apiPath, JSONObject json, String apiUrl) {
         URL url;
         try {
@@ -321,5 +360,29 @@ public class RestaurantAPI {
             return null;
         }
     }
+    
+   public static void postData(int area_id, String name, int grade_food, int grade_service) {
+        // Create a new HttpClient and Post Header
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpPost httppost = new HttpPost(HOST + "/api/v1/recommands");
+
+        try {
+            // Add your data
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+            nameValuePairs.add(new BasicNameValuePair("area_id", Integer.toString(area_id)));
+            nameValuePairs.add(new BasicNameValuePair("name", name));
+            nameValuePairs.add(new BasicNameValuePair("grade_food", Integer.toString(grade_food)));
+            nameValuePairs.add(new BasicNameValuePair("grade_service", Integer.toString(grade_service)));
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+            // Execute HTTP Post Request
+            HttpResponse response = httpclient.execute(httppost);
+            
+        } catch (ClientProtocolException e) {
+            // TODO Auto-generated catch block
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+        }
+   } 
     
 }
