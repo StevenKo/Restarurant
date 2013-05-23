@@ -22,17 +22,27 @@ public final class RestaurantNotesFragment extends Fragment {
     private View myFragmentView;
 	private ImageView noteImage;
 	private TextView noteText;
-	private int noteId;
-	private String picUrl;
-	private String title;
 	private ImageLoader imageLoader;
 	private LinearLayout noteLayout;
+	private int noteId;
+	private int rId;
+	private String noteTitle;
+	private String noteLink;
+	private double noteY;
+	private double noteX;
+	private String notePic;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-    	noteId = getArguments().getInt("ID");
-    	picUrl = getArguments().getString("PicUrl");
-    	title = getArguments().getString("Title");
+    	
+    	 noteId = getArguments().getInt("NoteId");
+         rId = getArguments().getInt("RestaurantId");
+         noteTitle = getArguments().getString("NoteTitle");
+         noteLink = getArguments().getString("NoteLink");
+         noteX = getArguments().getDouble("NoteX");
+         noteY = getArguments().getDouble("NoteY");
+         notePic = getArguments().getString("NotePic");
+        
         super.onCreate(savedInstanceState);
 
     }
@@ -46,12 +56,12 @@ public final class RestaurantNotesFragment extends Fragment {
     }
 
 	private void setViews() {
-		noteText.setText(title);
+		noteText.setText(noteTitle);
 		imageLoader = new ImageLoader(getActivity().getApplicationContext(), 150);
-		if (picUrl == null || picUrl.equals("null") ) {
+		if (notePic == null || notePic.equals("null") ) {
 			noteImage.setImageResource(R.drawable.icon);
         } else {
-            imageLoader.DisplayImage(picUrl, noteImage);
+            imageLoader.DisplayImage(notePic, noteImage);
         }
 		
 		noteLayout.setOnClickListener(new OnClickListener() {
@@ -59,6 +69,15 @@ public final class RestaurantNotesFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), RestaurantNoteActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("NoteId", noteId);
+            	bundle.putInt("RestaurantId",rId);
+            	bundle.putString("NoteTitle", noteTitle);
+            	bundle.putString("NoteLink", noteLink);
+            	bundle.putDouble("NoteX", noteX);
+            	bundle.putDouble("NoteY", noteY);
+            	bundle.putString("NotePic", notePic);
+            	intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
@@ -71,12 +90,19 @@ public final class RestaurantNotesFragment extends Fragment {
 		 noteLayout = (LinearLayout)myFragmentView.findViewById(R.id.note_fragment);
 	}
 
-	public static Fragment newInstance(int id, String picUrl, String title) {
+
+	public static Fragment newInstance(int id, int restaurantId, String title, String link, Double x, Double y, String picUrl) {
 		RestaurantNotesFragment fragment = new RestaurantNotesFragment();
         Bundle bdl = new Bundle();
-        bdl.putInt("ID", id);
-        bdl.putString("PicUrl", picUrl);
-        bdl.putString("Title", title);
+        
+        bdl.putInt("NoteId", id);
+        bdl.putInt("RestaurantId", restaurantId);
+        bdl.putString("NoteTitle", title);
+        bdl.putString("NoteLink", link);
+        bdl.putDouble("NoteX", x);
+        bdl.putDouble("NoteY", y);
+        bdl.putString("NotePic", picUrl);
+        
         fragment.setArguments(bdl);
         return fragment;
 	}

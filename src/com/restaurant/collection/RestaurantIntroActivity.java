@@ -206,7 +206,8 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
         @Override
         public Fragment getItem(int position) {
             Fragment kk = new Fragment();
-            kk = RestaurantNotesFragment.newInstance(notes.get(position).getId(),notes.get(position).getPicUrl(),notes.get(position).getTitle());
+        	
+            kk = RestaurantNotesFragment.newInstance(notes.get(position).getId(),notes.get(position).getRestaurantId(),notes.get(position).getTitle(),notes.get(position).getLink(), notes.get(position).getX(), notes.get(position).getY(),notes.get(position).getPicUrl());
             return kk;
         }
 
