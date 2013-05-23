@@ -36,7 +36,6 @@
    	 	android:id="@+id/load_more_grid"
    	 	android:layout_width="fill_parent"
    	 	android:layout_height="wrap_content"
-     	android:background="#FFFFFF"
      	android:gravity="center"
      	android:layout_weight="0"
      	>
@@ -64,7 +63,6 @@
    	 	android:layout_height="fill_parent"
      	android:gravity="center"
      	android:visibility="gone"
-     	android:background="@color/main_color_grey_dark"
      	>
 	    <ImageView 
 	       android:layout_width="80dp"
@@ -87,7 +85,6 @@
    	 	android:layout_height="fill_parent"
      	android:gravity="center"
      	android:visibility="gone"
-     	android:background="@color/main_color_grey_dark"
      	>
 	    <TextView 
 	        android:layout_width="wrap_content"

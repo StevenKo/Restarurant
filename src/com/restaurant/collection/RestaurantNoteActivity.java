@@ -146,7 +146,12 @@ public class RestaurantNoteActivity extends SherlockActivity{
             }
         });
 	   
-       
+    	SQLiteRestaurant db = new SQLiteRestaurant(RestaurantNoteActivity.this);
+    	if (db.isNoteCollected(note.getId())){
+    		favorite_button.setImageResource( R.drawable.icon_heart );
+    	}else{
+    		favorite_button.setImageResource( R.drawable.icon_heart_grey );
+    	}
        
 	}
 

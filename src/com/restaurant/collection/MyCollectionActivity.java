@@ -17,6 +17,8 @@ import com.actionbarsherlock.view.MenuItem;
 import com.restaurant.collection.CategoryActivity.CategoryPagerAdapter;
 import com.restaurant.collection.entity.Category;
 import com.restaurant.fragment.CategoryTabFragment;
+import com.restaurant.fragment.GridEatNoteFragment;
+import com.restaurant.fragment.GridRestaurantsFragment;
 import com.viewpagerindicator.TitlePageIndicator;
 
 public class MyCollectionActivity extends SherlockFragmentActivity{
@@ -33,16 +35,14 @@ public class MyCollectionActivity extends SherlockFragmentActivity{
         ab.setTitle("我的收藏");
         ab.setDisplayHomeAsUpEnabled(true);
 
-        ArrayList<Category> categories = new ArrayList<Category>();
-        categories.add(new Category());
 
-        FragmentPagerAdapter adapter = new CategoryPagerAdapter(getSupportFragmentManager(), categories);
+        FragmentPagerAdapter adapter = new CategoryPagerAdapter(getSupportFragmentManager());
 
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(adapter);
 
         TitlePageIndicator indicator = (TitlePageIndicator) findViewById(R.id.indicator);
-        indicator.setVisibility(View.GONE);
+        indicator.setViewPager(pager);
 
     }
 	
@@ -71,28 +71,39 @@ public class MyCollectionActivity extends SherlockFragmentActivity{
 	
 	class CategoryPagerAdapter extends FragmentPagerAdapter {
 
-        ArrayList<Category> categories;
 
-        public CategoryPagerAdapter(FragmentManager fm, ArrayList<Category> categories) {
+        public CategoryPagerAdapter(FragmentManager fm) {
             super(fm);
-            this.categories = categories;
         }
 
         @Override
         public Fragment getItem(int position) {
-            Fragment kk = new Fragment();
-            kk = CategoryTabFragment.newInstance(0,0,0,true,false);
+            Fragment kk = new Fragment();     
+            switch(position){
+        	case 0:
+        		kk = GridRestaurantsFragment.newInstance(0,0,0,true,false);
+        		break;
+        	case 1:
+        		kk = GridEatNoteFragment.newInstance(0,0,0,true,false);
+        		break;
+        	}
             return kk;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return categories.get(position).getName();
+        	switch(position){
+        	case 0:
+        		return "我的收藏餐廳";
+        	case 1:
+        		return "我的收藏食記";
+        	}
+			return "";
         }
 
         @Override
         public int getCount() {
-            return categories.size();
+            return 2;
         }
 	}
 

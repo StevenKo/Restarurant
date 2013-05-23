@@ -173,6 +173,13 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
             
             }
         });
+    	
+    	SQLiteRestaurant db = new SQLiteRestaurant(RestaurantIntroActivity.this);
+    	if (db.isRestaurantCollected(restaurant.getId())){
+    		favorite_button.setImageResource( R.drawable.icon_heart );
+    	}else{
+    		favorite_button.setImageResource( R.drawable.icon_heart_grey );
+    	}
 	}
 
 	private void findViews() {
