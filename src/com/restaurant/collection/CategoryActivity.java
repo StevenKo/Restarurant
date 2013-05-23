@@ -35,10 +35,9 @@ public class CategoryActivity extends SherlockFragmentActivity {
 	private Area area;
 	private ArrayList<Category> areaCategories;
 	private Category category;
-	private ArrayList<Area> categoryAreas;
 	private FragmentPagerAdapter adapter;
 	private Type type;
-	private ArrayList<Area> typeAreas;
+	private ArrayList<Area> areas;
 	private int areaId = 0;
 	private int categoryId = 0;
 	private int typeId = 0;
@@ -62,21 +61,43 @@ public class CategoryActivity extends SherlockFragmentActivity {
             adapter = new CategoryPagerAdapter(getSupportFragmentManager(), areaCategories);
         }else if (categoryId!=0){
         	category = Category.getCategory(categoryId);
-            categoryAreas = Area.getCategoryAreas(categoryId);
+            areas = Area.getCategoryAreas(categoryId);
             ab.setTitle(category.getName());
-            adapter = new AreaPagerAdapter(getSupportFragmentManager(), categoryAreas);
+            adapter = new AreaPagerAdapter(getSupportFragmentManager(), areas);
         }else{
         	type = Type.getType(typeId);
-        	typeAreas = Area.getTypeAreas(typeId);
+        	areas = Area.getTypeAreas(typeId);
         	ab.setTitle(type.getName());
-        	adapter = new AreaPagerAdapter(getSupportFragmentManager(), typeAreas);
+        	adapter = new AreaPagerAdapter(getSupportFragmentManager(), areas);
         }
 
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(adapter);
+        
+        
 
         TitlePageIndicator indicator = (TitlePageIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(pager);
+        
+        if(categoryId!=0 || typeId!=0){
+        	areaId = areas.get(0).getId();
+	        indicator.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+	
+	        	@Override
+	        	public void onPageSelected(int postion) {
+	        		areaId = areas.get(postion).getId();
+	        	}
+	        });
+        }else{
+        	categoryId = areaCategories.get(0).getId();
+        	indicator.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+        		
+	        	@Override
+	        	public void onPageSelected(int postion) {
+	        		categoryId = areaCategories.get(postion).getId();
+	        	}
+	        });
+        }
 
         setAboutUsDialog();
     }
@@ -171,7 +192,13 @@ public class CategoryActivity extends SherlockFragmentActivity {
         	startActivity(browserIntent);
             break;
         case ID_MAP:
+        	
             Intent intent = new Intent(CategoryActivity.this, MapActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putInt("AreaId", areaId);
+        	bundle.putInt("CategoryId",categoryId);
+        	bundle.putInt("TypeId", typeId);
+        	intent.putExtras(bundle);
             startActivity(intent);
             break;
         }
