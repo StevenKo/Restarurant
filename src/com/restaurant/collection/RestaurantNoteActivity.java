@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebSettings.RenderPriority;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -91,6 +93,8 @@ public class RestaurantNoteActivity extends SherlockActivity{
 	 private void setWebView() {
 		 webArticle.getSettings().setSupportZoom(true);
          webArticle.getSettings().setJavaScriptEnabled(true);
+         webArticle.getSettings().setRenderPriority(RenderPriority.HIGH);
+         webArticle.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
          webArticle.setWebViewClient(new WebViewClient() {
 
     	 public void onPageFinished(WebView view, String url) {
