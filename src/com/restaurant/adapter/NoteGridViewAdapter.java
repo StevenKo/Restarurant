@@ -72,10 +72,16 @@ public class NoteGridViewAdapter extends BaseAdapter {
 
         });
 
-        TextView textTitle = (TextView) vi.findViewById(R.id.grid_item_title);
-        ImageView image = (ImageView) vi.findViewById(R.id.grid_item_image);
-        TextView textAuthor = (TextView) vi.findViewById(R.id.grid_item_author);
-        TextView textDate = (TextView) vi.findViewById(R.id.grid_item_date);
+        ImageView noteImage = (ImageView) vi.findViewById(R.id.grid_item_image);
+        TextView noteText = (TextView) vi.findViewById(R.id.grid_item_text);
+        noteText.setText(data.get(position).getTitle());
+        
+        String picUrl = data.get(position).getPicUrl();
+        if (picUrl == null || picUrl.equals("null") ) {
+        	noteImage.setImageResource(R.drawable.icon);
+        } else {
+            imageLoader.DisplayImage(picUrl, noteImage);
+        }
 
         return vi;
     }
