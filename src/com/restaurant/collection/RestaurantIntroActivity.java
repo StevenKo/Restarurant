@@ -205,8 +205,7 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
 
         @Override
         public int getCount() {
-        	return 1;
-//            return notes.size();
+            return notes.size();
         }
     }
 	
