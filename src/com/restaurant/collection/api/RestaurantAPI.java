@@ -43,6 +43,17 @@ public class RestaurantAPI {
         return Category.getCategories();
     }
     
+    public static ArrayList<Restaurant> getSelectRestaurants(){
+    	String message = getMessageFromServer("GET", "/api/v1/restaurants/select_restaurants" , null, null);
+    	ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+    	if (message == null) {
+            return null;
+        } else {
+            return parseSelectRestaurants(message, restaurants);
+        }
+    }
+    
+    
     public static ArrayList<Restaurant> getAllRestaurant(){
     	String message = getMessageFromServer("GET", "/api/v1/restaurants/all" , null, null);
     	ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
@@ -113,6 +124,17 @@ public class RestaurantAPI {
             return null;
         } else {
             return parseRestaurants(message, restaurants);
+        }
+    }
+   
+    
+    public static ArrayList<Note> getSelectNotes() {
+        String message = getMessageFromServer("GET", "/api/v1/notes/select_notes", null, null);
+        ArrayList<Note> notes = new ArrayList<Note>();
+        if (message == null) {
+            return null;
+        } else {
+            return parseNotes(message, notes);
         }
     }
     
@@ -295,6 +317,36 @@ public class RestaurantAPI {
                 		"", "", "", 
                 		"", "", "", 
                 		"", "",x_lan,y_long);
+                restaurants.add(restaurant);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return restaurants;
+    }
+    
+    private static ArrayList<Restaurant> parseSelectRestaurants(String message, ArrayList<Restaurant> restaurants) {
+        try {
+            JSONArray jArray;
+            jArray = new JSONArray(message.toString());
+            for (int i = 0; i < jArray.length(); i++) {
+
+                int id = jArray.getJSONObject(i).getInt("id");
+                String name = jArray.getJSONObject(i).getString("name");
+                String grade_food = jArray.getJSONObject(i).getString("grade_food");
+                String grade_service = jArray.getJSONObject(i).getString("grade_service");
+                String pic_url = jArray.getJSONObject(i).getString("pic_url");
+                
+                int rank = 0;
+                if (!jArray.getJSONObject(i).isNull("rank"))
+                    rank = jArray.getJSONObject(i).getInt("rank");
+
+                Restaurant restaurant = new Restaurant(id, name, grade_food,
+                		grade_service, pic_url, "", 
+                		"", "", "", 
+                		"", "", 0,0);
                 restaurants.add(restaurant);
             }
 
