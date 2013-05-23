@@ -34,10 +34,11 @@ public class MapActivity extends SherlockFragmentActivity implements OnMarkerCli
 //	static final LatLng HAMBURG = new LatLng(53.558, 9.927);
 //	static final LatLng KIEL = new LatLng(53.551, 9.993);
 	ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
-private Bundle mBundle;
-private int areaId;
-private int categoryId;
-private int typeId;
+	private Bundle mBundle;
+	private int areaId;
+	private int categoryId;
+	private int typeId;
+	private boolean isColletion;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ private int typeId;
         areaId = mBundle.getInt("AreaId");
         categoryId = mBundle.getInt("CategoryId");
         typeId = mBundle.getInt("TypeId");
+        isColletion = mBundle.getBoolean("IsColletion");
         
         new DownloadRestaurantsTask().execute();
         
@@ -74,6 +76,9 @@ private int typeId;
         		restaurants = RestaurantAPI.getAreaTypeRestaurants(areaId, typeId, 1);
         	}else if(areaId != 0){
         		restaurants = RestaurantAPI.getAreaRestaurants(areaId);
+        	}else if(isColletion){
+        		SQLiteRestaurant db = new SQLiteRestaurant(MapActivity.this);
+        		restaurants = db.getAllRestaurants();
         	}else{
         	   restaurants = RestaurantAPI.getAllRestaurant();  
         	}
@@ -127,7 +132,10 @@ private int typeId;
     	
     	map.setOnMarkerClickListener(this);
     	map.setOnInfoWindowClickListener(this);
-    	map.moveCamera( CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude) , 12.0f) );
+    	if(isColletion)
+    	  map.moveCamera( CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude) , 8.0f) );
+    	else
+    	  map.moveCamera( CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude) , 12.0f) );
 		
 	}
 
