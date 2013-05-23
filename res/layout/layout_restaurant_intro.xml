@@ -27,7 +27,7 @@
 		        android:layout_width="wrap_content"
 	   	 		android:layout_height="wrap_content"
 	   	 		android:text="無法連線"
-	   	 		android:textSize="23dp"
+	   	 		android:textSize="18dp"
 	   	 		android:layout_marginLeft="5dp"
 	   	 		android:textColor="#6E6E6E"
 		        />
@@ -46,7 +46,7 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="fill_parent"
-        android:layout_height="100dp"
+        android:layout_height="150dp"
         android:background="@color/pager_background" 
         />
     <com.viewpagerindicator.CirclePageIndicator
@@ -65,7 +65,8 @@
            android:layout_width="fill_parent"
            android:layout_height="wrap_content"
            android:background="#222222"
-           android:layout_alignParentBottom="true">
+           android:layout_alignParentBottom="true"
+           android:id="@+id/buttons">
            <ImageButton 
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
@@ -93,7 +94,8 @@
        </LinearLayout>
        
         <ScrollView android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="fill_parent"
+            android:layout_above="@+id/buttons">
         <LinearLayout 
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -110,7 +112,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="地 址:"
-                android:textSize="23px" 
+                android:textSize="18dp" 
                   android:textColor="#999999"
                   android:typeface="serif">
                 </TextView>
@@ -124,7 +126,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2px"
                 android:text="台北市中正區忠孝東路一段12號1樓"
-                android:textSize="20px" 
+                android:textSize="16dp" 
                 android:textColor="#555555"
                 android:typeface="serif"
                 >
@@ -141,7 +143,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="營 業 時 間 :"
-                android:textSize="23px" 
+                android:textSize="18dp" 
                   android:textColor="#999999"
                   android:typeface="serif">
                 </TextView>
@@ -155,7 +157,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2px"
                 android:text="早餐：06:30 - 10:00"
-                android:textSize="20px" 
+                android:textSize="16dp" 
                 android:textColor="#555555"
                 android:typeface="serif"
                 >
@@ -172,7 +174,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="官 方 網 站 :"
-                android:textSize="23px" 
+                android:textSize="18dp" 
                   android:textColor="#999999"
                   android:typeface="serif">
                 </TextView>
@@ -198,7 +200,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="平 均 價 位 :"
-                android:textSize="23px" 
+                android:textSize="18dp" 
                   android:textColor="#999999"
                   android:typeface="serif">
                 </TextView>
@@ -212,7 +214,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2px"
                 android:text="$459 ～ $630"
-                android:textSize="20px" 
+                android:textSize="16dp" 
                 android:textColor="#555555"
                 android:typeface="serif"
                 >
@@ -229,7 +231,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="餐 廳 介 紹："
-                android:textSize="23px" 
+                android:textSize="18dp" 
                   android:textColor="#999999"
                   android:typeface="serif">
                 </TextView>
@@ -243,7 +245,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2px"
                 android:text=""
-                android:textSize="20px" 
+                android:textSize="16dp" 
                 android:textColor="#555555"
                 android:typeface="serif"
                 >

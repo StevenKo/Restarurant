@@ -17,7 +17,6 @@ import com.restaurant.collection.MapActivity;
 import com.restaurant.collection.MyCollectionActivity;
 import com.restaurant.collection.R;
 import com.restaurant.collection.RestaurantIntroActivity;
-import com.restaurant.collection.RestaurantNotesActivity;
 import com.restaurant.collection.MainActivity;;
 
 
