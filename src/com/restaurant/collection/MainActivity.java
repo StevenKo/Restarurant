@@ -39,7 +39,7 @@ public class MainActivity extends SherlockFragmentActivity implements OnButtonCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.simple_titles);
-
+        
         sectionTitles = getResources().getStringArray(R.array.sections);
 
         adapter = new SectionPagerAdapter(getSupportFragmentManager());
@@ -176,5 +176,6 @@ public class MainActivity extends SherlockFragmentActivity implements OnButtonCl
 		pager.setCurrentItem(0);
 		((IndexCategoryTabFragment)adapter.getItem(0)).setTabHostCurrent(2);
 	}
+	
 
 }
