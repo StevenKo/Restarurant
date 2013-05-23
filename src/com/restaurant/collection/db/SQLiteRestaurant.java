@@ -95,13 +95,13 @@ public class SQLiteRestaurant extends SQLiteOpenHelper {
     }
 
     public boolean deleteRestaurant(Restaurant r) {
-        Cursor cursor = db.rawQuery("DELETE FROM restaurants WHERE `restaurants`.`id` = ?", new String[] { r.getId() + "" });
+        Cursor cursor = db.rawQuery("DELETE FROM restaurants WHERE `restaurants`.`restaurant_id` = ?", new String[] { r.getId() + "" });
         cursor.moveToFirst();
         cursor.close();
         return true;
     }
     public boolean deleteNote(Note note) {
-        Cursor cursor = db.rawQuery("DELETE FROM notes WHERE `notes`.`id` = ?", new String[] { note.getId() + "" });
+        Cursor cursor = db.rawQuery("DELETE FROM notes WHERE `notes`.`note_id` = ?", new String[] { note.getId() + "" });
         cursor.moveToFirst();
         cursor.close();
         return true;

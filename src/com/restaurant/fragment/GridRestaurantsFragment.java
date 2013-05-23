@@ -40,6 +40,7 @@ public class GridRestaurantsFragment extends Fragment {
 	private int type_id;
 	private boolean is_collection;
 	private boolean is_selected;
+	private LinearLayout noDataLayout;
 
     public GridRestaurantsFragment() {
 
@@ -76,6 +77,8 @@ public class GridRestaurantsFragment extends Fragment {
         loadmoreLayout = (LinearLayout) myFragmentView.findViewById(R.id.load_more_grid);
         layoutReload = (LinearLayout) myFragmentView.findViewById(R.id.layout_reload);
         buttonReload = (Button) myFragmentView.findViewById(R.id.button_reload);
+        noDataLayout = (LinearLayout) myFragmentView.findViewById(R.id.layout_no_data);
+
         myGrid = (LoadMoreGridView) myFragmentView.findViewById(R.id.news_list);
         myGrid.setOnLoadMoreListener(new LoadMoreGridView.OnLoadMoreListener() {
             public void onLoadMore() {
@@ -153,7 +156,10 @@ public class GridRestaurantsFragment extends Fragment {
                 } catch (Exception e) {
 
                 }
-            } else {
+            } else if(restaurants != null && restaurants.size() == 0){
+            	noDataLayout.setVisibility(View.VISIBLE);
+            	layoutReload.setVisibility(View.GONE);
+            }else {
                 layoutReload.setVisibility(View.VISIBLE);
             }
 

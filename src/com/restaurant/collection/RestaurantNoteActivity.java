@@ -22,25 +22,38 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.restaurant.collection.db.SQLiteRestaurant;
 import com.restaurant.collection.entity.Note;
+import com.restaurant.gps.util.GPSTracker;
 
 public class RestaurantNoteActivity extends SherlockActivity{
 	
-	private static final int ID_COLLECT = 1;
 	private LinearLayout layoutProgress;
 	private LinearLayout layoutReload;
 	private Button buttonReload;
-	private TextView articleTextTitle;
 	private WebView webArticle;
 	private Note note;
 	private ImageButton share_btn;
 	private ImageButton direction_button;
 	private ImageButton place_button;
 	private ImageButton favorite_button;
+	private double latitude;
+	private double longitude;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_note);
+        
+        Bundle mBundle = this.getIntent().getExtras();
+        int noteId = mBundle.getInt("NoteId");
+        int rId = mBundle.getInt("RestaurantId");
+        String noteTitle = mBundle.getString("NoteTitle");
+        String noteLink = mBundle.getString("NoteLink");
+        double noteX = mBundle.getDouble("NoteX");
+        double noteY = mBundle.getDouble("NoteY");
+        String notePic = mBundle.getString("NotePic");
+         note = new Note(noteId, rId,noteTitle, "", notePic, noteLink,noteX, noteY);
+         
+
         
         final ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
@@ -48,65 +61,98 @@ public class RestaurantNoteActivity extends SherlockActivity{
         ab.setDisplayShowTitleEnabled(false);
         LayoutInflater inflator = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = inflator.inflate(R.layout.custom_actionbar_title, null);
-        ((TextView)v.findViewById(R.id.title)).setText("[食記]基隆長榮桂冠酒店18樓咖啡廳‏");
+        ((TextView)v.findViewById(R.id.title)).setText(note.getTitle());
         ab.setCustomView(v);
         
         findViews();
-        setViews();
+        setWebView();
+        getCurrentLocation();
+        setButtons();
         
-        new DownloadArticleTask().execute();
     }
 	
+	private void getCurrentLocation() {
+    	GPSTracker mGPS = new GPSTracker(this);
+
+    	if(mGPS.canGetLocation() ){
+
+    		latitude =mGPS.getLatitude();
+    		longitude=mGPS.getLongitude();
+
+    	}else{
+    	// can't get the location
+    	}
+		
+	}
+	
 
 	
-	 private void setViews() {
-	   webArticle.getSettings().setSupportZoom(true);
-       webArticle.getSettings().setJavaScriptEnabled(true);
-       webArticle.setWebViewClient(new WebViewClient() {
+	 private void setWebView() {
+		 webArticle.getSettings().setSupportZoom(true);
+         webArticle.getSettings().setJavaScriptEnabled(true);
+         webArticle.setWebViewClient(new WebViewClient() {
 
-    	   public void onPageFinished(WebView view, String url) {
+    	 public void onPageFinished(WebView view, String url) {
     		   layoutProgress.setVisibility(View.GONE);
-    	    }
-    	});
-       webArticle.setWebChromeClient(new WebChromeClient());
-       
-       share_btn.setOnClickListener(new OnClickListener() {
-           @Override
-           public void onClick(View v) {
-           	Intent intent = new Intent(Intent.ACTION_SEND);
-           	intent.setType("text/plain");
-           	intent.putExtra(android.content.Intent.EXTRA_TEXT, "News for you!");
-           	startActivity(intent); 
-           }
-       });
-   	place_button.setOnClickListener(new OnClickListener() {
-           @Override
-           public void onClick(View v) {
-           	Uri uri = Uri.parse("geo:0,0?q=22.99948365856307,72.60040283203125(Maninagar)");
+    	      }
+    	  });
+	      webArticle.setWebChromeClient(new WebChromeClient());
+	      webArticle.loadUrl(note.getLink()); 
+		
+	}
+
+
+
+	private void setButtons() {
+		
+		share_btn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            	Intent intent = new Intent(Intent.ACTION_SEND);
+            	intent.setType("text/plain");
+            	intent.putExtra(android.content.Intent.EXTRA_TEXT, "推薦食記 :" + note.getTitle()+"\n" + note.getLink());
+            	startActivity(intent); 
+            }
+        });
+ 
+    	place_button.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            	Uri uri = Uri.parse("geo:0,0?q="+note.getX()+"," + note.getY() );
 				Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 				startActivity(intent);
-           }
-       });
-   	direction_button.setOnClickListener(new OnClickListener() {
-           @Override
-           public void onClick(View v) {
-           	Intent intent = new Intent(Intent.ACTION_VIEW,
-           			Uri.parse("http://maps.google.com/maps?saddr="+23.0094408+","+72.5988541+"&daddr="+22.99948365856307+","+72.60040283203125));
-           			startActivity(intent);
-           }
-       });
-   	favorite_button.setOnClickListener(new OnClickListener() {
-           @Override
-           public void onClick(View v) {
-           	SQLiteRestaurant db = new SQLiteRestaurant(RestaurantNoteActivity.this);
-           	if (db.isRestaurantCollected(note.getId())){
-           		favorite_button.setImageResource( R.drawable.icon_heart_grey );
-           	}else{
-           		favorite_button.setImageResource( R.drawable.icon_heart );
-           	}
-           
-           }
-       });
+            }
+        });
+    	direction_button.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            	Intent intent = new Intent(Intent.ACTION_VIEW,
+            	        Uri.parse("http://maps.google.com/maps?saddr="+latitude+","+longitude+"&daddr="+note.getX()+","+note.getY()));
+            			startActivity(intent);
+            }
+        });
+    	favorite_button.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            	SQLiteRestaurant db = new SQLiteRestaurant(RestaurantNoteActivity.this);
+            	if (db.isNoteCollected(note.getId())){
+            		favorite_button.setImageResource( R.drawable.icon_heart_grey );
+            		db.deleteNote(note);
+            	}else{
+            		favorite_button.setImageResource( R.drawable.icon_heart );
+            		db.insertNote(note);
+            	}
+            
+            }
+        });
+	   
+    	SQLiteRestaurant db = new SQLiteRestaurant(RestaurantNoteActivity.this);
+    	if (db.isNoteCollected(note.getId())){
+    		favorite_button.setImageResource( R.drawable.icon_heart );
+    	}else{
+    		favorite_button.setImageResource( R.drawable.icon_heart_grey );
+    	}
+       
 	}
 
 	private void findViews() {
@@ -120,30 +166,6 @@ public class RestaurantNoteActivity extends SherlockActivity{
 		 favorite_button = (ImageButton)findViewById(R.id.favorite_button);
 	}
 	
-    private class DownloadArticleTask extends AsyncTask {
-		
-		@Override
-	    protected void onPreExecute() {
-	        super.onPreExecute();
-	    }
-		
-        @Override
-        protected Object doInBackground(Object... params) {        	
-        	note = new Note();
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Object result) {
-            super.onPostExecute(result);
-            
-            if (note.getLink()!=null){	            
-            	webArticle.loadUrl(note.getLink());           	
-            }else{
-            	layoutReload.setVisibility(View.VISIBLE);
-            }           
-        }
-	}
 
 	@Override
 	    public boolean onMenuItemSelected(int featureId, MenuItem item) {

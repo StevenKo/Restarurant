@@ -50,7 +50,7 @@
                         android:id="@+id/restaurant_name"        
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="十二廚">
+                        android:hint="Le Café 咖啡廳 - 台北老爺大酒店">
                         </EditText>
     </LinearLayout>
     <LinearLayout 
@@ -71,7 +71,7 @@
         	              >
         	            </TextView>
         	            <EditText
-                        android:id="@+id/restaurant_name"        
+                        android:id="@+id/grade_food"        
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="ex: 80"
@@ -97,7 +97,7 @@
         	              >
         	            </TextView>
         	            <EditText
-                        android:id="@+id/restaurant_name"        
+                        android:id="@+id/grade_service"        
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="ex: 93"

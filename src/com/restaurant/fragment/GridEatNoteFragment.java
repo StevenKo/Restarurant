@@ -40,6 +40,7 @@ public class GridEatNoteFragment extends Fragment {
 	private int type_id;
 	private boolean is_collection;
 	private boolean is_selected;
+	private LinearLayout noDataLayout;
 
     public GridEatNoteFragment() {
 
@@ -51,7 +52,7 @@ public class GridEatNoteFragment extends Fragment {
         bdl.putInt("AreaId", area_id);
         bdl.putInt("CategoryId", category_id);
         bdl.putInt("TypeId", type_id);
-        bdl.putBoolean("IsCollection", is_selected);
+        bdl.putBoolean("IsCollection", is_collection);
         bdl.putBoolean("IsSelected", is_selected);
         f.setArguments(bdl);
         return f;
@@ -75,6 +76,7 @@ public class GridEatNoteFragment extends Fragment {
         progressLayout = (LinearLayout) myFragmentView.findViewById(R.id.layout_progress);
         loadmoreLayout = (LinearLayout) myFragmentView.findViewById(R.id.load_more_grid);
         layoutReload = (LinearLayout) myFragmentView.findViewById(R.id.layout_reload);
+        noDataLayout = (LinearLayout) myFragmentView.findViewById(R.id.layout_no_data);
         buttonReload = (Button) myFragmentView.findViewById(R.id.button_reload);
         myGrid = (LoadMoreGridView) myFragmentView.findViewById(R.id.news_list);
         myGrid.setOnLoadMoreListener(new LoadMoreGridView.OnLoadMoreListener() {
@@ -152,6 +154,9 @@ public class GridEatNoteFragment extends Fragment {
                 } catch (Exception e) {
 
                 }
+            } else if(notes != null && notes.size() == 0){
+            	noDataLayout.setVisibility(View.VISIBLE);
+            	layoutReload.setVisibility(View.GONE);
             } else {
                 layoutReload.setVisibility(View.VISIBLE);
             }

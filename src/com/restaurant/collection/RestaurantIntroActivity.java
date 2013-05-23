@@ -1,10 +1,8 @@
 package com.restaurant.collection;
 
-import android.content.Context;
+import java.util.ArrayList;
+
 import android.content.Intent;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,12 +26,12 @@ import com.restaurant.adapter.RestaurantGridViewAdapter;
 import com.restaurant.collection.api.RestaurantAPI;
 import com.restaurant.collection.db.SQLiteRestaurant;
 import com.restaurant.collection.entity.Restaurant;
-import com.restaurant.fragment.RestaurantPhotoFragment;
+import com.restaurant.collection.entity.Note;
+import com.restaurant.fragment.RestaurantNotesFragment;
 import com.restaurant.gps.util.GPSTracker;
 import com.viewpagerindicator.CirclePageIndicator;
 
 public class RestaurantIntroActivity extends SherlockFragmentActivity {
-    private static final int ID_NOTE = 0;
 	private ViewPager pager;
 	private ImageButton share_btn;
 	private ImageButton direction_button;
@@ -49,6 +47,7 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
     private LinearLayout                      layoutReload;
     private Button                            buttonReload;
 	private Restaurant restaurant;
+	private ArrayList<Note> notes;
 	private double latitude;
 	private double longitude;
 
@@ -65,13 +64,6 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
         final ActionBar ab = getSupportActionBar();
         ab.setTitle(restaurantName);
         ab.setDisplayHomeAsUpEnabled(true);
-
-        FragmentPagerAdapter adapter = new PhotoPagerAdapter(getSupportFragmentManager());
-        pager = (ViewPager) findViewById(R.id.pager);
-        pager.setAdapter(adapter);
-
-        CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.indicator);
-        indicator.setViewPager(pager);
         
         findViews();
         getCurrentLocation();
@@ -106,17 +98,25 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
         @Override
         protected Object doInBackground(Object... params) {
         	restaurant = RestaurantAPI.getRestaurant(restaurant.getId());
+        	notes = RestaurantAPI.getRestaurantNotes(restaurant.getId(), 1);
             return null;
         }
 
         @Override
         protected void onPostExecute(Object result) {
-        	progressLayout.setVisibility(View.GONE);
+        	FragmentPagerAdapter adapter = new NotePagerAdapter(getSupportFragmentManager());
+            pager = (ViewPager) findViewById(R.id.pager);
+            pager.setAdapter(adapter);
+
+            CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.indicator);
+            indicator.setViewPager(pager);
+      	    progressLayout.setVisibility(View.GONE);
     		setViews();
             super.onPostExecute(result);
 
         }
     }
+	
 
     private void setViews() {
     	
@@ -138,15 +138,15 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
             public void onClick(View v) {
             	Intent intent = new Intent(Intent.ACTION_SEND);
             	intent.setType("text/plain");
-            	intent.putExtra(android.content.Intent.EXTRA_TEXT, "News for you!");
+            	intent.putExtra(android.content.Intent.EXTRA_TEXT, "推薦餐廳 :" + restaurant.getName()+"\n");
             	startActivity(intent); 
             }
         });
-    	share_btn.isClickable();
+    	
     	place_button.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-            	Uri uri = Uri.parse("geo:0,0?q="+restaurant.getX()+","+restaurant.getY()+"(Maninagar)");
+            	Uri uri = Uri.parse("geo:0,0?q="+restaurant.getAddress() );
 				Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 				startActivity(intent);
             }
@@ -155,7 +155,7 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
             @Override
             public void onClick(View v) {
             	Intent intent = new Intent(Intent.ACTION_VIEW,
-            			Uri.parse("http://maps.google.com/maps?saddr="+latitude+","+longitude+"&daddr="+restaurant.getX()+","+restaurant.getY()));
+            			Uri.parse("http://maps.google.com/maps?saddr="+latitude+","+longitude+"&daddr="+restaurant.getAddress()+"&hl=tw"));
             			startActivity(intent);
             }
         });
@@ -165,12 +165,21 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
             	SQLiteRestaurant db = new SQLiteRestaurant(RestaurantIntroActivity.this);
             	if (db.isRestaurantCollected(restaurant.getId())){
             		favorite_button.setImageResource( R.drawable.icon_heart_grey );
+            		db.deleteRestaurant(restaurant);
             	}else{
             		favorite_button.setImageResource( R.drawable.icon_heart );
+            		db.insertRestaurant(restaurant);
             	}
             
             }
         });
+    	
+    	SQLiteRestaurant db = new SQLiteRestaurant(RestaurantIntroActivity.this);
+    	if (db.isRestaurantCollected(restaurant.getId())){
+    		favorite_button.setImageResource( R.drawable.icon_heart );
+    	}else{
+    		favorite_button.setImageResource( R.drawable.icon_heart_grey );
+    	}
 	}
 
 	private void findViews() {
@@ -188,32 +197,27 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
         buttonReload = (Button) findViewById(R.id.button_reload);
 	}
 
-	class PhotoPagerAdapter extends FragmentPagerAdapter {
+	class NotePagerAdapter extends FragmentPagerAdapter {
 
-        public PhotoPagerAdapter(FragmentManager fm) {
+        public NotePagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
         @Override
         public Fragment getItem(int position) {
             Fragment kk = new Fragment();
-            kk = RestaurantPhotoFragment.newInstance();
+        	
+            kk = RestaurantNotesFragment.newInstance(notes.get(position).getId(),notes.get(position).getRestaurantId(),notes.get(position).getTitle(),notes.get(position).getLink(), notes.get(position).getX(), notes.get(position).getY(),notes.get(position).getPicUrl());
             return kk;
         }
 
         @Override
         public int getCount() {
-            return 5;
+            return notes.size();
         }
     }
 	
 	
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        menu.add(0, ID_NOTE, 0, "餐廳食記").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        return true;
-    }
     
 	@Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
@@ -224,14 +228,6 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
             finish();
             break;
             
-        case ID_NOTE:
-        	Intent intent = new Intent();
-            intent.setClass(RestaurantIntroActivity.this, RestaurantNotesActivity.class);
-            Bundle bundle = new Bundle();
-        	bundle.putInt("ResturantId", restaurant.getId());
-        	intent.putExtras(bundle);
-            startActivity(intent);
-            break;
         }
         return true;
     }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,15 +68,30 @@ public class NoteGridViewAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
             	Intent intent = new Intent(activity, RestaurantNoteActivity.class);
+            	Bundle bundle = new Bundle();
+            	bundle.putInt("NoteId", data.get(position).getId());
+            	bundle.putInt("RestaurantId", data.get(position).getRestaurantId());
+            	bundle.putString("NoteTitle", data.get(position).getTitle());
+            	bundle.putString("NoteLink", data.get(position).getLink());
+            	bundle.putDouble("NoteX", data.get(position).getX());
+            	bundle.putDouble("NoteY", data.get(position).getY());
+            	bundle.putString("NotePic", data.get(position).getPicUrl());
+            	intent.putExtras(bundle);
             	activity.startActivity(intent);
             }
 
         });
 
-        TextView textTitle = (TextView) vi.findViewById(R.id.grid_item_title);
-        ImageView image = (ImageView) vi.findViewById(R.id.grid_item_image);
-        TextView textAuthor = (TextView) vi.findViewById(R.id.grid_item_author);
-        TextView textDate = (TextView) vi.findViewById(R.id.grid_item_date);
+        ImageView noteImage = (ImageView) vi.findViewById(R.id.grid_item_image);
+        TextView noteText = (TextView) vi.findViewById(R.id.grid_item_text);
+        noteText.setText(data.get(position).getTitle());
+        
+        String picUrl = data.get(position).getPicUrl();
+        if (picUrl == null || picUrl.equals("null") ) {
+        	noteImage.setImageResource(R.drawable.icon);
+        } else {
+            imageLoader.DisplayImage(picUrl, noteImage);
+        }
 
         return vi;
     }
