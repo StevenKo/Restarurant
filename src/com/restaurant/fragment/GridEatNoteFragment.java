@@ -135,7 +135,7 @@ public class GridEatNoteFragment extends Fragment {
         		SQLiteRestaurant db = new SQLiteRestaurant(getActivity());
         		notes = db.getAllNotes();
         	}else if(is_selected){
-//        		restaurants = RestaurantAPI.getSelectedRestaurants(area_id, category_id, 1);
+        		notes = RestaurantAPI.getSelectNotes();
         	}
             return null;
         }
