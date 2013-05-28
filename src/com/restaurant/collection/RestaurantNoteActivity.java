@@ -90,6 +90,7 @@ public class RestaurantNoteActivity extends SherlockActivity{
 	 private void setWebView() {
 		 webArticle.getSettings().setSupportZoom(true);
          webArticle.getSettings().setJavaScriptEnabled(true);
+         webArticle.getSettings().setBuiltInZoomControls(true);
          webArticle.setWebViewClient(new WebViewClient() {
 
     	 public void onPageFinished(WebView view, String url) {
