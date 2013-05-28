@@ -34,6 +34,11 @@ public class MapActivity extends SherlockFragmentActivity implements OnMarkerCli
 //	static final LatLng HAMBURG = new LatLng(53.558, 9.927);
 //	static final LatLng KIEL = new LatLng(53.551, 9.993);
 	ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+	private Bundle mBundle;
+	private int areaId;
+	private int categoryId;
+	private int typeId;
+	private boolean isColletion;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +49,12 @@ public class MapActivity extends SherlockFragmentActivity implements OnMarkerCli
         final ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setTitle("地圖顯示");
-        getCurrentLocation();
+        
+        mBundle = this.getIntent().getExtras();
+        areaId = mBundle.getInt("AreaId");
+        categoryId = mBundle.getInt("CategoryId");
+        typeId = mBundle.getInt("TypeId");
+        isColletion = mBundle.getBoolean("IsColletion");
         
         new DownloadRestaurantsTask().execute();
         
@@ -60,28 +70,49 @@ public class MapActivity extends SherlockFragmentActivity implements OnMarkerCli
 
         @Override
         protected Object doInBackground(Object... params) {
-        	restaurants = RestaurantAPI.getAllRestaurant();  
+        	if(categoryId != 0){
+        		restaurants = RestaurantAPI.getAreaCategoryRestaurants(areaId, categoryId, 1);
+        	}else if(typeId != 0){
+        		restaurants = RestaurantAPI.getAreaTypeRestaurants(areaId, typeId, 1);
+        	}else if(areaId != 0){
+        		restaurants = RestaurantAPI.getAreaRestaurants(areaId);
+        	}else if(isColletion){
+        		SQLiteRestaurant db = new SQLiteRestaurant(MapActivity.this);
+        		restaurants = db.getAllRestaurants();
+        	}else{
+        	   restaurants = RestaurantAPI.getAllRestaurant();  
+        	}
             return null;
         }
 
         @Override
         protected void onPostExecute(Object result) {
             super.onPostExecute(result);
+            getCameraMoveLocation();
             setMap();
         }
     }
     
-    private void getCurrentLocation() {
-    	GPSTracker mGPS = new GPSTracker(this);
-
-    	if(mGPS.canGetLocation() ){
-
-    		latitude =mGPS.getLatitude();
-    		longitude=mGPS.getLongitude();
-
+    private void getCameraMoveLocation() {
+    	if(areaId !=0){
+    		double sumX = 0.0;
+    		double sumY = 0.0;
+    		for(int i=0; i < restaurants.size(); i++){
+    			sumX += restaurants.get(i).getX();
+    			sumY += restaurants.get(i).getY();
+    		}
+    		latitude = sumX/(double)restaurants.size();
+    		longitude = sumY/(double)restaurants.size();
     	}else{
-    	// can't get the location
+    		GPSTracker mGPS = new GPSTracker(this);
+        	if(mGPS.canGetLocation() ){
+        		latitude =mGPS.getLatitude();
+        		longitude=mGPS.getLongitude();
+        	}else{
+        	// can't get the location
+        	}
     	}
+    	
 		
 	}
     
@@ -94,17 +125,17 @@ public class MapActivity extends SherlockFragmentActivity implements OnMarkerCli
     			
     			Marker kiel = map.addMarker(new MarkerOptions()
 		  	          .position(location)
-		  	          .title(restaurants.get(i).getName())
-		  	          .icon(BitmapDescriptorFactory
-		  	              .fromResource(R.drawable.ic_launcher)));
-		  	    kiel.showInfoWindow();
+		  	          .title(restaurants.get(i).getName()));
     		}
     	      
         }
     	
     	map.setOnMarkerClickListener(this);
     	map.setOnInfoWindowClickListener(this);
-    	map.moveCamera( CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude) , 14.0f) );
+    	if(isColletion)
+    	  map.moveCamera( CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude) , 8.0f) );
+    	else
+    	  map.moveCamera( CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude) , 12.0f) );
 		
 	}
 
@@ -126,6 +157,14 @@ public class MapActivity extends SherlockFragmentActivity implements OnMarkerCli
 
 	@Override
 	public boolean onMarkerClick(Marker m) {
+		
+		return false;
+	}
+
+
+
+	@Override
+	public void onInfoWindowClick(Marker m) {
 		Intent intent = new Intent(this, RestaurantIntroActivity.class);
 		Bundle bundle = new Bundle();
 		for(int i =0 ; i < restaurants.size(); i++){
@@ -135,15 +174,6 @@ public class MapActivity extends SherlockFragmentActivity implements OnMarkerCli
 			}
 		}
     	intent.putExtras(bundle);
-    	this.startActivity(intent);
-		return false;
-	}
-
-
-
-	@Override
-	public void onInfoWindowClick(Marker arg0) {
-		Intent intent = new Intent(this, RestaurantIntroActivity.class);
     	this.startActivity(intent);
 	}
 

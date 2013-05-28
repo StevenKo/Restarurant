@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebSettings.RenderPriority;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -26,6 +28,7 @@ import com.restaurant.gps.util.GPSTracker;
 
 public class RestaurantNoteActivity extends SherlockActivity{
 	
+	private static final int ID_RESTAURANT = 0;
 	private LinearLayout layoutProgress;
 	private LinearLayout layoutReload;
 	private Button buttonReload;
@@ -90,7 +93,12 @@ public class RestaurantNoteActivity extends SherlockActivity{
 	 private void setWebView() {
 		 webArticle.getSettings().setSupportZoom(true);
          webArticle.getSettings().setJavaScriptEnabled(true);
+
          webArticle.getSettings().setBuiltInZoomControls(true);
+
+         webArticle.getSettings().setRenderPriority(RenderPriority.HIGH);
+         webArticle.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+
          webArticle.setWebViewClient(new WebViewClient() {
 
     	 public void onPageFinished(WebView view, String url) {
@@ -167,6 +175,12 @@ public class RestaurantNoteActivity extends SherlockActivity{
 		 favorite_button = (ImageButton)findViewById(R.id.favorite_button);
 	}
 	
+	@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add(0, ID_RESTAURANT, 4, "餐廳介紹").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        return true;
+    }
+	
 
 	@Override
 	    public boolean onMenuItemSelected(int featureId, MenuItem item) {
@@ -176,6 +190,14 @@ public class RestaurantNoteActivity extends SherlockActivity{
 	        case android.R.id.home:
 	            finish();
 	            break;
+	        case ID_RESTAURANT:
+	        	Intent intent = new Intent(RestaurantNoteActivity.this, RestaurantIntroActivity.class);
+            	Bundle bundle = new Bundle();
+            	bundle.putInt("ResturantId", note.getRestaurantId());
+            	bundle.putString("ResturantName", "餐廳介紹");
+            	intent.putExtras(bundle);
+            	startActivity(intent);
+	        	break;
 	        }
 	        return true;
 	    }

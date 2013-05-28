@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -25,6 +26,8 @@ public class MyCollectionActivity extends SherlockFragmentActivity{
 	
 	private ViewPager pager;
 	private static final int    ID_MAP      = 4;
+	private int fragmentPositon = 0;
+
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +37,7 @@ public class MyCollectionActivity extends SherlockFragmentActivity{
         final ActionBar ab = getSupportActionBar();
         ab.setTitle("我的收藏");
         ab.setDisplayHomeAsUpEnabled(true);
-
+        
 
         FragmentPagerAdapter adapter = new CategoryPagerAdapter(getSupportFragmentManager());
 
@@ -43,13 +46,22 @@ public class MyCollectionActivity extends SherlockFragmentActivity{
 
         TitlePageIndicator indicator = (TitlePageIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(pager);
+        
+        indicator.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+        	
+			@Override
+        	public void onPageSelected(int position) {
+        		fragmentPositon = position;
+        		ActivityCompat.invalidateOptionsMenu(MyCollectionActivity.this);
+        	}
+        });
 
     }
 	
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
-        menu.add(0, ID_MAP, 4, "餐廳地圖顯示").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        if(fragmentPositon==0)
+        	menu.add(0, ID_MAP, 4, "餐廳地圖顯示").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         return true;
     }
 	
@@ -63,6 +75,9 @@ public class MyCollectionActivity extends SherlockFragmentActivity{
             break;
         case ID_MAP:
             Intent intent = new Intent(MyCollectionActivity.this, MapActivity.class);
+            Bundle bundle = new Bundle();
+        	bundle.putBoolean("IsColletion", true);
+        	intent.putExtras(bundle);
             startActivity(intent);
             break;
         }

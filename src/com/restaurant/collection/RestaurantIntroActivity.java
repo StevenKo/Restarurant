@@ -62,7 +62,7 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
         restaurant = new Restaurant(restaurantId, restaurantName,"","","","","", "", "", "", "", 0, 0 );
         
         final ActionBar ab = getSupportActionBar();
-        ab.setTitle(restaurantName);
+        ab.setTitle(restaurant.getName());
         ab.setDisplayHomeAsUpEnabled(true);
         
         findViews();
@@ -120,6 +120,8 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
 
     private void setViews() {
     	
+    	final ActionBar ab = getSupportActionBar();
+        ab.setTitle(restaurant.getName());
     	address_text.setText(restaurant.getAddress());
 		opentime_text.setText(restaurant.getOpenTime());
 		price_text.setText(restaurant.getPrice());
