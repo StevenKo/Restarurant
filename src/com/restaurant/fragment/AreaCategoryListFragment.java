@@ -6,8 +6,13 @@ import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
 
+import com.restaurant.adapter.AreaCategoryListAdapter;
+import com.restaurant.adapter.AreaTypeListAdapter;
+import com.restaurant.adapter.CategoryListAdapter;
 import com.restaurant.adapter.SeparatedListAdapter;
 import com.restaurant.adapter.TypeListAdapter;
+import com.restaurant.collection.R;
+import com.restaurant.collection.api.RestaurantAPI;
 import com.restaurant.collection.entity.Type;
 
 public class AreaCategoryListFragment extends ListFragment {
@@ -31,11 +36,14 @@ public class AreaCategoryListFragment extends ListFragment {
         super.onActivityCreated(savedInstanceState);
         
         SeparatedListAdapter adapter = new SeparatedListAdapter(getActivity());
-        TypeListAdapter tadapter = new TypeListAdapter(getActivity(), Type.getTypes());
+        AreaTypeListAdapter tadapter = new AreaTypeListAdapter(getActivity(), Type.getTypes());
         adapter.addSection("中式料理", tadapter);
+        adapter.addSection("日式料理", tadapter);
+        AreaCategoryListAdapter cadapter = new AreaCategoryListAdapter(getActivity(), RestaurantAPI.getCategories());
+        adapter.addSection("類型分類", cadapter);
 //        AreaListAdapter adapter = new AreaListAdapter(getActivity(), RestaurantAPI.getAreas());
         setListAdapter(adapter);
-
+        
     }
 
 }

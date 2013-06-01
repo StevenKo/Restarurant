@@ -46,7 +46,8 @@ public class CategoryListAdapter extends BaseAdapter {
             vi = inflater.inflate(R.layout.item_listview_category, null);
         TextView text = (TextView) vi.findViewById(R.id.text_list);
         text.setText(data.get(position).getName());
-
+       
+        vi.setBackground(activity.getResources().getDrawable(R.drawable.restaurant_list_selector));
         return vi;
     }
 }
