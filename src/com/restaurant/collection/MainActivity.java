@@ -122,6 +122,9 @@ public class MainActivity extends SherlockFragmentActivity implements OnButtonCl
             case 3:
                 kk = GridEatNoteFragment.newInstance(0,0,0,false,true);
                 break;
+            default:
+            	kk = GridRestaurantsFragment.newInstance(0,0,0,false,true);
+            	break;
             }
             return kk;
         }

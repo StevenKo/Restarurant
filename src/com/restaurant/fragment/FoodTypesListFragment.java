@@ -7,17 +7,19 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.restaurant.adapter.CategoryListAdapter;
+import com.restaurant.adapter.TypeListAdapter;
 import com.restaurant.collection.CategoryActivity;
 import com.restaurant.collection.api.RestaurantAPI;
+import com.restaurant.collection.entity.Type;
 
-public class CategoryFoodKindsListFragment extends ListFragment {
+public class FoodTypesListFragment extends ListFragment {
 
-    public CategoryFoodKindsListFragment() {
+    public FoodTypesListFragment() {
 
     }
 
-    public static final CategoryFoodKindsListFragment newInstance() {
-        CategoryFoodKindsListFragment f = new CategoryFoodKindsListFragment();
+    public static final FoodTypesListFragment newInstance() {
+        FoodTypesListFragment f = new FoodTypesListFragment();
         return f;
     }
 
@@ -30,7 +32,7 @@ public class CategoryFoodKindsListFragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        CategoryListAdapter adapter = new CategoryListAdapter(getActivity(), RestaurantAPI.getCategories());
+        TypeListAdapter adapter = new TypeListAdapter(getActivity(), Type.getTypes());
         setListAdapter(adapter);
 
     }
@@ -39,7 +41,7 @@ public class CategoryFoodKindsListFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
         Intent intent = new Intent(getActivity(), CategoryActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putInt("CategoryId", RestaurantAPI.getCategories().get(position).getId());
+        bundle.putInt("TypeId", Type.getTypes().get(position).getId());
         intent.putExtras(bundle);
         getActivity().startActivity(intent);
     }

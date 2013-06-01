@@ -6,20 +6,18 @@ import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
 
-import com.restaurant.adapter.CategoryListAdapter;
-import com.restaurant.adapter.TypeListAdapter;
+import com.restaurant.adapter.AreaListAdapter;
 import com.restaurant.collection.CategoryActivity;
 import com.restaurant.collection.api.RestaurantAPI;
-import com.restaurant.collection.entity.Type;
 
-public class CategoryFoodTypesFragment extends ListFragment {
+public class AreasListFragment extends ListFragment {
 
-    public CategoryFoodTypesFragment() {
+    public AreasListFragment() {
 
     }
 
-    public static final CategoryFoodTypesFragment newInstance() {
-        CategoryFoodTypesFragment f = new CategoryFoodTypesFragment();
+    public static final AreasListFragment newInstance() {
+        AreasListFragment f = new AreasListFragment();
         return f;
     }
 
@@ -32,7 +30,7 @@ public class CategoryFoodTypesFragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        TypeListAdapter adapter = new TypeListAdapter(getActivity(), Type.getTypes());
+        AreaListAdapter adapter = new AreaListAdapter(getActivity(), RestaurantAPI.getAreas());
         setListAdapter(adapter);
 
     }
@@ -41,7 +39,7 @@ public class CategoryFoodTypesFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
         Intent intent = new Intent(getActivity(), CategoryActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putInt("TypeId", Type.getTypes().get(position).getId());
+        bundle.putInt("AreaId", RestaurantAPI.getAreas().get(position).getId());
         intent.putExtras(bundle);
         getActivity().startActivity(intent);
     }

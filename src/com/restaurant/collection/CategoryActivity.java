@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -49,6 +50,7 @@ public class CategoryActivity extends SherlockFragmentActivity {
         
         final ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
+        TitlePageIndicator indicator = (TitlePageIndicator) findViewById(R.id.indicator);
         
         mBundle = this.getIntent().getExtras();
         areaId = mBundle.getInt("AreaId");
@@ -61,33 +63,31 @@ public class CategoryActivity extends SherlockFragmentActivity {
             adapter = new CategoryPagerAdapter(getSupportFragmentManager(), areaCategories);
         }else if (categoryId!=0){
         	category = Category.getCategory(categoryId);
-            areas = Area.getCategoryAreas(categoryId);
+//            areas = Area.getCategoryAreas(categoryId);
             ab.setTitle(category.getName());
-            adapter = new AreaPagerAdapter(getSupportFragmentManager(), areas);
+            adapter = new AreaPagerAdapter(getSupportFragmentManager());
+            indicator.setVisibility(View.GONE);
         }else{
         	type = Type.getType(typeId);
-        	areas = Area.getTypeAreas(typeId);
+//        	areas = Area.getTypeAreas(typeId);
         	ab.setTitle(type.getName());
-        	adapter = new AreaPagerAdapter(getSupportFragmentManager(), areas);
+        	adapter = new AreaPagerAdapter(getSupportFragmentManager());
+        	indicator.setVisibility(View.GONE);
         }
 
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(adapter);
-        
-        
-
-        TitlePageIndicator indicator = (TitlePageIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(pager);
         
         if(categoryId!=0 || typeId!=0){
-        	areaId = areas.get(0).getId();
-	        indicator.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
-	
-	        	@Override
-	        	public void onPageSelected(int postion) {
-	        		areaId = areas.get(postion).getId();
-	        	}
-	        });
+//        	areaId = areas.get(0).getId();
+//	        indicator.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+//	
+//	        	@Override
+//	        	public void onPageSelected(int postion) {
+//	        		areaId = areas.get(postion).getId();
+//	        	}
+//	        });
         }else{
         	categoryId = areaCategories.get(0).getId();
         	indicator.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
@@ -120,7 +120,7 @@ public class CategoryActivity extends SherlockFragmentActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return categories.get(position).getName();
+            return "中式料理";
         }
 
         @Override
@@ -131,28 +131,26 @@ public class CategoryActivity extends SherlockFragmentActivity {
     
     class AreaPagerAdapter extends FragmentPagerAdapter {
 
-        ArrayList<Area> areas;
 
-        public AreaPagerAdapter(FragmentManager fm, ArrayList<Area> areas) {
+        public AreaPagerAdapter(FragmentManager fm) {
             super(fm);
-            this.areas = areas;
         }
 
         @Override
         public Fragment getItem(int position) {
             Fragment kk = new Fragment();
-            kk = CategoryTabFragment.newInstance(areas.get(position).getId(), categoryId, typeId,false, false);
+            kk = CategoryTabFragment.newInstance(2, categoryId, typeId,false, false);
             return kk;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return areas.get(position).getName();
+            return "";
         }
 
         @Override
         public int getCount() {
-            return areas.size();
+            return 1;
         }
     }
 
