@@ -8,7 +8,7 @@
  
    <LinearLayout 
       android:layout_width="fill_parent"
-	  android:layout_height="200dp"
+	  android:layout_height="220dp"
 	  android:gravity="center_horizontal"
 	  android:orientation="vertical"
        >
@@ -110,7 +110,6 @@
 	        <LinearLayout android:layout_width="fill_parent"
                 android:layout_height="20dp"
                 android:orientation="horizontal"                
-                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="7dp"
                 android:layout_marginTop="2dp"
@@ -131,6 +130,34 @@
                     android:text="500~1000"
                     android:textSize="15dp" 
                     android:textColor="#555555"
+                    android:typeface="serif"
+                    android:maxLines="1"
+                    >
+            </TextView>
+            </LinearLayout>
+            <LinearLayout android:layout_width="fill_parent"
+                android:layout_height="20dp"
+                android:orientation="horizontal"                
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="7dp"
+            >
+                <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="距離:"
+                  android:textSize="15dp" 
+                  android:textColor="#999999"
+                  android:typeface="serif"
+                  >
+                </TextView>
+                <TextView
+                    android:id="@+id/grid_item_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1110m"
+                    android:textSize="15dp" 
+                    android:textColor="#1111ff"
                     android:typeface="serif"
                     android:maxLines="1"
                     >
