@@ -3,34 +3,45 @@ package com.restaurant.collection.entity;
 public class Restaurant {
 	int id;
 	String  name;
+	String  pic_url;
     String  grade_food;
     String  grade_service;
-    String  pic_url;
-    String  address;
-    String  open_time;
-    String  official_link;
+    String  grade_ambiance;
     String  price;
-    String  traffic;
+    String  open_time;
+    String  rest_date;
+    String  address;
+    String  phone;
+    int  rate_num;
     String  introduction;
-    double	x_lan;
+    String  official_link;
+    String  recommand_dish;
+    
+    double	x_lat;
     double	y_long;
     public Restaurant(){
-    	this(1, "", "", "","","","","","","","", 0, 0);
+    	this(1, "", "", "","","","","","","","", 0,"","","", 0, 0);
     }
-    public Restaurant(int id, String name, String grade_food, String grade_service, String pic_url, String address, 
-    		String open_time, String official_link, String price, String traffic, String introduction, double x_lan, double y_long){
+    public Restaurant(int id, String name, String pic_url,String grade_food, String grade_service,  String grade_ambiance, String price,String open_time,
+    		String rest_date, String address, String phone, int rate_num, String introduction,
+    		 String official_link,  String recommand_dish,  double x_lan, double y_long){
     	this.id = id;
     	this.name = name;
+    	this.pic_url = pic_url;
     	this.grade_food = grade_food;
     	this.grade_service = grade_service;
-    	this.pic_url = pic_url;
-    	this.address = address;
-    	this.open_time = open_time;
-    	this.official_link = official_link;
+    	this.grade_ambiance = grade_ambiance;
     	this.price = price;
-    	this.traffic = traffic;
+    	this.open_time = open_time;
+    	this.rest_date = rest_date;
+    	this.address = address;
+    	this.phone = phone;
+    	this.rate_num = rate_num;
     	this.introduction = introduction;
-    	this.x_lan = x_lan;
+    	this.official_link = official_link;
+    	this.recommand_dish = recommand_dish;
+    	
+    	this.x_lat = x_lan;
     	this.y_long = y_long;
     }
     
@@ -42,6 +53,10 @@ public class Restaurant {
     	return name;
     }
     
+    public String getPicUrl(){
+    	return pic_url;
+    }
+    
     public String getGradeFood(){
     	return grade_food;
     }
@@ -50,36 +65,49 @@ public class Restaurant {
     	return grade_service;
     }
     
-    public String getPicUrl(){
-    	return pic_url;
+    public String getGradeAmbiance(){
+    	return grade_ambiance;
     }
         
-    public String getAddress(){
-    	return address;
+      
+    public String getPrice(){
+    	return price;
     }
     
     public String getOpenTime(){
     	return open_time;
     }
-    
-    public String getOfficailLink(){
-    	return official_link;
+     
+    public String getRestDate(){
+    	return rest_date;
+    } 
+        
+    public String getAddress(){
+    	return address;
     }
     
-    public String getPrice(){
-    	return price;
+    public String getPhone(){
+    	return phone;
     }
     
-    public String getTraffic(){
-    	return traffic;
+    public int getRateNum(){
+    	return rate_num;
     }
     
     public String getIntroduction(){
     	return introduction;
     }
     
+    public String getOfficialLink(){
+    	return official_link;
+    }
+    
+    public String getRecommandDish(){
+    	return recommand_dish;
+    }
+    
     public double getX(){
-    	return x_lan;
+    	return x_lat;
     }
     
     public double getY(){

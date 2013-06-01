@@ -59,7 +59,7 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
         Bundle mBundle = this.getIntent().getExtras();
         int restaurantId = mBundle.getInt("ResturantId");
         String restaurantName = mBundle.getString("ResturantName");
-        restaurant = new Restaurant(restaurantId, restaurantName,"","","","","", "", "", "", "", 0, 0 );
+        restaurant = new Restaurant(restaurantId, restaurantName,"","","","","", "", "", "", "", 0, "", "", "", latitude,longitude );
         
         final ActionBar ab = getSupportActionBar();
         ab.setTitle(restaurant.getName());
@@ -129,7 +129,7 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
 		official_btn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-            	Uri uri = Uri.parse(restaurant.getOfficailLink());
+            	Uri uri = Uri.parse(restaurant.getOfficialLink());
             	Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             	startActivity(intent);
             }

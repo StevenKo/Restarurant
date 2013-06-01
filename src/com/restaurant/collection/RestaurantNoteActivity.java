@@ -54,9 +54,9 @@ public class RestaurantNoteActivity extends SherlockActivity{
         double noteX = mBundle.getDouble("NoteX");
         double noteY = mBundle.getDouble("NoteY");
         String notePic = mBundle.getString("NotePic");
-         note = new Note(noteId, rId,noteTitle, "", notePic, noteLink,noteX, noteY);
+         note = new Note(noteId, rId,noteTitle, "", notePic, "",noteLink, noteX, noteY);
          
-
+//         int id, int restaurant_id,String title, String author, String pic_url, String pub_date, String link, double x_lan, double y_long
         
         final ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);

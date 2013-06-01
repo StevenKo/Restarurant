@@ -58,7 +58,7 @@ public class CategoryActivity extends SherlockFragmentActivity {
         typeId = mBundle.getInt("TypeId");
         if(areaId!=0){
         	area = Area.getArea(areaId);
-        	areaCategories = Category.getAreaCategories(areaId);
+        	areaCategories = Category.getCategories();
             ab.setTitle(area.getName());
             adapter = new CategoryPagerAdapter(getSupportFragmentManager(), areaCategories);
         }else if (categoryId!=0){

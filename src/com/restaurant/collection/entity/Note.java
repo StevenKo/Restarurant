@@ -5,24 +5,27 @@ public class Note {
 	int id;
 	int restaurant_id;
 	String title;
-    String intro;
+    String author;
     String pic_url;
+    String pub_date;
     String link;
-    double	x_lan;
+    
+    double	x_lat;
     double	y_long;
     
     public Note(){
-    	this(1,1,"","","","http://www.wretch.cc/blog/yui888888888/7030513",0,0);
+    	this(1,1,"","","","","http://www.wretch.cc/blog/yui888888888/7030513",0,0);
     }
     
-    public Note(int id, int restaurant_id,String title, String intro, String pic_url, String link, double x_lan, double y_long){
+    public Note(int id, int restaurant_id,String title, String author, String pic_url, String pub_date, String link, double x_lat, double y_long){
     	this.id = id;
     	this.restaurant_id = restaurant_id;
     	this.title = title;
-    	this.intro = intro;
+    	this.author = author;
     	this.pic_url = pic_url;
+    	this.pub_date = pub_date;
     	this.link = link;
-    	this.x_lan = x_lan;
+    	this.x_lat = x_lat;
     	this.y_long = y_long;
     }
     
@@ -41,8 +44,12 @@ public class Note {
     	return title;
     }
     
-    public String getIntro(){
-    	return intro;
+    public String getAuthor(){
+    	return author;
+    }
+    
+    public String getPubDate(){
+    	return pub_date;
     }
     
     public String getLink(){
@@ -50,7 +57,7 @@ public class Note {
     }
     
     public Double getX(){
-    	return x_lan;
+    	return x_lat;
     }
     
     public Double getY(){

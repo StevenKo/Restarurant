@@ -207,17 +207,18 @@ public class RestaurantAPI {
                int id = jArray.getJSONObject(i).getInt("id");
                int restaurant_id = jArray.getJSONObject(i).getInt("restaurant_id");
                String title = jArray.getJSONObject(i).getString("title");
-               String intro = jArray.getJSONObject(i).getString("intro");
+               String author = jArray.getJSONObject(i).getString("author");
                String pic_url = jArray.getJSONObject(i).getString("pic_url");
-               String link = jArray.getJSONObject(i).getString("link");
-               double x_lan = jArray.getJSONObject(i).getDouble("x_lan");
+               String pub_date = jArray.getJSONObject(i).getString("pub_date");
+               String link = jArray.getJSONObject(i).getString("ipeen_link");
+               double x_lan = jArray.getJSONObject(i).getDouble("x_lat");
                double y_long = jArray.getJSONObject(i).getDouble("y_long");
                
                int rank = 0;
                if (!jArray.getJSONObject(i).isNull("rank"))
                    rank = jArray.getJSONObject(i).getInt("rank");
 
-               Note note = new Note(id, restaurant_id, title, intro, pic_url, link, x_lan, y_long);
+               Note note = new Note(id, restaurant_id, title, author, pic_url, pub_date, link, x_lan, y_long);
                notes.add(note);
            }
 
@@ -231,33 +232,37 @@ public class RestaurantAPI {
    private static Restaurant parseRestaurant(String message, Restaurant restaurant) {
        try {
            
-    	   JSONObject jObject = new JSONObject(message.toString());
-
+    	   JSONObject jObject = new JSONObject(message.toString());	   		
+    	   
                int id = jObject.getInt("id");
                String name = jObject.getString("name");
+               String pic_url = jObject.getString("pic_url");
                String grade_food = jObject.getString("grade_food");
                String grade_service = jObject.getString("grade_service");
-               String pic_url = jObject.getString("pic_url");
-               String address = jObject.getString("address");
-               String open_time = jObject.getString("open_time");
-               String official_link = jObject.getString("official_link");
+               String grade_ambiance = jObject.getString("grade_ambiance");
                String price = jObject.getString("price");
-               String traffic = jObject.getString("traffic");
+               String open_time = jObject.getString("open_time");
+               String rest_date = jObject.getString("rest_date");
+               String address = jObject.getString("address");
+               String phone = jObject.getString("phone");
+               int rate_num = jObject.getInt("rate_num");
                String introduction = jObject.getString("introduction");
-               double x_lan = jObject.getDouble("x_lan");
+               String official_link = jObject.getString("official_link");            
+               String recommand_dish = jObject.getString("recommand_dish");
+               
+               double x_lat = jObject.getDouble("x_lat");
                double y_long = jObject.getDouble("y_long");
                
                int rank = 0;
                if (!jObject.isNull("rank"))
                    rank = jObject.getInt("rank");
 
-               restaurant = new Restaurant(id, name, grade_food,
-               		grade_service, pic_url, address, 
-               		open_time, official_link, price, 
-               		traffic, introduction, x_lan, y_long);
+               restaurant = new Restaurant(id, name, pic_url,
+            		   grade_food, grade_service,  grade_ambiance,
+            		   price, open_time, rest_date, address, 
+               		   phone, rate_num, introduction, 
+               		   official_link, recommand_dish, x_lat, y_long);
                
-           
-
        } catch (JSONException e) {
            e.printStackTrace();
            return null;
@@ -282,11 +287,10 @@ public class RestaurantAPI {
                 int rank = 0;
                 if (!jArray.getJSONObject(i).isNull("rank"))
                     rank = jArray.getJSONObject(i).getInt("rank");
-
-                Restaurant restaurant = new Restaurant(id, name, grade_food,
-                		grade_service, pic_url, "", 
-                		"", "", "", 
-                		"", "",x_lan,y_long);
+                
+                Restaurant restaurant = new Restaurant(id, name,pic_url, grade_food,
+                		grade_service,  "", 
+                		"", "", "", "", "",0, "", "", "", x_lan,y_long);
                 restaurants.add(restaurant);
             }
 
@@ -306,7 +310,7 @@ public class RestaurantAPI {
 
                 int id = jArray.getJSONObject(i).getInt("id");
                 String name = jArray.getJSONObject(i).getString("name");
-                double x_lan = jArray.getJSONObject(i).getDouble("x_lan");
+                double x_lat = jArray.getJSONObject(i).getDouble("x_lat");
                 double y_long = jArray.getJSONObject(i).getDouble("y_long");
                 
                 int rank = 0;
@@ -316,7 +320,7 @@ public class RestaurantAPI {
                 Restaurant restaurant = new Restaurant(id, name, "",
                 		"", "", "", 
                 		"", "", "", 
-                		"", "",x_lan,y_long);
+                		"", "",0, "", "", "", x_lat,y_long);
                 restaurants.add(restaurant);
             }
 
@@ -346,7 +350,7 @@ public class RestaurantAPI {
                 Restaurant restaurant = new Restaurant(id, name, grade_food,
                 		grade_service, pic_url, "", 
                 		"", "", "", 
-                		"", "", 0,0);
+                		"", "", 0,"", "", "", 0, rank);
                 restaurants.add(restaurant);
             }
 
