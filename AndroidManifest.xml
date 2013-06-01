@@ -59,6 +59,13 @@
             android:windowSoftInputMode="adjustPan" 
             >
         </activity>
+        <activity
+            android:name=".NearRestaurantActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" 
+            >
+        </activity>
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyADPDJQjax4dJZw5p4M-ekOGb2Xwqh_o-Q"/>

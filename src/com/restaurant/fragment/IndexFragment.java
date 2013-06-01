@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.restaurant.collection.MapActivity;
 import com.restaurant.collection.MyCollectionActivity;
+import com.restaurant.collection.NearRestaurantActivity;
 import com.restaurant.collection.R;
 import com.restaurant.collection.RestaurantIntroActivity;
 import com.restaurant.collection.MainActivity;
@@ -160,7 +161,7 @@ public final class IndexFragment extends Fragment {
     	near_food.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-            	Intent intent = new Intent(getActivity(), MapActivity.class);
+            	Intent intent = new Intent(getActivity(), NearRestaurantActivity.class);
                 startActivity(intent);
             }
         });

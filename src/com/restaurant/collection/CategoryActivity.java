@@ -20,6 +20,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.restaurant.collection.entity.Area;
 import com.restaurant.collection.entity.Category;
 import com.restaurant.collection.entity.Type;
+import com.restaurant.fragment.AreaCategoryListFragment;
 import com.restaurant.fragment.CategoryTabFragment;
 import com.viewpagerindicator.TitlePageIndicator;
 
@@ -79,6 +80,9 @@ public class CategoryActivity extends SherlockFragmentActivity {
         pager.setAdapter(adapter);
         indicator.setViewPager(pager);
         
+        if(areaId!=0)
+        	pager.setCurrentItem(1);
+        
         if(categoryId!=0 || typeId!=0){
 //        	areaId = areas.get(0).getId();
 //	        indicator.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
@@ -114,18 +118,23 @@ public class CategoryActivity extends SherlockFragmentActivity {
         @Override
         public Fragment getItem(int position) {
             Fragment kk = new Fragment();
-            kk = CategoryTabFragment.newInstance(areaId, categories.get(position).getId(), typeId, false, false);
+            if(position == 0)
+              kk = AreaCategoryListFragment.newInstance();
+            else
+              kk = CategoryTabFragment.newInstance(areaId, categories.get(position-1).getId(), typeId, false, false);
             return kk;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
+        	if(position == 0)
+        		return "分類";
             return "中式料理";
         }
 
         @Override
         public int getCount() {
-            return categories.size();
+            return categories.size()+1;
         }
     }
     
