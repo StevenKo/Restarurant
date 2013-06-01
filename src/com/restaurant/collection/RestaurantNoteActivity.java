@@ -98,6 +98,9 @@ public class RestaurantNoteActivity extends SherlockActivity{
 
          webArticle.getSettings().setRenderPriority(RenderPriority.HIGH);
          webArticle.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+         
+         webArticle.getSettings().setLoadWithOverviewMode(true);
+         webArticle.getSettings().setUseWideViewPort(true);
 
          webArticle.setWebViewClient(new WebViewClient() {
 
