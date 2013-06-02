@@ -176,6 +176,7 @@ public class RestaurantNoteActivity extends SherlockActivity{
 		 direction_button = (ImageButton)findViewById(R.id.direction_button);
 		 place_button = (ImageButton)findViewById(R.id.place_button);
 		 favorite_button = (ImageButton)findViewById(R.id.favorite_button);
+		 layoutProgress.setVisibility(View.GONE);
 	}
 	
 	@Override

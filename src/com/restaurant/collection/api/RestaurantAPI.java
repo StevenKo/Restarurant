@@ -129,7 +129,7 @@ public class RestaurantAPI {
     
     
     public static ArrayList<Restaurant> getTypeRestaurants(int type_id, int page) {
-        String message = getMessageFromServer("GET", "/api/v1/restaurants?type_id=" + type_id + "&page=" + page, null, null);
+        String message = getMessageFromServer("GET", "/api/v1/restaurants?area_id=1&type_id=" + type_id + "&page=" + page, null, null);
         ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
         if (message == null) {
             return null;
