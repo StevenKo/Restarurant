@@ -136,7 +136,7 @@ public class GridRestaurantsFragment extends Fragment {
         		SQLiteRestaurant db = new SQLiteRestaurant(getActivity());
         		restaurants = db.getAllRestaurants();
         	}else if(is_selected){
-        		restaurants = RestaurantAPI.getSelectRestaurants();
+        		restaurants = RestaurantAPI.getSelectRestaurants(1);
         	}
        
             return null;

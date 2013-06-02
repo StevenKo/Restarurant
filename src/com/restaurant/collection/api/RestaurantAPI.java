@@ -43,8 +43,8 @@ public class RestaurantAPI {
         return Category.getCategories();
     }
     
-    public static ArrayList<Restaurant> getSelectRestaurants(){
-    	String message = getMessageFromServer("GET", "/api/v1/restaurants/select_restaurants" , null, null);
+    public static ArrayList<Restaurant> getSelectRestaurants(int page){
+    	String message = getMessageFromServer("GET", "/api/v1/restaurants/select_restaurants?page="+page , null, null);
     	ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
     	if (message == null) {
             return null;
@@ -149,8 +149,8 @@ public class RestaurantAPI {
     }
    
     
-    public static ArrayList<Note> getSelectNotes() {
-        String message = getMessageFromServer("GET", "/api/v1/notes/select_notes", null, null);
+    public static ArrayList<Note> getSelectNotes(int page) {
+        String message = getMessageFromServer("GET", "/api/v1/notes/select_notes?page="+page, null, null);
         ArrayList<Note> notes = new ArrayList<Note>();
         if (message == null) {
             return null;
