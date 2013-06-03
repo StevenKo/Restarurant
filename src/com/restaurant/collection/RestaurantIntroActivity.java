@@ -50,6 +50,7 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
 	private ArrayList<Note> notes;
 	private double latitude;
 	private double longitude;
+	private TextView official_link_none_text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,14 +127,21 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
 		opentime_text.setText(restaurant.getOpenTime());
 		price_text.setText(restaurant.getPrice());
 		restaurant_intro_text.setText(restaurant.getIntroduction());
-		official_btn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            	Uri uri = Uri.parse(restaurant.getOfficialLink());
-            	Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            	startActivity(intent);
-            }
-        });
+		
+		if(restaurant.getOfficialLink().equals("null")){
+			official_btn.setVisibility(View.GONE);
+			
+		}else{
+			official_link_none_text.setVisibility(View.GONE);
+			official_btn.setOnClickListener(new OnClickListener() {
+	            @Override
+	            public void onClick(View v) {
+	            	Uri uri = Uri.parse(restaurant.getOfficialLink());
+	            	Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+	            	startActivity(intent);
+	            }
+	        });	
+		}
 
     	share_btn.setOnClickListener(new OnClickListener() {
             @Override
@@ -192,6 +200,7 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
 		address_text = (TextView)findViewById(R.id.address_text);
 		opentime_text = (TextView)findViewById(R.id.opentime_text);
 		price_text = (TextView)findViewById(R.id.price_text);
+		official_link_none_text = (TextView)findViewById(R.id.official_link_none);
 		restaurant_intro_text = (TextView)findViewById(R.id.restaurant_intro_text);
 		official_btn = (Button)findViewById(R.id.official_btn);
 		progressLayout = (LinearLayout) findViewById(R.id.layout_progress);

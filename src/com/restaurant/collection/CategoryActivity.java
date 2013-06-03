@@ -146,7 +146,7 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
 
             Fragment kk = new Fragment();
             if(position == 0)
-               kk = SecondCategoryListFragment.newInstance(categories.get(position).getId());
+               kk = SecondCategoryListFragment.newInstance(categoryId);
             else if(position == 1)
                kk = CategoryTabFragment.newInstance(0, 0,categoryId,0, 0, false, false);
             else
