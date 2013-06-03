@@ -20,6 +20,7 @@ import com.restaurant.collection.api.RestaurantAPI;
 import com.restaurant.collection.db.SQLiteRestaurant;
 import com.restaurant.collection.entity.Restaurant;
 import com.restaurant.customized.view.LoadMoreGridView;
+import com.restaurant.gps.util.GPSTracker;
 
 @SuppressLint("ValidFragment")
 public class GridRestaurantsFragment extends Fragment {
@@ -40,6 +41,7 @@ public class GridRestaurantsFragment extends Fragment {
 	private int type_id;
 	private boolean is_collection;
 	private boolean is_selected;
+	private boolean is_near;
 	private LinearLayout noDataLayout;
 	private int rank_category_id;
 	private int second_category_id;
@@ -48,7 +50,7 @@ public class GridRestaurantsFragment extends Fragment {
 
     }
     
-    public static final GridRestaurantsFragment newInstance(int area_id, int rank_category_id, int category_id,  int second_category_id, int type_id, boolean is_collection, boolean is_selected) {
+    public static final GridRestaurantsFragment newInstance(int area_id, int rank_category_id, int category_id,  int second_category_id, int type_id, boolean is_collection, boolean is_selected, boolean is_near) {
         GridRestaurantsFragment f = new GridRestaurantsFragment();
         Bundle bdl = new Bundle();
         bdl.putInt("AreaId", area_id);
@@ -58,6 +60,7 @@ public class GridRestaurantsFragment extends Fragment {
         bdl.putInt("TypeId", type_id);
         bdl.putBoolean("IsCollection", is_collection);
         bdl.putBoolean("IsSelected", is_selected);
+        bdl.putBoolean("IsNear", is_near);
         f.setArguments(bdl);
         return f;
     }
@@ -72,8 +75,23 @@ public class GridRestaurantsFragment extends Fragment {
 		type_id = getArguments().getInt("TypeId");
 		is_collection = getArguments().getBoolean("IsCollection");
 		is_selected = getArguments().getBoolean("IsSelected");
+		is_near = getArguments().getBoolean("IsNear");
+		getCurrentXY();
         super.onCreate(savedInstanceState);
     }
+    
+    private double latitude;
+	private double longitude;
+	
+	private void getCurrentXY(){
+		GPSTracker mGPS = new GPSTracker(getActivity());
+    	if(mGPS.canGetLocation() ){
+    		latitude =mGPS.getLatitude();
+    		longitude=mGPS.getLongitude();
+    	}else{
+    	// can't get the location
+    	}
+	}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -125,7 +143,7 @@ public class GridRestaurantsFragment extends Fragment {
 
     private class DownloadRestaurantsTask extends AsyncTask {
 
-        @Override
+		@Override
         protected void onPreExecute() {
             super.onPreExecute();
 
@@ -134,7 +152,13 @@ public class GridRestaurantsFragment extends Fragment {
         @Override
         protected Object doInBackground(Object... params) {
         	
-        	if(area_id !=0 && category_id != 0){
+        	if(is_near && category_id != 0 && second_category_id!=0){
+        		restaurants = RestaurantAPI.getAroundRestaurants(latitude, longitude, 1, category_id, second_category_id);
+        	}else if(is_near && category_id != 0){
+        		restaurants = RestaurantAPI.getAroundRestaurants(latitude, longitude, 1, category_id, 0);
+        	}else if(is_near){
+        		restaurants = RestaurantAPI.getAroundRestaurants(latitude, longitude, 1, 0, 0);
+        	}else if(area_id !=0 && category_id != 0){
         		restaurants = RestaurantAPI.getAreaCategoryRestaurants(area_id, category_id, 1);
         	}else if(area_id != 0 && rank_category_id != 0){
         		restaurants = RestaurantAPI.getAreaRankCategoryRestaurants(area_id, rank_category_id, 1);

@@ -73,7 +73,7 @@ public class NearRestaurantActivity extends SherlockFragmentActivity{
             Fragment kk = new Fragment();     
             switch(position){
         	case 0:
-        		kk = GridRestaurantsFragment.newInstance(0,0,0,0,0,true,false);
+        		kk = GridRestaurantsFragment.newInstance(0,0,0,0,0,false,false,true);
         		break;
         	}
             return kk;
@@ -81,10 +81,6 @@ public class NearRestaurantActivity extends SherlockFragmentActivity{
 
         @Override
         public CharSequence getPageTitle(int position) {
-        	switch(position){
-        	case 0:
-        		return "我的收藏餐廳";
-        	}
 			return "";
         }
 
