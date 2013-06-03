@@ -186,7 +186,7 @@ public class GridRestaurantsFragment extends Fragment {
             if(area_id !=0 && category_id != 0){
             	moreRestaurants = RestaurantAPI.getAreaCategoryRestaurants(area_id, category_id, myPage);
         	}else if(area_id != 0 && rank_category_id != 0){
-        		restaurants = RestaurantAPI.getAreaRankCategoryRestaurants(area_id, rank_category_id, myPage);
+        		moreRestaurants = RestaurantAPI.getAreaRankCategoryRestaurants(area_id, rank_category_id, myPage);
         	}else if(area_id != 0 && type_id != 0){
         		moreRestaurants = RestaurantAPI.getAreaTypeRestaurants(area_id, type_id, myPage);
         	}else if(is_selected){

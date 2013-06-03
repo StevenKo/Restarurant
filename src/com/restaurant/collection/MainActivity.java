@@ -188,20 +188,20 @@ public class MainActivity extends SherlockFragmentActivity implements OnButtonCl
 	@Override
 	public void onCategorySearchClicked() {
 		pager.setCurrentItem(0);
-		((IndexCategoryTabFragment)adapter.getItem(0)).setTabHostCurrent(0);
+		((IndexCategoryTabFragment)adapter.getItem(0)).setTabHostCurrent(2);
 	}
 
 	@Override
 	public void onLocationSearchClicked() {
 		pager.setCurrentItem(0);
-		((IndexCategoryTabFragment)adapter.getItem(0)).setTabHostCurrent(1);
+		((IndexCategoryTabFragment)adapter.getItem(0)).setTabHostCurrent(0);
 		
 	}
 
 	@Override
 	public void onFoodtypeSearchClicked() {
 		pager.setCurrentItem(0);
-		((IndexCategoryTabFragment)adapter.getItem(0)).setTabHostCurrent(2);
+		((IndexCategoryTabFragment)adapter.getItem(0)).setTabHostCurrent(1);
 	}
 	
 
