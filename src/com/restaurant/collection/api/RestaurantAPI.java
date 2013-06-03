@@ -128,8 +128,28 @@ public class RestaurantAPI {
     }
     
     
+    public static ArrayList<Restaurant> getSecondCategoryRestaurants(int sec_c_id, int page) {
+        String message = getMessageFromServer("GET", "/api/v1/restaurants/second_restaurants?sec_c_id=" + sec_c_id + "&page=" + page, null, null);
+        ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+        if (message == null) {
+            return null;
+        } else {
+            return parseRestaurants(message, restaurants);
+        }
+    }
+    
     public static ArrayList<Restaurant> getTypeRestaurants(int type_id, int page) {
         String message = getMessageFromServer("GET", "/api/v1/restaurants?area_id=1&type_id=" + type_id + "&page=" + page, null, null);
+        ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+        if (message == null) {
+            return null;
+        } else {
+            return parseRestaurants(message, restaurants);
+        }
+    }
+    
+    public static ArrayList<Restaurant> getAreaSecondCategoryRestaurants(int area_id,int sec_c_id, int page) {
+        String message = getMessageFromServer("GET", "/api/v1/restaurants/second_restaurants?area_id=" + area_id +"&sec_c_id="+ sec_c_id+ "&page=" + page, null, null);
         ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
         if (message == null) {
             return null;
