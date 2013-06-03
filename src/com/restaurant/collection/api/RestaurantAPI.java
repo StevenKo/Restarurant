@@ -567,7 +567,7 @@ public class RestaurantAPI {
 		}
 		
 	return res;
-}
+	}
 
 	private static String getDesstring(ArrayList<Restaurant> res) {
 		String des_string ="";
@@ -578,4 +578,6 @@ public class RestaurantAPI {
 		}	
 		return des_string;
 	}
+	
+	
 }
