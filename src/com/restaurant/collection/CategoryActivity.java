@@ -12,11 +12,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.restaurant.collection.api.RestaurantAPI;
 import com.restaurant.collection.entity.Area;
 import com.restaurant.collection.entity.Category;
 import com.restaurant.collection.entity.Type;
@@ -25,7 +29,7 @@ import com.restaurant.fragment.CategoryTabFragment;
 import com.restaurant.fragment.SecondCategoryListFragment;
 import com.viewpagerindicator.TitlePageIndicator;
 
-public class CategoryActivity extends SherlockFragmentActivity {
+public class CategoryActivity extends SherlockFragmentActivity implements OnItemClickListener{
 
     private static final int    ID_SETTING  = 0;
     private static final int    ID_RESPONSE = 1;
@@ -110,7 +114,7 @@ public class CategoryActivity extends SherlockFragmentActivity {
             if(position == 0)
               kk = AreaCategoryListFragment.newInstance();
             else
-              kk = CategoryTabFragment.newInstance(areaId, categories.get(position-1).getId(),0, typeId, false, false);
+              kk = CategoryTabFragment.newInstance(areaId, categories.get(position-1).getId(),0, 0,0, false, false);
             return kk;
         }
 
@@ -139,11 +143,14 @@ public class CategoryActivity extends SherlockFragmentActivity {
 
         @Override
         public Fragment getItem(int position) {
+
             Fragment kk = new Fragment();
             if(position == 0)
                kk = SecondCategoryListFragment.newInstance(categories.get(position).getId());
+            else if(position == 1)
+               kk = CategoryTabFragment.newInstance(0, 0,categoryId,0, 0, false, false);
             else
-               kk = CategoryTabFragment.newInstance(1, 0,categories.get(position).getId(), 0, false, false);
+               kk = CategoryTabFragment.newInstance(0, 0,0,categories.get(position-2).getId(), 0, false, false);
             return kk;
         }
 
@@ -151,12 +158,14 @@ public class CategoryActivity extends SherlockFragmentActivity {
         public CharSequence getPageTitle(int position) {
         	if(position == 0)
           	  return "分類";
-           return categories.get(position-1).getName();
+        	else if(position == 1)
+        	  return "全部";
+           return categories.get(position-2).getName();
         }
 
         @Override
         public int getCount() {
-            return categories.size()+1;
+            return categories.size()+2;
         }
     }
     
@@ -170,7 +179,7 @@ public class CategoryActivity extends SherlockFragmentActivity {
         @Override
         public Fragment getItem(int position) {
             Fragment kk = new Fragment();
-            kk = CategoryTabFragment.newInstance(0, 0,categoryId, typeId,false, false);
+            kk = CategoryTabFragment.newInstance(0, 0,categoryId,0, typeId,false, false);
             return kk;
         }
 
@@ -245,4 +254,9 @@ public class CategoryActivity extends SherlockFragmentActivity {
                     }
                 });
     }
+
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View v, int position, long id) {
+		pager.setCurrentItem(position+2);
+	}
 }

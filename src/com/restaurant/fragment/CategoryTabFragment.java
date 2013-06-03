@@ -18,12 +18,13 @@ public class CategoryTabFragment extends Fragment {
     public CategoryTabFragment() {
     }
 
-    public static final CategoryTabFragment newInstance(int area_id, int rank_category_id, int category_id, int type_id, boolean is_collection, boolean is_selected) {
+    public static final CategoryTabFragment newInstance(int area_id, int rank_category_id, int category_id, int second_category_id, int type_id, boolean is_collection, boolean is_selected) {
         CategoryTabFragment f = new CategoryTabFragment();
         Bundle bdl = new Bundle();
         bdl.putInt("AreaId", area_id);
         bdl.putInt("RankCategoryId", rank_category_id);
         bdl.putInt("CategoryId", category_id);
+        bdl.putInt("SecondCategoryId", second_category_id);
         bdl.putInt("TypeId", type_id);
         bdl.putBoolean("IsCollection", is_collection);
         bdl.putBoolean("IsSelected", is_selected);
@@ -60,6 +61,7 @@ public class CategoryTabFragment extends Fragment {
         Bundle arg1 = new Bundle();
 		arg1.putInt("AreaId", getArguments().getInt("AreaId"));
 		arg1.putInt("CategoryId", getArguments().getInt("CategoryId"));
+		arg1.putInt("SecondCategoryId", getArguments().getInt("SecondCategoryId"));
 		arg1.putInt("RankCategoryId", getArguments().getInt("RankCategoryId"));
 		arg1.putInt("TypeId", getArguments().getInt("TypeId"));
 		arg1.putBoolean("IsCollection", getArguments().getBoolean("IsCollection"));
