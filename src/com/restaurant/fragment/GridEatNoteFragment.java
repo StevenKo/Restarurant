@@ -133,7 +133,7 @@ public class GridEatNoteFragment extends Fragment {
         	if(area_id !=0 && category_id != 0){
         		notes = RestaurantAPI.getAreaCategoryNotes(area_id, category_id, 1);
         	}else if(area_id != 0 && rank_category_id != 0){
-//        		notes = RestaurantAPI.get(area_id, type_id, 1);
+        		notes = RestaurantAPI.getAreaRankCategoryNotes(area_id, rank_category_id, 1);
         	}else if(area_id != 0 && type_id != 0){
         		notes = RestaurantAPI.getAreaTypeNotes(area_id, type_id, 1);
         	}else if(is_collection){
@@ -185,7 +185,7 @@ public class GridEatNoteFragment extends Fragment {
         	if(area_id !=0 && category_id != 0){
         		moreNotes = RestaurantAPI.getAreaCategoryNotes(area_id, category_id, myPage);
         	}else if(area_id != 0 && rank_category_id != 0){
-//        		moreNotes = RestaurantAPI.get(area_id, type_id, 1);
+        		moreNotes = RestaurantAPI.getAreaRankCategoryNotes(area_id, rank_category_id, myPage);
         	}else if(area_id != 0 && type_id != 0){
         		moreNotes = RestaurantAPI.getAreaTypeNotes(area_id, type_id, myPage);
         	}else if(is_selected){
