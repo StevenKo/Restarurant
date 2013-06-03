@@ -219,6 +219,16 @@ public class RestaurantAPI {
        }
    }
    
+   public static ArrayList<Restaurant> getAroundRestaurants(double x, double y,double dis, int category_id, int second_category_id) {
+       String message = getMessageFromServer("GET", "api/v1/restaurants/around_restaurates?x="+x+"&y="+ y + "&dis="+ dis + "&category_id=" + category_id + "&sec_c_id="+ second_category_id, null, null);
+       ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+       if (message == null) {
+           return null;
+       } else {
+           return parseRestaurants(message, restaurants);
+       }
+   }
+   
    private static ArrayList<Note> parseNotes(String message, ArrayList<Note> notes) {
        try {
            JSONArray jArray;
