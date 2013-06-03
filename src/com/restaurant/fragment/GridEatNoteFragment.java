@@ -34,7 +34,7 @@ public class GridEatNoteFragment extends Fragment {
 
     private int                               myPage          = 1;
     private Boolean                           checkLoad       = true;
-    private final ArrayList<Note> moreNotes = new ArrayList<Note>();
+    private  ArrayList<Note> moreNotes = new ArrayList<Note>();
     private int area_id;
 	private int category_id;
 	private int type_id;
@@ -177,6 +177,17 @@ public class GridEatNoteFragment extends Fragment {
         protected Object doInBackground(Object... params) {
 
         	moreNotes.clear();
+        	if(area_id !=0 && category_id != 0){
+        		moreNotes = RestaurantAPI.getAreaCategoryNotes(area_id, category_id, myPage);
+        	}else if(area_id != 0 && type_id != 0){
+        		moreNotes = RestaurantAPI.getAreaTypeNotes(area_id, type_id, myPage);
+        	}else if(is_selected){
+        		moreNotes = RestaurantAPI.getSelectNotes(myPage);
+        	}
+        	
+        	for (int i = 0; i < moreNotes.size(); i++) {
+        		notes.add(moreNotes.get(i));
+            }
 
             return null;
         }

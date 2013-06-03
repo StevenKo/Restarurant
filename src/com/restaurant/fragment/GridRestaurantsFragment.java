@@ -34,23 +34,25 @@ public class GridRestaurantsFragment extends Fragment {
 
     private int                               myPage          = 1;
     private Boolean                           checkLoad       = true;
-    private final ArrayList<Restaurant> moreRestaurants = new ArrayList<Restaurant>();
+    private ArrayList<Restaurant> moreRestaurants = new ArrayList<Restaurant>();
 	private int area_id;
 	private int category_id;
 	private int type_id;
 	private boolean is_collection;
 	private boolean is_selected;
 	private LinearLayout noDataLayout;
+	private int rank_category_id;
 
     public GridRestaurantsFragment() {
 
     }
     
-    public static final GridRestaurantsFragment newInstance(int area_id, int category_id, int type_id, boolean is_collection, boolean is_selected) {
+    public static final GridRestaurantsFragment newInstance(int area_id, int rank_category_id, int category_id, int type_id, boolean is_collection, boolean is_selected) {
         GridRestaurantsFragment f = new GridRestaurantsFragment();
         Bundle bdl = new Bundle();
         bdl.putInt("AreaId", area_id);
         bdl.putInt("CategoryId", category_id);
+        bdl.putInt("RankCategoryId", rank_category_id);
         bdl.putInt("TypeId", type_id);
         bdl.putBoolean("IsCollection", is_collection);
         bdl.putBoolean("IsSelected", is_selected);
@@ -63,6 +65,7 @@ public class GridRestaurantsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         area_id = getArguments().getInt("AreaId");
 		category_id = getArguments().getInt("CategoryId");
+		rank_category_id = getArguments().getInt("RankCategoryId");
 		type_id = getArguments().getInt("TypeId");
 		is_collection = getArguments().getBoolean("IsCollection");
 		is_selected = getArguments().getBoolean("IsSelected");
@@ -130,6 +133,8 @@ public class GridRestaurantsFragment extends Fragment {
         	
         	if(area_id !=0 && category_id != 0){
         		restaurants = RestaurantAPI.getAreaCategoryRestaurants(area_id, category_id, 1);
+        	}else if(area_id != 0 && rank_category_id != 0){
+        		restaurants = RestaurantAPI.getAreaRankCategoryRestaurants(area_id, rank_category_id, 1);
         	}else if(area_id != 0 && type_id != 0){
         		restaurants = RestaurantAPI.getAreaTypeRestaurants(area_id, type_id, 1);
         	}else if(is_collection){
@@ -178,7 +183,19 @@ public class GridRestaurantsFragment extends Fragment {
         @Override
         protected Object doInBackground(Object... params) {
 
-            moreRestaurants.clear();
+            if(area_id !=0 && category_id != 0){
+            	moreRestaurants = RestaurantAPI.getAreaCategoryRestaurants(area_id, category_id, myPage);
+        	}else if(area_id != 0 && rank_category_id != 0){
+        		restaurants = RestaurantAPI.getAreaRankCategoryRestaurants(area_id, rank_category_id, myPage);
+        	}else if(area_id != 0 && type_id != 0){
+        		moreRestaurants = RestaurantAPI.getAreaTypeRestaurants(area_id, type_id, myPage);
+        	}else if(is_selected){
+        		moreRestaurants = RestaurantAPI.getSelectRestaurants(myPage);
+        	}
+            
+            for (int i = 0; i < moreRestaurants.size(); i++) {
+            	restaurants.add(moreRestaurants.get(i));
+            }
 
             return null;
         }

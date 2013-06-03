@@ -7,13 +7,13 @@
         <item>精選餐廳</item>
         <item>精選食記</item>
         <item>中式料理(台灣)</item>
+        <item>台式料理(台灣)</item>
         <item>日式料理(台灣)</item>
-        <item>亞洲料理(台灣)</item>
-        <item>異國料理(台灣)</item>
-        <item>燒烤類(台灣)</item>
-        <item>鍋類(台灣)</item>
-        <item>素食(台灣)</item>
-        <item>主題特色餐廳(台灣)</item>
-        <item>buffet自助餐(台灣)</item>
+        <item>歐式料理(台灣)</item>
+        <item>南洋料理(台灣)</item>
+        <item>鍋類料理(台灣)</item>
+        <item>燒烤料理(台灣)</item>
+        <item>下午茶(台灣)</item>
+        <item>主題餐廳(台灣)</item>
     </string-array>
 </resources>
