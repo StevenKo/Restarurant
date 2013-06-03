@@ -48,6 +48,7 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
 	private int categoryId = 0;
 	private int rankCategoryId = 0;
 	private int typeId = 0;
+	private int secondCategoryId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,20 +62,33 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
         mBundle = this.getIntent().getExtras();
         areaId = mBundle.getInt("AreaId");
         categoryId = mBundle.getInt("CategoryId");
+        secondCategoryId = mBundle.getInt("SecondCategoryId");
         typeId = mBundle.getInt("TypeId");
-        if(areaId!=0){
+        if(areaId!=0 && secondCategoryId!=0){
+        	area = Area.getArea(areaId);
+        	category = Category.getSecondCategory(secondCategoryId);
+        	ab.setTitle(area.getName() + ":" + category.getName());
+        	adapter = new AreaSecondCategoryPagerAdapter(getSupportFragmentManager());
+        	indicator.setVisibility(View.GONE);
+        }else if(areaId!=0 && typeId!=0){
+        	area = Area.getArea(areaId);
+        	type = Type.getType(typeId);
+        	ab.setTitle(area.getName() + ":" + type.getName());
+        	adapter = new AreaTypePagerAdapter(getSupportFragmentManager());
+        	indicator.setVisibility(View.GONE);
+        }else if(areaId!=0){
         	area = Area.getArea(areaId);
         	rankCategories = Category.getRankCategories();
             ab.setTitle(area.getName());
-            adapter = new AreaCategoryPagerAdapter(getSupportFragmentManager(), rankCategories);
+            adapter = new AreaRankCategoryPagerAdapter(getSupportFragmentManager(), rankCategories);
         }else if (categoryId!=0){
         	category = Category.getCategory(categoryId);
             ab.setTitle(category.getName());
             adapter = new CategoryPagerAdapter(getSupportFragmentManager(), category.getSecondCategories());
-        }else{
+        }else if(typeId!=0){
         	type = Type.getType(typeId);
         	ab.setTitle(type.getName());
-        	adapter = new AreaPagerAdapter(getSupportFragmentManager());
+        	adapter = new TypePagerAdapter(getSupportFragmentManager());
         	indicator.setVisibility(View.GONE);
         }
 
@@ -82,7 +96,7 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
         pager.setAdapter(adapter);
         indicator.setViewPager(pager);
         
-        if(areaId!=0){
+        if(areaId!=0 && categoryId==0 && typeId==0 && secondCategoryId==0){
         	pager.setCurrentItem(1);
         	rankCategoryId = rankCategories.get(0).getId();
         	indicator.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
@@ -99,11 +113,11 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
         setAboutUsDialog();
     }
 
-    class AreaCategoryPagerAdapter extends FragmentPagerAdapter {
+    class AreaRankCategoryPagerAdapter extends FragmentPagerAdapter {
 
         ArrayList<Category> categories;
 
-        public AreaCategoryPagerAdapter(FragmentManager fm, ArrayList<Category> categories) {
+        public AreaRankCategoryPagerAdapter(FragmentManager fm, ArrayList<Category> categories) {
             super(fm);
             this.categories = categories;
         }
@@ -112,7 +126,7 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
         public Fragment getItem(int position) {
             Fragment kk = new Fragment();
             if(position == 0)
-              kk = AreaCategoryListFragment.newInstance();
+              kk = AreaCategoryListFragment.newInstance(areaId);
             else
               kk = CategoryTabFragment.newInstance(areaId, categories.get(position-1).getId(),0, 0,0, false, false);
             return kk;
@@ -169,10 +183,10 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
         }
     }
     
-    class AreaPagerAdapter extends FragmentPagerAdapter {
+    class TypePagerAdapter extends FragmentPagerAdapter {
 
 
-        public AreaPagerAdapter(FragmentManager fm) {
+        public TypePagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -180,6 +194,56 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
         public Fragment getItem(int position) {
             Fragment kk = new Fragment();
             kk = CategoryTabFragment.newInstance(0, 0,0 ,0, typeId,false, false);
+            return kk;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return "";
+        }
+
+        @Override
+        public int getCount() {
+            return 1;
+        }
+    }
+    
+    class AreaTypePagerAdapter extends FragmentPagerAdapter {
+
+
+        public AreaTypePagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            Fragment kk = new Fragment();
+            kk = CategoryTabFragment.newInstance(areaId, 0,0 ,0, typeId,false, false);
+            return kk;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return "";
+        }
+
+        @Override
+        public int getCount() {
+            return 1;
+        }
+    }
+    
+    class AreaSecondCategoryPagerAdapter extends FragmentPagerAdapter {
+
+
+        public AreaSecondCategoryPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            Fragment kk = new Fragment();
+            kk = CategoryTabFragment.newInstance(areaId, 0,0 ,secondCategoryId, 0,false, false);
             return kk;
         }
 

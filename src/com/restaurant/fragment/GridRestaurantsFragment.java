@@ -138,6 +138,8 @@ public class GridRestaurantsFragment extends Fragment {
         		restaurants = RestaurantAPI.getAreaCategoryRestaurants(area_id, category_id, 1);
         	}else if(area_id != 0 && rank_category_id != 0){
         		restaurants = RestaurantAPI.getAreaRankCategoryRestaurants(area_id, rank_category_id, 1);
+        	}else if(area_id != 0 && second_category_id != 0){
+        		restaurants = RestaurantAPI.getAreaSecondCategoryRestaurants(area_id, second_category_id, 1);
         	}else if(area_id != 0 && type_id != 0){
         		restaurants = RestaurantAPI.getAreaTypeRestaurants(area_id, type_id, 1);
         	}else if(category_id != 0 && area_id == 0){
@@ -196,6 +198,8 @@ public class GridRestaurantsFragment extends Fragment {
             	moreRestaurants = RestaurantAPI.getAreaCategoryRestaurants(area_id, category_id, myPage);
         	}else if(area_id != 0 && rank_category_id != 0){
         		moreRestaurants = RestaurantAPI.getAreaRankCategoryRestaurants(area_id, rank_category_id, myPage);
+        	}else if(area_id != 0 && second_category_id != 0){
+        		moreRestaurants = RestaurantAPI.getAreaSecondCategoryRestaurants(area_id, second_category_id, myPage);
         	}else if(area_id != 0 && type_id != 0){
         		moreRestaurants = RestaurantAPI.getAreaTypeRestaurants(area_id, type_id, myPage);
         	}else if(category_id != 0 && area_id == 0){

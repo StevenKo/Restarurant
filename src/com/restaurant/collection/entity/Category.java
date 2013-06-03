@@ -96,6 +96,17 @@ public class Category {
 		return null;
 	}
 	
+	public static Category getSecondCategory(int id){
+		ArrayList<Category> cs = getCategories();
+		for (Category category : cs){
+			for(Category subCategory : category.getSecondCategories()){
+				if(subCategory.getId() == id)
+					return subCategory;
+			}
+		}
+		return null;
+	}
+	
 //	public static ArrayList<Category> getAreaCategories(int area_id){
 //		ArrayList<Category> newlist = new ArrayList<Category>();
 //		JSONArray jArray;
