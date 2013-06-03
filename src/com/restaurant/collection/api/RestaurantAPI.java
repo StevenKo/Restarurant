@@ -128,8 +128,28 @@ public class RestaurantAPI {
     }
     
     
+    public static ArrayList<Restaurant> getSecondCategoryRestaurants(int sec_c_id, int page) {
+        String message = getMessageFromServer("GET", "/api/v1/restaurants/second_restaurants?sec_c_id=" + sec_c_id + "&page=" + page, null, null);
+        ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+        if (message == null) {
+            return null;
+        } else {
+            return parseRestaurants(message, restaurants);
+        }
+    }
+    
     public static ArrayList<Restaurant> getTypeRestaurants(int type_id, int page) {
         String message = getMessageFromServer("GET", "/api/v1/restaurants?area_id=1&type_id=" + type_id + "&page=" + page, null, null);
+        ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+        if (message == null) {
+            return null;
+        } else {
+            return parseRestaurants(message, restaurants);
+        }
+    }
+    
+    public static ArrayList<Restaurant> getAreaSecondCategoryRestaurants(int area_id,int sec_c_id, int page) {
+        String message = getMessageFromServer("GET", "/api/v1/restaurants/second_restaurants?area_id=" + area_id +"&sec_c_id="+ sec_c_id+ "&page=" + page, null, null);
         ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
         if (message == null) {
             return null;
@@ -321,6 +341,7 @@ public class RestaurantAPI {
                 String grade_food = jArray.getJSONObject(i).getString("grade_food");
                 String grade_service = jArray.getJSONObject(i).getString("grade_service");
                 String pic_url = jArray.getJSONObject(i).getString("pic_url");
+                String price = jArray.getJSONObject(i).getString("price");
                 double x_lat = jArray.getJSONObject(i).getDouble("x_lat");
                 double y_long = jArray.getJSONObject(i).getDouble("y_long");
                 
@@ -329,8 +350,8 @@ public class RestaurantAPI {
                     rank = jArray.getJSONObject(i).getInt("rank");
                 
                 Restaurant restaurant = new Restaurant(id, name,pic_url, grade_food,
-                		grade_service,  "", 
-                		"", "", "", "", "",0, "", "", "", x_lat,y_long);
+                		grade_service,  "", price,
+                		"", "", "", "",0, "", "", "", x_lat,y_long);
                 restaurants.add(restaurant);
             }
 
@@ -371,6 +392,10 @@ public class RestaurantAPI {
         return restaurants;
     }
     
+//    (int id, String name, String pic_url,String grade_food, String grade_service,  String grade_ambiance, String price,String open_time,
+//    		String rest_date, String address, String phone, int rate_num, String introduction,
+//    		 String official_link,  String recommand_dish,  double x_lan, double y_long)
+    
     private static ArrayList<Restaurant> parseSelectRestaurants(String message, ArrayList<Restaurant> restaurants) {
         try {
             JSONArray jArray;
@@ -382,15 +407,15 @@ public class RestaurantAPI {
                 String grade_food = jArray.getJSONObject(i).getString("grade_food");
                 String grade_service = jArray.getJSONObject(i).getString("grade_service");
                 String pic_url = jArray.getJSONObject(i).getString("pic_url");
+                String price = jArray.getJSONObject(i).getString("price");
                 
                 int rank = 0;
                 if (!jArray.getJSONObject(i).isNull("rank"))
                     rank = jArray.getJSONObject(i).getInt("rank");
 
-                Restaurant restaurant = new Restaurant(id, name, grade_food,
-                		grade_service, pic_url, "", 
-                		"", "", "", 
-                		"", "", 0,"", "", "", 0, rank);
+                Restaurant restaurant = new Restaurant(id, name, pic_url, grade_food,
+                		grade_service, "", price,
+                		"", "", "", "", 0,"", "", "", 0, rank);
                 restaurants.add(restaurant);
             }
 
@@ -479,6 +504,16 @@ public class RestaurantAPI {
         } catch (IOException e) {
             // TODO Auto-generated catch block
         }
-   } 
-    
+   }
+   
+   
+   public static ArrayList<Restaurant> getRestaurantsDistance(double x, double y, ArrayList<Restaurant> res) {
+       String message = getMessageFromServer("GET", "/json?origins=" , null, "http://maps.googleapis.com/maps/api/distancematrix");
+       ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+       if (message == null) {
+           return null;
+       } else {
+           return parseRestaurants(message, restaurants);
+       }
+   }
 }
