@@ -19,20 +19,21 @@ import com.restaurant.collection.entity.Type;
 
 public class AreaTypeListAdapter extends BaseAdapter {
 
-    private final Activity        activity;
-    private final  ArrayList<Type>       data;
+    private  Activity        activity;
+    private  ArrayList<Type>       data;
+    private int area_id;
     private static LayoutInflater inflater = null;
 
-    public AreaTypeListAdapter(Activity a, ArrayList<Type> cs) {
+    public AreaTypeListAdapter(Activity a, ArrayList<Type> cs, int a_id) {
         activity = a;
         data = cs;
+        area_id = a_id;
         inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
     }
 
     public int getCount() {
-//        return data.size();
-    	return 2;
+        return data.size();
     }
 
     public Object getItem(int position) {
@@ -58,6 +59,7 @@ public class AreaTypeListAdapter extends BaseAdapter {
             	Intent intent = new Intent(activity, CategoryActivity.class);
             	Bundle bundle = new Bundle();
             	bundle.putInt("TypeId", data.get(position).getId());
+            	bundle.putInt("AreaId", area_id);
                 intent.putExtras(bundle);
             	activity.startActivity(intent);
 

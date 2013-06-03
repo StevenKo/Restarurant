@@ -42,16 +42,18 @@ public class GridEatNoteFragment extends Fragment {
 	private boolean is_selected;
 	private LinearLayout noDataLayout;
 	private int rank_category_id;
+	private int second_category_id;
 
     public GridEatNoteFragment() {
 
     }
     
-    public static final GridEatNoteFragment newInstance(int area_id,int rank_category_id, int category_id, int type_id, boolean is_collection, boolean is_selected) {
+    public static final GridEatNoteFragment newInstance(int area_id,int rank_category_id, int category_id, int second_category_id, int type_id, boolean is_collection, boolean is_selected) {
     	GridEatNoteFragment f = new GridEatNoteFragment();
         Bundle bdl = new Bundle();
         bdl.putInt("AreaId", area_id);
         bdl.putInt("CategoryId", category_id);
+        bdl.putInt("SecondCategoryId", second_category_id);
         bdl.putInt("RankCategoryId", rank_category_id);
         bdl.putInt("TypeId", type_id);
         bdl.putBoolean("IsCollection", is_collection);
@@ -66,6 +68,7 @@ public class GridEatNoteFragment extends Fragment {
     	area_id = getArguments().getInt("AreaId");
 		rank_category_id = getArguments().getInt("RankCategoryId");
 		category_id = getArguments().getInt("CategoryId");
+		second_category_id = getArguments().getInt("SecondCategoryId");
 		type_id = getArguments().getInt("TypeId");
 		is_collection = getArguments().getBoolean("IsCollection");
 		is_selected = getArguments().getBoolean("IsSelected");
@@ -133,9 +136,17 @@ public class GridEatNoteFragment extends Fragment {
         	if(area_id !=0 && category_id != 0){
         		notes = RestaurantAPI.getAreaCategoryNotes(area_id, category_id, 1);
         	}else if(area_id != 0 && rank_category_id != 0){
-//        		notes = RestaurantAPI.get(area_id, type_id, 1);
+        		notes = RestaurantAPI.getAreaRankCategoryNotes(area_id, rank_category_id, 1);
+        	}else if(area_id != 0 && second_category_id != 0){
+        		notes = RestaurantAPI.getAreaSecondCategoryNotes(area_id, second_category_id, 1);
         	}else if(area_id != 0 && type_id != 0){
         		notes = RestaurantAPI.getAreaTypeNotes(area_id, type_id, 1);
+        	}else if(category_id != 0 && area_id == 0){
+        		notes = RestaurantAPI.getCategoryaNotes(category_id, 1);
+        	}else if(second_category_id != 0 && area_id == 0){
+        		notes = RestaurantAPI.getSecondCategoryaNotes(second_category_id, 1);
+        	}else if(area_id == 0 && type_id != 0){
+        		notes = RestaurantAPI.getTypeNotes(type_id, 1);
         	}else if(is_collection){
         		SQLiteRestaurant db = new SQLiteRestaurant(getActivity());
         		notes = db.getAllNotes();
@@ -185,9 +196,17 @@ public class GridEatNoteFragment extends Fragment {
         	if(area_id !=0 && category_id != 0){
         		moreNotes = RestaurantAPI.getAreaCategoryNotes(area_id, category_id, myPage);
         	}else if(area_id != 0 && rank_category_id != 0){
-//        		moreNotes = RestaurantAPI.get(area_id, type_id, 1);
+        		moreNotes = RestaurantAPI.getAreaRankCategoryNotes(area_id, rank_category_id, myPage);
+        	}else if(area_id != 0 && second_category_id != 0){
+        		moreNotes = RestaurantAPI.getAreaSecondCategoryNotes(area_id, second_category_id, myPage);
         	}else if(area_id != 0 && type_id != 0){
         		moreNotes = RestaurantAPI.getAreaTypeNotes(area_id, type_id, myPage);
+        	}else if(category_id != 0 && area_id == 0){
+        		moreNotes = RestaurantAPI.getCategoryaNotes(category_id, myPage);
+        	}else if(second_category_id != 0 && area_id == 0){
+        		moreNotes = RestaurantAPI.getSecondCategoryaNotes(second_category_id, myPage);
+        	}else if(area_id == 0 && type_id != 0){
+        		moreNotes = RestaurantAPI.getTypeNotes(type_id, myPage);
         	}else if(is_selected){
         		moreNotes = RestaurantAPI.getSelectNotes(myPage);
         	}

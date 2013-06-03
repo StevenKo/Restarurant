@@ -240,7 +240,7 @@ public class RestaurantAPI {
    }
    
    public static ArrayList<Note> getAreaSecondCategoryNotes(int area_id, int second_category_id,int page) {
-       String message = getMessageFromServer("GET", "/api/v1/notes/second_notes?area_id="+ area_id  +"&sec_c_id=="+ second_category_id+ "&page=" + page, null, null);
+       String message = getMessageFromServer("GET", "/api/v1/notes/second_notes?area_id="+ area_id  +"&sec_c_id="+ second_category_id+ "&page=" + page, null, null);
        ArrayList<Note> notes = new ArrayList<Note>();
        if (message == null) {
            return null;
@@ -277,7 +277,7 @@ public class RestaurantAPI {
 	   }else if(category_id != 0 && second_category_id ==0){
 		   message = getMessageFromServer("GET", "api/v1/restaurants/around_restaurates?x="+x+"&y="+ y + "&dis="+ dis + "&category_id=" + category_id, null, null); 
 	   }else{
-		   message = getMessageFromServer("GET", "api/v1/restaurants/around_restaurates?x="+x+"&y="+ y + "&dis="+ dis + category_id, null, null); 
+		   message = getMessageFromServer("GET", "api/v1/restaurants/around_restaurates?x="+x+"&y="+ y + "&dis="+ dis , null, null); 
 	   }
 		   
        ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();

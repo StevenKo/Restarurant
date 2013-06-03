@@ -111,7 +111,7 @@
                   android:id="@+id/author_tip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="地 址:"
+                android:text="地 址："
                 android:textSize="18dp" 
                   android:textColor="#999999"
                   android:typeface="serif">
@@ -142,7 +142,7 @@
                   android:id="@+id/author_tip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="營 業 時 間 :"
+                android:text="營 業 時 間："
                 android:textSize="18dp" 
                   android:textColor="#999999"
                   android:typeface="serif">
@@ -173,7 +173,7 @@
                   android:id="@+id/author_tip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="官 方 網 站 :"
+                android:text="官 方 網 站："
                 android:textSize="18dp" 
                   android:textColor="#999999"
                   android:typeface="serif">
@@ -189,6 +189,21 @@
                        android:text="前往官方網站"
                     />
                 </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" 
+                    android:layout_toRightOf="@+id/author_tip">
+                <TextView
+                       android:id="@+id/official_link_none"
+                       android:layout_width="wrap_content"
+		               android:layout_height="wrap_content"
+		               android:layout_marginTop="2px"
+		               android:textSize="16dp" 
+		               android:textColor="#555555"
+		               android:typeface="serif"
+                       android:text="無官方網站"
+                    />
+                </RelativeLayout>
             </RelativeLayout>
             <RelativeLayout android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -199,7 +214,7 @@
                   android:id="@+id/author_tip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="平 均 價 位 :"
+                android:text="平 均 價 位："
                 android:textSize="18dp" 
                   android:textColor="#999999"
                   android:typeface="serif">

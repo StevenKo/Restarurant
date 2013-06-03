@@ -23,18 +23,19 @@ public class AreaCategoryListAdapter extends BaseAdapter {
 
     private final Activity        activity;
     private final  ArrayList<Category>       data;
+	private int area_id;
     private static LayoutInflater inflater = null;
 
-    public AreaCategoryListAdapter(Activity a, ArrayList<Category> cs) {
+    public AreaCategoryListAdapter(Activity a, ArrayList<Category> cs, int a_id) {
         activity = a;
         data = cs;
+        area_id = a_id;
         inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
     }
 
     public int getCount() {
-//        return data.size();
-    	return 3;
+        return data.size();
     }
 
     public Object getItem(int position) {
@@ -59,7 +60,8 @@ public class AreaCategoryListAdapter extends BaseAdapter {
             	
             	Intent intent = new Intent(activity, CategoryActivity.class);
             	Bundle bundle = new Bundle();
-            	bundle.putInt("CategoryId", data.get(position).getId());
+            	bundle.putInt("SecondCategoryId", data.get(position).getId());
+            	bundle.putInt("AreaId", area_id);
                 intent.putExtras(bundle);
             	activity.startActivity(intent);
 

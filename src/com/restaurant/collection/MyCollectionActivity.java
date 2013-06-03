@@ -96,10 +96,10 @@ public class MyCollectionActivity extends SherlockFragmentActivity{
             Fragment kk = new Fragment();     
             switch(position){
         	case 0:
-        		kk = GridRestaurantsFragment.newInstance(0,0,0,0,true,false);
+        		kk = GridRestaurantsFragment.newInstance(0,0,0,0,0,true,false);
         		break;
         	case 1:
-        		kk = GridEatNoteFragment.newInstance(0,0,0,0,true,false);
+        		kk = GridEatNoteFragment.newInstance(0,0,0,0,0,true,false);
         		break;
         	}
             return kk;
