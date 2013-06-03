@@ -51,28 +51,7 @@
         android:layout_marginBottom="5dp"
         >
         
-        <LinearLayout android:id="@+id/category_search"
-             android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:background="@drawable/restaurant_selector"
-            android:clickable="true"
-            android:padding="15dp"        
-            >
-            <ImageView 
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_weight="1"
-                android:src="@drawable/food"
-                />     
-            <TextView 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/category_search"
-                />
-        </LinearLayout>
+        
         <LinearLayout android:id="@+id/location_search"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
@@ -82,7 +61,6 @@
             android:background="@drawable/restaurant_selector"
             android:clickable="true"
             android:padding="15dp"
-            android:layout_marginLeft="5dp"           
             >
             <ImageView 
                 android:layout_width="64dp"
@@ -117,6 +95,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/foodtype_search"
+                />
+        </LinearLayout>
+        <LinearLayout android:id="@+id/category_search"
+             android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@drawable/restaurant_selector"
+            android:clickable="true"
+            android:padding="15dp"
+            android:layout_marginLeft="5dp"                   
+            >
+            <ImageView 
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_weight="1"
+                android:src="@drawable/food"
+                />     
+            <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/category_search"
                 />
         </LinearLayout>
     </LinearLayout>
