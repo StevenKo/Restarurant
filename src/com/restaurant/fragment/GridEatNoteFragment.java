@@ -143,6 +143,8 @@ public class GridEatNoteFragment extends Fragment {
         		notes = RestaurantAPI.getCategoryaNotes(category_id, 1);
         	}else if(second_category_id != 0 && area_id == 0){
         		notes = RestaurantAPI.getSecondCategoryaNotes(second_category_id, 1);
+        	}else if(area_id == 0 && type_id != 0){
+        		notes = RestaurantAPI.getTypeNotes(type_id, 1);
         	}else if(is_collection){
         		SQLiteRestaurant db = new SQLiteRestaurant(getActivity());
         		notes = db.getAllNotes();
@@ -199,6 +201,8 @@ public class GridEatNoteFragment extends Fragment {
         		moreNotes = RestaurantAPI.getCategoryaNotes(category_id, myPage);
         	}else if(second_category_id != 0 && area_id == 0){
         		moreNotes = RestaurantAPI.getSecondCategoryaNotes(second_category_id, myPage);
+        	}else if(area_id == 0 && type_id != 0){
+        		moreNotes = RestaurantAPI.getTypeNotes(type_id, myPage);
         	}else if(is_selected){
         		moreNotes = RestaurantAPI.getSelectNotes(myPage);
         	}

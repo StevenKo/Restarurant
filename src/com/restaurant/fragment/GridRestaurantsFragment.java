@@ -144,6 +144,8 @@ public class GridRestaurantsFragment extends Fragment {
         		restaurants = RestaurantAPI.getCategoryRestaurants(category_id, 1);
         	}else if(second_category_id != 0 && area_id == 0){
         		restaurants = RestaurantAPI.getSecondCategoryRestaurants(second_category_id, 1);
+        	}else if(area_id == 0 && type_id != 0){
+        		restaurants = RestaurantAPI.getTypeRestaurants(type_id, 1);
         	}else if(is_collection){
         		SQLiteRestaurant db = new SQLiteRestaurant(getActivity());
         		restaurants = db.getAllRestaurants();
@@ -200,6 +202,8 @@ public class GridRestaurantsFragment extends Fragment {
         		moreRestaurants = RestaurantAPI.getCategoryRestaurants(category_id, myPage);
         	}else if(second_category_id != 0 && area_id == 0){
         		moreRestaurants = RestaurantAPI.getSecondCategoryRestaurants(second_category_id, myPage);
+        	}else if(area_id == 0 && type_id != 0){
+        		moreRestaurants = RestaurantAPI.getTypeRestaurants(type_id, myPage);
         	}else if(is_selected){
         		moreRestaurants = RestaurantAPI.getSelectRestaurants(myPage);
         	}

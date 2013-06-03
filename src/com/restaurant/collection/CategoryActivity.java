@@ -179,7 +179,7 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
         @Override
         public Fragment getItem(int position) {
             Fragment kk = new Fragment();
-            kk = CategoryTabFragment.newInstance(0, 0,categoryId,0, typeId,false, false);
+            kk = CategoryTabFragment.newInstance(0, 0,0 ,0, typeId,false, false);
             return kk;
         }
 
