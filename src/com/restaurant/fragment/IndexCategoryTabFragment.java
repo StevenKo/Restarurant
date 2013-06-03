@@ -38,7 +38,7 @@ public class IndexCategoryTabFragment extends Fragment {
         mTabHost.setup(getActivity(), getChildFragmentManager(), R.layout.fragment_tabhost);
 
         setupTab(AreasListFragment.class, "依縣市", "View1");
-        setupTab(FoodCategoryListFragment.class, "依料理", "View2");
+        setupTab(FoodKindsListFragment.class, "依料理", "View2");
         setupTab(FoodTypesListFragment.class, "依類別", "View3");
 
         return mTabHost;

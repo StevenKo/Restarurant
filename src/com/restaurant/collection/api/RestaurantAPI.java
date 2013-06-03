@@ -219,6 +219,16 @@ public class RestaurantAPI {
        }
    }
    
+   public static ArrayList<Note> getSecondCategoryaNotes(int second_category_id, int page) {
+       String message = getMessageFromServer("GET", "/api/v1/notes/second_notes?sec_c_id="+ second_category_id +"&page=" + page, null, null);
+       ArrayList<Note> notes = new ArrayList<Note>();
+       if (message == null) {
+           return null;
+       } else {
+           return parseNotes(message, notes);
+       }
+   }
+   
    public static ArrayList<Note> getAreaCategoryNotes(int area_id, int category_id,int page) {
        String message = getMessageFromServer("GET", "/api/v1/notes?area_id="+ area_id  +"&category_id="+ category_id+ "&page=" + page, null, null);
        ArrayList<Note> notes = new ArrayList<Note>();
@@ -229,6 +239,15 @@ public class RestaurantAPI {
        }
    }
    
+   public static ArrayList<Note> getAreaSecondCategoryNotes(int area_id, int second_category_id,int page) {
+       String message = getMessageFromServer("GET", "/api/v1/notes/second_notes?area_id="+ area_id  +"&sec_c_id=="+ second_category_id+ "&page=" + page, null, null);
+       ArrayList<Note> notes = new ArrayList<Note>();
+       if (message == null) {
+           return null;
+       } else {
+           return parseNotes(message, notes);
+       }
+   }
    
    public static ArrayList<Note> getAreaRankCategoryNotes(int area_id, int rank_category_id,int page) {
        String message = getMessageFromServer("GET", "/api/v1/notes?area_id="+ area_id  +"&rank_category_id="+ rank_category_id+ "&page=" + page, null, null);

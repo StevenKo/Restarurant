@@ -10,14 +10,14 @@ import com.restaurant.adapter.CategoryListAdapter;
 import com.restaurant.collection.CategoryActivity;
 import com.restaurant.collection.api.RestaurantAPI;
 
-public class FoodCategoryListFragment extends ListFragment {
+public class FoodKindsListFragment extends ListFragment {
 
-    public FoodCategoryListFragment() {
+    public FoodKindsListFragment() {
 
     }
 
-    public static final FoodCategoryListFragment newInstance() {
-        FoodCategoryListFragment f = new FoodCategoryListFragment();
+    public static final FoodKindsListFragment newInstance() {
+        FoodKindsListFragment f = new FoodKindsListFragment();
         return f;
     }
 
