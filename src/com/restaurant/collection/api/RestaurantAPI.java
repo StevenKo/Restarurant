@@ -229,6 +229,17 @@ public class RestaurantAPI {
        }
    }
    
+   
+   public static ArrayList<Note> getAreaRankCategoryNotes(int area_id, int rank_category_id,int page) {
+       String message = getMessageFromServer("GET", "/api/v1/notes?area_id="+ area_id  +"&rank_category_id="+ rank_category_id+ "&page=" + page, null, null);
+       ArrayList<Note> notes = new ArrayList<Note>();
+       if (message == null) {
+           return null;
+       } else {
+           return parseNotes(message, notes);
+       }
+   }
+   
    public static ArrayList<Note> getAreaTypeNotes(int area_id, int type_id,int page) {
        String message = getMessageFromServer("GET", "/api/v1/notes?area_id="+ area_id  +"&type_id="+ type_id+ "&page=" + page, null, null);
        ArrayList<Note> notes = new ArrayList<Note>();
