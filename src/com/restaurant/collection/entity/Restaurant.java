@@ -19,12 +19,13 @@ public class Restaurant {
     
     double	x_lat;
     double	y_long;
+    String  dis;
     public Restaurant(){
-    	this(1, "", "", "","","","","","","","", 0,"","","", 0, 0);
+    	this(1, "", "", "","","","","","","","", 0,"","","", 0, 0,"");
     }
     public Restaurant(int id, String name, String pic_url,String grade_food, String grade_service,  String grade_ambiance, String price,String open_time,
     		String rest_date, String address, String phone, int rate_num, String introduction,
-    		 String official_link,  String recommand_dish,  double x_lan, double y_long){
+    		 String official_link,  String recommand_dish,  double x_lan, double y_long,String dis){
     	this.id = id;
     	this.name = name;
     	this.pic_url = pic_url;
@@ -114,5 +115,11 @@ public class Restaurant {
     	return y_long;
     }
     
-
+    public void setDis(String dis){
+    	this.dis = dis;
+    }
+    
+    public String getDis(){
+    	return dis;
+    }
 }
