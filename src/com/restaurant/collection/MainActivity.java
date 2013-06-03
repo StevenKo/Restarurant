@@ -117,13 +117,37 @@ public class MainActivity extends SherlockFragmentActivity implements OnButtonCl
                 kk = IndexFragment.newInstance();
                 break;
             case 2:
-                kk = GridRestaurantsFragment.newInstance(0,0,0,false,true);
+                kk = GridRestaurantsFragment.newInstance(0,0,0,0,false,true);
                 break;
             case 3:
                 kk = GridEatNoteFragment.newInstance(0,0,0,false,true);
                 break;
-            default:
-            	kk = GridRestaurantsFragment.newInstance(0,0,0,false,true);
+            case 4:
+            	kk = GridRestaurantsFragment.newInstance(1,1,0,0,false,false);
+            	break;
+            case 5:
+            	kk = GridRestaurantsFragment.newInstance(1,2,0,0,false,false);
+            	break;
+            case 6:
+            	kk = GridRestaurantsFragment.newInstance(1,3,0,0,false,false);
+            	break;
+            case 7:
+            	kk = GridRestaurantsFragment.newInstance(1,4,0,0,false,false);
+            	break;
+            case 8:
+            	kk = GridRestaurantsFragment.newInstance(1,5,0,0,false,false);
+            	break;
+            case 9:
+            	kk = GridRestaurantsFragment.newInstance(1,6,0,0,false,false);
+            	break;
+            case 10:
+            	kk = GridRestaurantsFragment.newInstance(1,7,0,0,false,false);
+            	break;
+            case 11:
+            	kk = GridRestaurantsFragment.newInstance(1,8,0,0,false,false);
+            	break;
+            case 12:
+            	kk = GridRestaurantsFragment.newInstance(1,9,0,0,false,false);
             	break;
             }
             return kk;
