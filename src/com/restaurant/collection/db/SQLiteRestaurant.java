@@ -234,7 +234,7 @@ public class SQLiteRestaurant extends SQLiteOpenHelper {
          		   grade_food, grade_service,  grade_ambiance,
          		   price, open_time, rest_date, address, 
             		   phone, rate_num, introduction, 
-            		   official_link, recommand_dish, x_lat, y_long);
+            		   official_link, recommand_dish, x_lat, y_long,"");
             rs.add(r);
         }
         return rs;
