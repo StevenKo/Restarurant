@@ -59,7 +59,7 @@ public class CategoryActivity extends SherlockFragmentActivity {
         typeId = mBundle.getInt("TypeId");
         if(areaId!=0){
         	area = Area.getArea(areaId);
-        	areaCategories = Category.getCategories();
+        	areaCategories = Category.getRankCategories();
             ab.setTitle(area.getName());
             adapter = new CategoryPagerAdapter(getSupportFragmentManager(), areaCategories);
         }else if (categoryId!=0){
@@ -121,15 +121,16 @@ public class CategoryActivity extends SherlockFragmentActivity {
             if(position == 0)
               kk = AreaCategoryListFragment.newInstance();
             else
-              kk = CategoryTabFragment.newInstance(areaId, categories.get(position-1).getId(), typeId, false, false);
+              kk = CategoryTabFragment.newInstance(areaId, categories.get(position-1).getId(),0, typeId, false, false);
             return kk;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
         	if(position == 0)
-        		return "分類";
-            return "中式料理";
+        	  return "分類";
+        	else
+              return categories.get(position-1).getName();
         }
 
         @Override
@@ -148,7 +149,7 @@ public class CategoryActivity extends SherlockFragmentActivity {
         @Override
         public Fragment getItem(int position) {
             Fragment kk = new Fragment();
-            kk = CategoryTabFragment.newInstance(2, categoryId, typeId,false, false);
+            kk = CategoryTabFragment.newInstance(2, 1,categoryId, typeId,false, false);
             return kk;
         }
 
