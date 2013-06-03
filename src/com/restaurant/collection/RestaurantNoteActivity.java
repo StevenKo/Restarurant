@@ -16,6 +16,7 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -26,7 +27,7 @@ import com.restaurant.collection.db.SQLiteRestaurant;
 import com.restaurant.collection.entity.Note;
 import com.restaurant.gps.util.GPSTracker;
 
-public class RestaurantNoteActivity extends SherlockActivity{
+public class RestaurantNoteActivity<Bitmap> extends SherlockActivity{
 	
 	private static final int ID_RESTAURANT = 0;
 	private LinearLayout layoutProgress;
@@ -40,6 +41,7 @@ public class RestaurantNoteActivity extends SherlockActivity{
 	private ImageButton favorite_button;
 	private double latitude;
 	private double longitude;
+	private ProgressBar progress;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,11 +105,23 @@ public class RestaurantNoteActivity extends SherlockActivity{
          webArticle.getSettings().setUseWideViewPort(true);
 
          webArticle.setWebViewClient(new WebViewClient() {
-
-    	 public void onPageFinished(WebView view, String url) {
-    		   layoutProgress.setVisibility(View.GONE);
-    	      }
-    	  });
+        	 
+        	 @Override
+	    	 public void onPageFinished(WebView view, String url) {
+	    		 progress.setVisibility(View.GONE);
+	    		 RestaurantNoteActivity.this.progress.setProgress(100);
+	    		 super.onPageFinished(view, url);
+	    	 }
+        	 
+        	 @Override
+	    	 public void onPageStarted(WebView view, String url, android.graphics.Bitmap favicon) {
+	              progress.setVisibility(View.VISIBLE);
+	              RestaurantNoteActivity.this.progress.setProgress(0);
+	             super.onPageStarted(view, url, favicon);
+	         }
+         });
+	         
+	         
 	      webArticle.setWebChromeClient(new WebChromeClient());
 	      webArticle.loadUrl(note.getLink()); 
 		
@@ -177,6 +191,8 @@ public class RestaurantNoteActivity extends SherlockActivity{
 		 place_button = (ImageButton)findViewById(R.id.place_button);
 		 favorite_button = (ImageButton)findViewById(R.id.favorite_button);
 		 layoutProgress.setVisibility(View.GONE);
+		 progress = (ProgressBar) findViewById(R.id.progressBar);
+	     progress.setMax(100);
 	}
 	
 	@Override
