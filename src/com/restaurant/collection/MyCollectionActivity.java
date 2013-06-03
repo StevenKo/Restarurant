@@ -99,7 +99,7 @@ public class MyCollectionActivity extends SherlockFragmentActivity{
         		kk = GridRestaurantsFragment.newInstance(0,0,0,0,0,true,false);
         		break;
         	case 1:
-        		kk = GridEatNoteFragment.newInstance(0,0,0,0,true,false);
+        		kk = GridEatNoteFragment.newInstance(0,0,0,0,0,true,false);
         		break;
         	}
             return kk;
