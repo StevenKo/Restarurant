@@ -6,6 +6,12 @@
     android:gravity="center_horizontal"
      >
      
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+         />
      
     
     <LinearLayout android:id="@+id/layout_progress"
@@ -78,13 +84,6 @@
            android:id="@+id/favorite_button"
            android:layout_weight="1"/>
        </LinearLayout>
-       
-       <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        />
        
        <WebView  android:id="@+id/web_article"
 	       android:layout_width="fill_parent"

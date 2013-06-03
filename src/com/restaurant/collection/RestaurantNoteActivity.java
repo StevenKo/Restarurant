@@ -27,7 +27,7 @@ import com.restaurant.collection.db.SQLiteRestaurant;
 import com.restaurant.collection.entity.Note;
 import com.restaurant.gps.util.GPSTracker;
 
-public class RestaurantNoteActivity<Bitmap> extends SherlockActivity{
+public class RestaurantNoteActivity extends SherlockActivity{
 	
 	private static final int ID_RESTAURANT = 0;
 	private LinearLayout layoutProgress;
@@ -105,24 +105,20 @@ public class RestaurantNoteActivity<Bitmap> extends SherlockActivity{
          webArticle.getSettings().setUseWideViewPort(true);
 
          webArticle.setWebViewClient(new WebViewClient() {
-        	 
-        	 @Override
-	    	 public void onPageFinished(WebView view, String url) {
-	    		 progress.setVisibility(View.GONE);
-	    		 RestaurantNoteActivity.this.progress.setProgress(100);
-	    		 super.onPageFinished(view, url);
-	    	 }
-        	 
-        	 @Override
-	    	 public void onPageStarted(WebView view, String url, android.graphics.Bitmap favicon) {
-	              progress.setVisibility(View.VISIBLE);
-	              RestaurantNoteActivity.this.progress.setProgress(0);
-	             super.onPageStarted(view, url, favicon);
-	         }
-         });
-	         
-	         
-	      webArticle.setWebChromeClient(new WebChromeClient());
+
+    	 public void onPageFinished(WebView view, String url) {
+    		   progress.setVisibility(View.GONE);
+    	      }
+    	  });
+         
+	      webArticle.setWebChromeClient(new WebChromeClient() {  
+
+	            public void onProgressChanged(WebView view, int progress_value) {  
+	            	progress.setProgress(progress_value);  
+	            }  
+
+	      });
+	      
 	      webArticle.loadUrl(note.getLink()); 
 		
 	}
