@@ -34,7 +34,7 @@ public class GridRestaurantsFragment extends Fragment {
 
     private int                               myPage          = 1;
     private Boolean                           checkLoad       = true;
-    private final ArrayList<Restaurant> moreRestaurants = new ArrayList<Restaurant>();
+    private ArrayList<Restaurant> moreRestaurants = new ArrayList<Restaurant>();
 	private int area_id;
 	private int category_id;
 	private int type_id;
@@ -178,7 +178,17 @@ public class GridRestaurantsFragment extends Fragment {
         @Override
         protected Object doInBackground(Object... params) {
 
-            moreRestaurants.clear();
+            if(area_id !=0 && category_id != 0){
+            	moreRestaurants = RestaurantAPI.getAreaCategoryRestaurants(area_id, category_id, myPage);
+        	}else if(area_id != 0 && type_id != 0){
+        		moreRestaurants = RestaurantAPI.getAreaTypeRestaurants(area_id, type_id, myPage);
+        	}else if(is_selected){
+        		moreRestaurants = RestaurantAPI.getSelectRestaurants(myPage);
+        	}
+            
+            for (int i = 0; i < moreRestaurants.size(); i++) {
+            	restaurants.add(moreRestaurants.get(i));
+            }
 
             return null;
         }
