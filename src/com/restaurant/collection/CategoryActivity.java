@@ -22,6 +22,7 @@ import com.restaurant.collection.entity.Category;
 import com.restaurant.collection.entity.Type;
 import com.restaurant.fragment.AreaCategoryListFragment;
 import com.restaurant.fragment.CategoryTabFragment;
+import com.restaurant.fragment.SecondCategoryListFragment;
 import com.viewpagerindicator.TitlePageIndicator;
 
 public class CategoryActivity extends SherlockFragmentActivity {
@@ -35,13 +36,13 @@ public class CategoryActivity extends SherlockFragmentActivity {
     private ViewPager           pager;
 	private Bundle mBundle;
 	private Area area;
-	private ArrayList<Category> areaCategories;
+	private ArrayList<Category> rankCategories;
 	private Category category;
 	private FragmentPagerAdapter adapter;
 	private Type type;
-	private ArrayList<Area> areas;
 	private int areaId = 0;
 	private int categoryId = 0;
+	private int rankCategoryId = 0;
 	private int typeId = 0;
 
     @Override
@@ -59,18 +60,15 @@ public class CategoryActivity extends SherlockFragmentActivity {
         typeId = mBundle.getInt("TypeId");
         if(areaId!=0){
         	area = Area.getArea(areaId);
-        	areaCategories = Category.getRankCategories();
+        	rankCategories = Category.getRankCategories();
             ab.setTitle(area.getName());
-            adapter = new CategoryPagerAdapter(getSupportFragmentManager(), areaCategories);
+            adapter = new AreaCategoryPagerAdapter(getSupportFragmentManager(), rankCategories);
         }else if (categoryId!=0){
         	category = Category.getCategory(categoryId);
-//            areas = Area.getCategoryAreas(categoryId);
             ab.setTitle(category.getName());
-            adapter = new AreaPagerAdapter(getSupportFragmentManager());
-            indicator.setVisibility(View.GONE);
+            adapter = new CategoryPagerAdapter(getSupportFragmentManager(), category.getSecondCategories());
         }else{
         	type = Type.getType(typeId);
-//        	areas = Area.getTypeAreas(typeId);
         	ab.setTitle(type.getName());
         	adapter = new AreaPagerAdapter(getSupportFragmentManager());
         	indicator.setVisibility(View.GONE);
@@ -80,37 +78,28 @@ public class CategoryActivity extends SherlockFragmentActivity {
         pager.setAdapter(adapter);
         indicator.setViewPager(pager);
         
-        if(areaId!=0)
+        if(areaId!=0){
         	pager.setCurrentItem(1);
-        
-        if(categoryId!=0 || typeId!=0){
-//        	areaId = areas.get(0).getId();
-//	        indicator.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
-//	
-//	        	@Override
-//	        	public void onPageSelected(int postion) {
-//	        		areaId = areas.get(postion).getId();
-//	        	}
-//	        });
-        }else{
-        	categoryId = areaCategories.get(0).getId();
+        	rankCategoryId = rankCategories.get(0).getId();
         	indicator.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
         		
 	        	@Override
 	        	public void onPageSelected(int postion) {
-	        		categoryId = areaCategories.get(postion).getId();
+	        		rankCategoryId = rankCategories.get(postion).getId();
 	        	}
 	        });
+        }else if(categoryId!=0){
+        	pager.setCurrentItem(1);
         }
 
         setAboutUsDialog();
     }
 
-    class CategoryPagerAdapter extends FragmentPagerAdapter {
+    class AreaCategoryPagerAdapter extends FragmentPagerAdapter {
 
         ArrayList<Category> categories;
 
-        public CategoryPagerAdapter(FragmentManager fm, ArrayList<Category> categories) {
+        public AreaCategoryPagerAdapter(FragmentManager fm, ArrayList<Category> categories) {
             super(fm);
             this.categories = categories;
         }
@@ -139,6 +128,38 @@ public class CategoryActivity extends SherlockFragmentActivity {
         }
     }
     
+    class CategoryPagerAdapter extends FragmentPagerAdapter {
+
+        ArrayList<Category> categories;
+
+        public CategoryPagerAdapter(FragmentManager fm, ArrayList<Category> categories) {
+            super(fm);
+            this.categories = categories;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            Fragment kk = new Fragment();
+            if(position == 0)
+               kk = SecondCategoryListFragment.newInstance(categories.get(position).getId());
+            else
+               kk = CategoryTabFragment.newInstance(1, 0,categories.get(position).getId(), 0, false, false);
+            return kk;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+        	if(position == 0)
+          	  return "分類";
+           return categories.get(position-1).getName();
+        }
+
+        @Override
+        public int getCount() {
+            return categories.size()+1;
+        }
+    }
+    
     class AreaPagerAdapter extends FragmentPagerAdapter {
 
 
@@ -149,7 +170,7 @@ public class CategoryActivity extends SherlockFragmentActivity {
         @Override
         public Fragment getItem(int position) {
             Fragment kk = new Fragment();
-            kk = CategoryTabFragment.newInstance(2, 1,categoryId, typeId,false, false);
+            kk = CategoryTabFragment.newInstance(0, 0,categoryId, typeId,false, false);
             return kk;
         }
 

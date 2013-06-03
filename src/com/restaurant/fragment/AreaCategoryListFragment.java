@@ -1,17 +1,11 @@
 package com.restaurant.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.view.View;
-import android.widget.ListView;
 
 import com.restaurant.adapter.AreaCategoryListAdapter;
 import com.restaurant.adapter.AreaTypeListAdapter;
-import com.restaurant.adapter.CategoryListAdapter;
 import com.restaurant.adapter.SeparatedListAdapter;
-import com.restaurant.adapter.TypeListAdapter;
-import com.restaurant.collection.R;
 import com.restaurant.collection.api.RestaurantAPI;
 import com.restaurant.collection.entity.Type;
 
