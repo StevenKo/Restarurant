@@ -9,26 +9,25 @@ import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.restaurant.collection.api.RestaurantAPI;
 import com.restaurant.collection.entity.Area;
 import com.restaurant.collection.entity.Category;
 import com.restaurant.collection.entity.Type;
@@ -45,7 +44,6 @@ interface AlertPositiveListener {
 public class CategoryActivity extends SherlockFragmentActivity implements OnItemClickListener,AlertPositiveListener{
 	
 
-    private static final int    ID_SETTING  = 0;
     private static final int    ID_RESPONSE = 1;
     private static final int    ID_ABOUT_US = 2;
     private static final int    ID_GRADE    = 3;
@@ -57,7 +55,7 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
 	private Area area;
 	private ArrayList<Category> rankCategories;
 	private Category category;
-	private FragmentPagerAdapter adapter;
+	private FragmentStatePagerAdapter adapter;
 	private Type type;
 	private int areaId = 0;
 	private int categoryId = 0;
@@ -65,22 +63,35 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
 	private int typeId = 0;
 	private int secondCategoryId;
 	private int sortPosition = 1;
+	private int price_low = 0;
+	private int price_high = 100000;
+	private int order = 0;
+	// 0 for none
+	// 1 by distance
+	// 2 by service
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.simple_titles);
         
-        final ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
-        TitlePageIndicator indicator = (TitlePageIndicator) findViewById(R.id.indicator);
-        
         mBundle = this.getIntent().getExtras();
         areaId = mBundle.getInt("AreaId");
         categoryId = mBundle.getInt("CategoryId");
         secondCategoryId = mBundle.getInt("SecondCategoryId");
         typeId = mBundle.getInt("TypeId");
-        if(areaId!=0 && secondCategoryId!=0){
+        
+        setPageView();
+        setAboutUsDialog();
+        
+    }
+
+    private void setPageView() {
+    	
+    	final ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
+        TitlePageIndicator indicator = (TitlePageIndicator) findViewById(R.id.indicator);
+    	if(areaId!=0 && secondCategoryId!=0){
         	area = Area.getArea(areaId);
         	category = Category.getSecondCategory(secondCategoryId);
         	ab.setTitle(area.getName() + ":" + category.getName());
@@ -125,22 +136,47 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
         }else if(categoryId!=0){
         	pager.setCurrentItem(1);
         }
+	}
 
-        setAboutUsDialog();
-        
-    }
-
-    private void showPriceRangeDialog() {
+	private void showPriceRangeDialog() {
     	LayoutInflater inflater = this.getLayoutInflater();
     	LinearLayout priceRangeLayout = (LinearLayout) inflater.inflate(R.layout.price_range_dialog,null);
     	final EditText rangeStart = (EditText)priceRangeLayout.findViewById(R.id.price_range_start);
     	final EditText rangeEnd = (EditText)priceRangeLayout.findViewById(R.id.price_range_end);
+    	RadioGroup radioPirceGroup = (RadioGroup) priceRangeLayout.findViewById(R.id.radioPrice);
+    	final RadioButton radioPriceRange = (RadioButton) priceRangeLayout.findViewById(R.id.radioPriceRange);
+    	final RadioButton radioNoPriceRange = (RadioButton) priceRangeLayout.findViewById(R.id.radioNoPriceRange);
+    	
+    	if(sortPosition == 5)
+    		radioNoPriceRange.setVisibility(View.GONE);
+    	
+    	radioPirceGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+               if(checkedId == radioNoPriceRange.getId()){
+            	   rangeStart.setEnabled(false);
+            	   rangeEnd.setEnabled(false);
+               }else{
+            	   rangeStart.setEnabled(true);
+            	   rangeEnd.setEnabled(true);
+               }
+            }
+        });
     	
     	Builder a = new AlertDialog.Builder(this).setTitle("選擇價格區間").setIcon(R.drawable.icon)
                 .setPositiveButton("確定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                    	if(!rangeStart.getText().toString().equals(""))
+                    		price_low = Integer.parseInt(rangeStart.getText().toString());
+                    	else
+                    		price_low = 0;
+                    	if(!rangeEnd.getText().toString().equals(""))
+                    		price_high = Integer.parseInt(rangeEnd.getText().toString());
+                    	else
+                    		price_high = 100000;
                     	
+                    	setPageView();
 
                     }
         }).setNegativeButton("取消", null);
@@ -151,7 +187,7 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
     public class AlertDialogRadio  extends DialogFragment{
     	
     	AlertPositiveListener alertPositiveListener;
-    	final CharSequence[] items = {"距離 ","服務 ", "菜色", "價格 $0~200", "價格 $200~500", "價格$500~1000", "自訂價格"};
+    	final CharSequence[] items = {"距離 ","服務 ", "價格 $0~200", "價格 $200~500", "價格 $500~1000", "自訂價格區間"};
     	
     	public void onAttach(android.app.Activity activity) {
             super.onAttach(activity);
@@ -203,7 +239,7 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
     	
     }
 
-	class AreaRankCategoryPagerAdapter extends FragmentPagerAdapter {
+	class AreaRankCategoryPagerAdapter extends FragmentStatePagerAdapter {
 
         ArrayList<Category> categories;
 
@@ -218,7 +254,7 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
             if(position == 0)
               kk = AreaCategoryListFragment.newInstance(areaId);
             else
-              kk = CategoryTabFragment.newInstance(areaId, categories.get(position-1).getId(),0, 0,0, false, false);
+              kk = CategoryTabFragment.newInstance(areaId, categories.get(position-1).getId(),0, 0,0, false, false,price_low,price_high,order);
             return kk;
         }
 
@@ -236,7 +272,7 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
         }
     }
     
-    class CategoryPagerAdapter extends FragmentPagerAdapter {
+    class CategoryPagerAdapter extends FragmentStatePagerAdapter {
 
         ArrayList<Category> categories;
 
@@ -252,9 +288,9 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
             if(position == 0)
                kk = SecondCategoryListFragment.newInstance(categoryId);
             else if(position == 1)
-               kk = CategoryTabFragment.newInstance(0, 0,categoryId,0, 0, false, false);
+               kk = CategoryTabFragment.newInstance(0, 0,categoryId,0, 0, false, false,price_low,price_high,order);
             else
-               kk = CategoryTabFragment.newInstance(0, 0,0,categories.get(position-2).getId(), 0, false, false);
+               kk = CategoryTabFragment.newInstance(0, 0,0,categories.get(position-2).getId(), 0, false, false,price_low,price_high,order);
             return kk;
         }
 
@@ -273,7 +309,7 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
         }
     }
     
-    class TypePagerAdapter extends FragmentPagerAdapter {
+    class TypePagerAdapter extends FragmentStatePagerAdapter {
 
 
         public TypePagerAdapter(FragmentManager fm) {
@@ -283,7 +319,7 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
         @Override
         public Fragment getItem(int position) {
             Fragment kk = new Fragment();
-            kk = CategoryTabFragment.newInstance(0, 0,0 ,0, typeId,false, false);
+            kk = CategoryTabFragment.newInstance(0, 0,0 ,0, typeId,false, false,price_low,price_high,order);
             return kk;
         }
 
@@ -298,7 +334,7 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
         }
     }
     
-    class AreaTypePagerAdapter extends FragmentPagerAdapter {
+    class AreaTypePagerAdapter extends FragmentStatePagerAdapter {
 
 
         public AreaTypePagerAdapter(FragmentManager fm) {
@@ -308,7 +344,7 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
         @Override
         public Fragment getItem(int position) {
             Fragment kk = new Fragment();
-            kk = CategoryTabFragment.newInstance(areaId, 0,0 ,0, typeId,false, false);
+            kk = CategoryTabFragment.newInstance(areaId, 0,0 ,0, typeId,false, false,price_low,price_high,order);
             return kk;
         }
 
@@ -323,7 +359,7 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
         }
     }
     
-    class AreaSecondCategoryPagerAdapter extends FragmentPagerAdapter {
+    class AreaSecondCategoryPagerAdapter extends FragmentStatePagerAdapter {
 
 
         public AreaSecondCategoryPagerAdapter(FragmentManager fm) {
@@ -333,7 +369,7 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
         @Override
         public Fragment getItem(int position) {
             Fragment kk = new Fragment();
-            kk = CategoryTabFragment.newInstance(areaId, 0,0 ,secondCategoryId, 0,false, false);
+            kk = CategoryTabFragment.newInstance(areaId, 0,0 ,secondCategoryId, 0,false, false,price_low,price_high,order);
             return kk;
         }
 
@@ -425,10 +461,38 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
 	@Override
 	public void onPositiveClick(int position) {
 		sortPosition = position;
-        switch(position){
-        case 6:
+		
+		switch(position){
+		case 0:
+			order = 1;
+			showPriceRangeDialog();
+			break;
+		case 1:
+			order =2;
+			showPriceRangeDialog();
+			break;
+		case 2:
+			order = 0;
+			price_low = 0;
+			price_high = 200;
+			setPageView();
+			break;
+		case 3:
+			order = 0;
+			price_low = 200;
+			price_high = 500;
+			setPageView();
+			break;
+		case 4:
+			order = 0;
+			price_low = 500;
+			price_high = 1000;
+			setPageView();
+			break;
+        case 5:
         	showPriceRangeDialog();
         	break;
-        }
+        }	
+		
 	}
 }

@@ -31,6 +31,23 @@ public class CategoryTabFragment extends Fragment {
         f.setArguments(bdl);
         return f;
     }
+    
+    public static final CategoryTabFragment newInstance(int area_id, int rank_category_id, int category_id, int second_category_id, int type_id, boolean is_collection, boolean is_selected, int price_high, int price_low, int order) {
+        CategoryTabFragment f = new CategoryTabFragment();
+        Bundle bdl = new Bundle();
+        bdl.putInt("AreaId", area_id);
+        bdl.putInt("RankCategoryId", rank_category_id);
+        bdl.putInt("CategoryId", category_id);
+        bdl.putInt("SecondCategoryId", second_category_id);
+        bdl.putInt("TypeId", type_id);
+        bdl.putBoolean("IsCollection", is_collection);
+        bdl.putBoolean("IsSelected", is_selected);
+        bdl.putInt("PriceHigh", price_high);
+        bdl.putInt("PriceLow", price_low);
+        bdl.putInt("Order", order);
+        f.setArguments(bdl);
+        return f;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,7 +83,12 @@ public class CategoryTabFragment extends Fragment {
 		arg1.putInt("TypeId", getArguments().getInt("TypeId"));
 		arg1.putBoolean("IsCollection", getArguments().getBoolean("IsCollection"));
 		arg1.putBoolean("IsSelected", getArguments().getBoolean("IsSelected"));
-		
+		if (getArguments().containsKey("PriceHigh"))
+			arg1.putInt("PriceHigh", getArguments().getInt("PriceHigh"));
+		if (getArguments().containsKey("PriceLow"))
+			arg1.putInt("PriceLow", getArguments().getInt("PriceLow"));
+		if (getArguments().containsKey("Order"))
+			arg1.putInt("Order", getArguments().getInt("Order"));
         mTabHost.addTab(mTabHost.newTabSpec(nameSpec).setIndicator(tab), ccls, arg1);
 
     }
