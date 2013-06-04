@@ -555,10 +555,16 @@ public class RestaurantAPI {
 			JSONObject jObject = new JSONObject(message.toString());
 			JSONArray jArray = jObject.getJSONArray("rows").getJSONObject(0).getJSONArray("elements");
 			
+			int resIndex = 0;
+			for(resIndex=0; resIndex < res.size(); resIndex++){
+				if(res.get(resIndex).getDis().equals(""))
+					break;
+			}
+			
 			for (int i = 0; i < jArray.length(); i++) {
 				
 				String dis = jArray.getJSONObject(i).getJSONObject("distance").getString("text");
-				res.get(i).setDis(dis);
+				res.get(i+resIndex).setDis(dis);
             }
 			
 		} catch (JSONException e) {
@@ -572,9 +578,11 @@ public class RestaurantAPI {
 	private static String getDesstring(ArrayList<Restaurant> res) {
 		String des_string ="";
 		for(int i=0; i< res.size();i++){
-			String x_position = String.valueOf(res.get(i).getX());
-			String y_position = String.valueOf(res.get(i).getY());
-			des_string = des_string+x_position+","+y_position+"|";
+			if(res.get(i).getDis().equals("")){
+				String x_position = String.valueOf(res.get(i).getX());
+				String y_position = String.valueOf(res.get(i).getY());
+				des_string = des_string+x_position+","+y_position+"|";
+			}
 		}	
 		return des_string;
 	}

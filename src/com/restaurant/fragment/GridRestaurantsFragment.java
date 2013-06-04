@@ -193,6 +193,7 @@ public class GridRestaurantsFragment extends Fragment {
                     layoutReload.setVisibility(View.GONE);
                     myGridViewAdapter = new RestaurantGridViewAdapter(getActivity(), restaurants);
                     myGrid.setAdapter(myGridViewAdapter);
+                    new DownloadRestaurantsDistanceTask().execute();
                 } catch (Exception e) {
 
                 }
@@ -250,6 +251,7 @@ public class GridRestaurantsFragment extends Fragment {
 
             if (moreRestaurants != null && moreRestaurants.size() != 0) {
                 myGridViewAdapter.notifyDataSetChanged();
+                new DownloadRestaurantsDistanceTask().execute();
             } else {
                 checkLoad = false;
                 Toast.makeText(getActivity(), "no more data", Toast.LENGTH_SHORT).show();
@@ -258,5 +260,23 @@ public class GridRestaurantsFragment extends Fragment {
 
         }
     }
+    
+    private class DownloadRestaurantsDistanceTask extends AsyncTask {
+
+		@Override
+		protected Object doInBackground(Object... arg0) {
+			restaurants = RestaurantAPI.getRestaurantsDistance(latitude, longitude, restaurants);
+			return null;
+		}
+		
+		@Override
+        protected void onPostExecute(Object result) {
+            super.onPostExecute(result);
+            loadmoreLayout.setVisibility(View.GONE);
+            myGridViewAdapter.notifyDataSetChanged();
+            
+        }
+    }
+    
 
 }
