@@ -94,7 +94,7 @@ public class RestaurantGridViewAdapter extends BaseAdapter {
         price.setText(data.get(position).getPrice());
         dis.setText(data.get(position).getDis());
         
-        if (picUrl == null || picUrl.equals("null") ) {
+        if (picUrl == null || picUrl.equals("null") || picUrl.equals("http://iphoto.ipeen.com.tw/images/search/piczone140.jpg") ) {
             image.setImageResource(R.drawable.icon);
         } else {
             imageLoader.DisplayImage(picUrl, image);
