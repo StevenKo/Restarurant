@@ -493,14 +493,14 @@ public class RestaurantAPI {
    }
    
    // for unselect category, put 0 to id
-   public static ArrayList<Restaurant> getAroundRestaurants(double x, double y,double dis, int category_id, int second_category_id) {
+   public static ArrayList<Restaurant> getAroundRestaurants(double x, double y,int page, int category_id, int second_category_id) {
 	   String message ="";
 	   if(category_id != 0 && second_category_id !=0){
-		   message = getMessageFromServer("GET", "/api/v1/restaurants/around_restaurates?x="+x+"&y="+ y + "&dis="+ dis + "&category_id=" + category_id + "&sec_c_id="+ second_category_id, null, null);   
+		   message = getMessageFromServer("GET", "/api/v1/restaurants/around_restaurates?x="+x+"&y="+ y + "&page="+ page + "&category_id=" + category_id + "&sec_c_id="+ second_category_id, null, null);   
 	   }else if(category_id != 0 && second_category_id ==0){
-		   message = getMessageFromServer("GET", "/api/v1/restaurants/around_restaurates?x="+x+"&y="+ y + "&dis="+ dis + "&category_id=" + category_id, null, null); 
+		   message = getMessageFromServer("GET", "/api/v1/restaurants/around_restaurates?x="+x+"&y="+ y + "&page="+ page + "&category_id=" + category_id, null, null); 
 	   }else{
-		   message = getMessageFromServer("GET", "/api/v1/restaurants/around_restaurates?x="+x+"&y="+ y + "&dis="+ dis , null, null); 
+		   message = getMessageFromServer("GET", "/api/v1/restaurants/around_restaurates?x="+x+"&y="+ y + "&page="+ page , null, null); 
 	   }
 		   
        ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
