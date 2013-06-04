@@ -153,11 +153,11 @@ public class GridRestaurantsFragment extends Fragment {
         protected Object doInBackground(Object... params) {
         	
         	if(is_near && category_id != 0 && second_category_id!=0){
-        		restaurants = RestaurantAPI.getAroundRestaurants(latitude, longitude, 0.5, category_id, second_category_id);
+        		restaurants = RestaurantAPI.getAroundRestaurants(latitude, longitude, 1, category_id, second_category_id);
         	}else if(is_near && category_id != 0){
-        		restaurants = RestaurantAPI.getAroundRestaurants(latitude, longitude, 0.5, category_id, 0);
+        		restaurants = RestaurantAPI.getAroundRestaurants(latitude, longitude, 1, category_id, 0);
         	}else if(is_near){
-        		restaurants = RestaurantAPI.getAroundRestaurants(latitude, longitude, 0.5, 0, 0);
+        		restaurants = RestaurantAPI.getAroundRestaurants(latitude, longitude, 1, 0, 0);
         	}else if(area_id !=0 && category_id != 0){
         		restaurants = RestaurantAPI.getAreaCategoryRestaurants(area_id, category_id, 1);
         	}else if(area_id != 0 && rank_category_id != 0){
