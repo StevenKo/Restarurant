@@ -32,7 +32,7 @@ public class CategoryTabFragment extends Fragment {
         return f;
     }
     
-    public static final CategoryTabFragment newInstance(int area_id, int rank_category_id, int category_id, int second_category_id, int type_id, boolean is_collection, boolean is_selected, int price_high, int price_low, int order) {
+    public static final CategoryTabFragment newInstance(int area_id, int rank_category_id, int category_id, int second_category_id, int type_id, boolean is_collection, boolean is_selected,  int price_low, int price_high,int order) {
         CategoryTabFragment f = new CategoryTabFragment();
         Bundle bdl = new Bundle();
         bdl.putInt("AreaId", area_id);
