@@ -44,6 +44,7 @@ public class Restaurant {
     	
     	this.x_lat = x_lan;
     	this.y_long = y_long;
+    	this.dis = dis;
     }
     
     public int getId(){

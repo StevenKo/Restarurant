@@ -496,11 +496,11 @@ public class RestaurantAPI {
    public static ArrayList<Restaurant> getAroundRestaurants(double x, double y,double dis, int category_id, int second_category_id) {
 	   String message ="";
 	   if(category_id != 0 && second_category_id !=0){
-		   message = getMessageFromServer("GET", "api/v1/restaurants/around_restaurates?x="+x+"&y="+ y + "&dis="+ dis + "&category_id=" + category_id + "&sec_c_id="+ second_category_id, null, null);   
+		   message = getMessageFromServer("GET", "/api/v1/restaurants/around_restaurates?x="+x+"&y="+ y + "&dis="+ dis + "&category_id=" + category_id + "&sec_c_id="+ second_category_id, null, null);   
 	   }else if(category_id != 0 && second_category_id ==0){
-		   message = getMessageFromServer("GET", "api/v1/restaurants/around_restaurates?x="+x+"&y="+ y + "&dis="+ dis + "&category_id=" + category_id, null, null); 
+		   message = getMessageFromServer("GET", "/api/v1/restaurants/around_restaurates?x="+x+"&y="+ y + "&dis="+ dis + "&category_id=" + category_id, null, null); 
 	   }else{
-		   message = getMessageFromServer("GET", "api/v1/restaurants/around_restaurates?x="+x+"&y="+ y + "&dis="+ dis , null, null); 
+		   message = getMessageFromServer("GET", "/api/v1/restaurants/around_restaurates?x="+x+"&y="+ y + "&dis="+ dis , null, null); 
 	   }
 		   
        ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
@@ -778,10 +778,16 @@ public class RestaurantAPI {
 			JSONObject jObject = new JSONObject(message.toString());
 			JSONArray jArray = jObject.getJSONArray("rows").getJSONObject(0).getJSONArray("elements");
 			
+			int resIndex = 0;
+			for(resIndex=0; resIndex < res.size(); resIndex++){
+				if(res.get(resIndex).getDis().equals(""))
+					break;
+			}
+			
 			for (int i = 0; i < jArray.length(); i++) {
 				
 				String dis = jArray.getJSONObject(i).getJSONObject("distance").getString("text");
-				res.get(i).setDis(dis);
+				res.get(i+resIndex).setDis(dis);
             }
 			
 		} catch (JSONException e) {
@@ -795,9 +801,11 @@ public class RestaurantAPI {
 	private static String getDesstring(ArrayList<Restaurant> res) {
 		String des_string ="";
 		for(int i=0; i< res.size();i++){
-			String x_position = String.valueOf(res.get(i).getX());
-			String y_position = String.valueOf(res.get(i).getY());
-			des_string = des_string+x_position+","+y_position+"|";
+			if(res.get(i).getDis().equals("")){
+				String x_position = String.valueOf(res.get(i).getX());
+				String y_position = String.valueOf(res.get(i).getY());
+				des_string = des_string+x_position+","+y_position+"|";
+			}
 		}	
 		return des_string;
 	}
