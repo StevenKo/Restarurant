@@ -12,6 +12,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.telephony.TelephonyManager;
+import android.text.InputType;
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -36,6 +42,7 @@ public class MainActivity extends SherlockFragmentActivity implements OnButtonCl
     private String[]            sectionTitles;
     private ViewPager           pager;
     private AlertDialog.Builder aboutUsDialog;
+	private MenuItem itemSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +70,47 @@ public class MainActivity extends SherlockFragmentActivity implements OnButtonCl
         menu.add(0, ID_RESPONSE, 1, getResources().getString(R.string.menu_respond)).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
         menu.add(0, ID_ABOUT_US, 2, getResources().getString(R.string.menu_aboutus)).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
         menu.add(0, ID_GRADE, 3, getResources().getString(R.string.menu_recommend)).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-        menu.add(0, ID_SEARCH, 4, getResources().getString(R.string.menu_search)).setIcon(R.drawable.ic_search_inverse)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        
+        itemSearch = menu.add(0, ID_SEARCH, 4, getResources().getString(R.string.menu_search)).setIcon(R.drawable.ic_search_inverse)
+                .setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+                    private EditText search;
+
+                    @Override
+                    public boolean onMenuItemActionExpand(MenuItem item) {
+                        search = (EditText) item.getActionView();
+                        search.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+                        search.setInputType(InputType.TYPE_CLASS_TEXT);
+                        search.requestFocus();
+                        search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                            @Override
+                            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                                if (actionId == EditorInfo.IME_ACTION_SEARCH || event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("SearchKeyword", v.getText().toString());
+                                    Intent intent = new Intent();
+                                    intent.setClass(MainActivity.this, SearchActivity.class);
+                                    intent.putExtras(bundle);
+                                    startActivity(intent);
+                                    itemSearch.collapseActionView();
+                                    return true;
+                                }
+                                return false;
+                            }
+                        });
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.showSoftInput(null, InputMethodManager.SHOW_IMPLICIT);
+                        return true;
+                    }
+
+                    @Override
+                    public boolean onMenuItemActionCollapse(MenuItem item) {
+                        // TODO Auto-generated method stub
+                        search.setText("");
+                        return true;
+                    }
+                }).setActionView(R.layout.collapsible_edittext);
+        itemSearch.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS | MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+        
         return true;
     }
 
