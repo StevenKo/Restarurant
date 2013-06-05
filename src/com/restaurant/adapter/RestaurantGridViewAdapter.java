@@ -28,10 +28,12 @@ public class RestaurantGridViewAdapter extends BaseAdapter {
     private final ArrayList<Restaurant> data;
     private static LayoutInflater             inflater = null;
     public ImageLoader                        imageLoader;
+    private boolean isShowDistance;
 
-    public RestaurantGridViewAdapter(Activity a, ArrayList<Restaurant> restaurants) {
+    public RestaurantGridViewAdapter(Activity a, ArrayList<Restaurant> restaurants, boolean isShowDistance) {
         activity = a;
         data = restaurants;
+        this.isShowDistance = isShowDistance;
         inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageLoader = new ImageLoader(activity.getApplicationContext(), 70);
 
@@ -57,9 +59,15 @@ public class RestaurantGridViewAdapter extends BaseAdapter {
         int height = display.getHeight(); // deprecated
 
         if (width > 480) {
-            vi = inflater.inflate(R.layout.item_gridview_restaurant, null);
+        	if(isShowDistance)
+        		vi = inflater.inflate(R.layout.item_gridview_restaurant, null);
+        	else
+        		vi = inflater.inflate(R.layout.item_gridview_restaurant_no_distance, null);
         } else {
-            vi = inflater.inflate(R.layout.item_gridview_restaurant_small, null);
+        	if(isShowDistance)
+        		vi = inflater.inflate(R.layout.item_gridview_restaurant_small, null);
+        	else
+        		vi = inflater.inflate(R.layout.item_gridview_restaurant_small_no_distance, null);
         }
 
         vi.setClickable(true);
@@ -85,14 +93,16 @@ public class RestaurantGridViewAdapter extends BaseAdapter {
         TextView foodScore = (TextView) vi.findViewById(R.id.grid_food_score);
         TextView serviceScore = (TextView) vi.findViewById(R.id.grid_service_score);
         TextView price = (TextView) vi.findViewById(R.id.grid_item_price);
-        TextView dis = (TextView) vi.findViewById(R.id.grid_item_dis);
-        
+        if(isShowDistance){
+        	TextView dis = (TextView) vi.findViewById(R.id.grid_item_dis);
+            dis.setText(data.get(position).getDis());
+        }
+          
         String picUrl = data.get(position).getPicUrl();
         title.setText(data.get(position).getName());
         foodScore.setText(data.get(position).getGradeFood());
         serviceScore.setText(data.get(position).getGradeService());
         price.setText(data.get(position).getPrice());
-        dis.setText(data.get(position).getDis());
         
         if (picUrl == null || picUrl.equals("null") || picUrl.equals("http://iphoto.ipeen.com.tw/images/search/piczone140.jpg") ) {
             image.setImageResource(R.drawable.icon);

@@ -47,7 +47,8 @@ public class GridRestaurantsFragment extends Fragment {
 	private int second_category_id;
 	private int price_high;
 	private int price_low;
-	
+	private boolean is_show_distance = true;	
+
 	private int order;
 	// 0 for none
 	// 1 by distance
@@ -70,6 +71,22 @@ public class GridRestaurantsFragment extends Fragment {
         bdl.putBoolean("IsCollection", is_collection);
         bdl.putBoolean("IsSelected", is_selected);
         bdl.putBoolean("IsNear", is_near);
+        f.setArguments(bdl);
+        return f;
+    }
+    
+    public static final GridRestaurantsFragment newInstance(int area_id, int rank_category_id, int category_id,  int second_category_id, int type_id, boolean is_collection, boolean is_selected, boolean is_near, boolean is_show_distance) {
+        GridRestaurantsFragment f = new GridRestaurantsFragment();
+        Bundle bdl = new Bundle();
+        bdl.putInt("AreaId", area_id);
+        bdl.putInt("CategoryId", category_id);
+        bdl.putInt("SecondCategoryId", second_category_id);
+        bdl.putInt("RankCategoryId", rank_category_id);
+        bdl.putInt("TypeId", type_id);
+        bdl.putBoolean("IsCollection", is_collection);
+        bdl.putBoolean("IsSelected", is_selected);
+        bdl.putBoolean("IsNear", is_near);
+        bdl.putBoolean("IsShowDistance", is_show_distance);
         f.setArguments(bdl);
         return f;
     }
@@ -109,6 +126,8 @@ public class GridRestaurantsFragment extends Fragment {
 			price_low = getArguments().getInt("PriceLow");
 		if (getArguments().containsKey("Order"))
 			order = getArguments().getInt("Order");
+		if (getArguments().containsKey("IsShowDistance"))
+			is_show_distance = getArguments().getBoolean("IsShowDistance");
 		
 		getCurrentXY();
         super.onCreate(savedInstanceState);
@@ -299,7 +318,7 @@ public class GridRestaurantsFragment extends Fragment {
             if (restaurants != null && restaurants.size() != 0) {
                 try {
                     layoutReload.setVisibility(View.GONE);
-                    myGridViewAdapter = new RestaurantGridViewAdapter(getActivity(), restaurants);
+                    myGridViewAdapter = new RestaurantGridViewAdapter(getActivity(), restaurants,is_show_distance);
                     myGrid.setAdapter(myGridViewAdapter);
                     new DownloadRestaurantsDistanceTask().execute();
                 } catch (Exception e) {
