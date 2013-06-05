@@ -28,6 +28,8 @@ import com.viewpagerindicator.TitlePageIndicator;
 public class NearRestaurantActivity extends SherlockFragmentActivity{
 	private ViewPager pager;
 	private PagerAdapter fragmentAdapter;
+	private int secondCategoryId = 0;
+	private int categoryId = 0;
 	private static final int    ID_MAP      = 4;
 	
 	@Override
@@ -66,10 +68,12 @@ public class NearRestaurantActivity extends SherlockFragmentActivity{
 				if(position == 0){
 			        fragmentAdapter = new PagerAdapter(getSupportFragmentManager(),0,0);
 			        pager.setAdapter(fragmentAdapter);
-
+                    
+			        categoryId = 0;
 					secondCategoryLayout.setVisibility(View.GONE);
 				}else{
 					final Category selectCategory = Category.getCategories().get(position-1);
+					categoryId = selectCategory.getId();
 					fragmentAdapter = new PagerAdapter(getSupportFragmentManager(),selectCategory.getId(),0);
 					pager.setAdapter(fragmentAdapter);
 			        
@@ -88,10 +92,12 @@ public class NearRestaurantActivity extends SherlockFragmentActivity{
 							if(position == 0){
 								fragmentAdapter = new PagerAdapter(getSupportFragmentManager(),selectCategory.getId(),0);
 								pager.setAdapter(fragmentAdapter);
+								secondCategoryId = 0;
 							}else{
 								Category subCategory = subCategories.get(position-1);
 								fragmentAdapter = new PagerAdapter(getSupportFragmentManager(),selectCategory.getId(),subCategory.getId());
-								pager.setAdapter(fragmentAdapter);	
+								pager.setAdapter(fragmentAdapter);
+								secondCategoryId = subCategory.getId();
 							}
 						}
 						@Override
@@ -128,7 +134,8 @@ public class NearRestaurantActivity extends SherlockFragmentActivity{
         case ID_MAP:
             Intent intent = new Intent(NearRestaurantActivity.this, MapActivity.class);
             Bundle bundle = new Bundle();
-        	bundle.putBoolean("IsColletion", true);
+            bundle.putInt("CategoryId", categoryId);
+            bundle.putInt("SecondCategoryId", secondCategoryId);
         	intent.putExtras(bundle);
             startActivity(intent);
             break;

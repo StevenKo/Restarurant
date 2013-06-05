@@ -393,9 +393,7 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
         menu.add(0, ID_RESPONSE, 1, getResources().getString(R.string.menu_respond)).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
         menu.add(0, ID_ABOUT_US, 2, getResources().getString(R.string.menu_aboutus)).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
         menu.add(0, ID_GRADE, 3, getResources().getString(R.string.menu_recommend)).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-        // menu.add(0, ID_SEARCH, 4, getResources().getString(R.string.menu_search)).setIcon(R.drawable.ic_search_inverse)
-        // .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        menu.add(0, ID_MAP, 4, "地圖顯示餐廳").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+//        menu.add(0, ID_MAP, 4, "地圖顯示餐廳").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         menu.add(0, ID_SORT, 5, "排序").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         return true;
     }
@@ -423,15 +421,15 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
         	Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.recommend_url)));
         	startActivity(browserIntent);
             break;
-        case ID_MAP:	
-            Intent intent = new Intent(CategoryActivity.this, MapActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putInt("AreaId", areaId);
-        	bundle.putInt("CategoryId",categoryId);
-        	bundle.putInt("TypeId", typeId);
-        	intent.putExtras(bundle);
-            startActivity(intent);
-            break;
+//        case ID_MAP:	
+//            Intent intent = new Intent(CategoryActivity.this, MapActivity.class);
+//            Bundle bundle = new Bundle();
+//            bundle.putInt("AreaId", areaId);
+//        	bundle.putInt("CategoryId",categoryId);
+//        	bundle.putInt("TypeId", typeId);
+//        	intent.putExtras(bundle);
+//            startActivity(intent);
+//            break;
         case ID_SORT:
         	android.app.FragmentManager manager = getFragmentManager();        	 
             AlertDialogRadio alert = new AlertDialogRadio();
