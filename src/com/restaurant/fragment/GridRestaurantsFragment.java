@@ -53,6 +53,7 @@ public class GridRestaurantsFragment extends Fragment {
 	// 1 by distance
 	// 2 by service
 	// 3 by price
+	// 4 by food
 
     public GridRestaurantsFragment() {
 
@@ -266,6 +267,24 @@ public class GridRestaurantsFragment extends Fragment {
 	        		restaurants = RestaurantAPI.getTypeRestaurantsByPrice(type_id,price_low, price_high, 1);
 	        	}
 
+        	}else if(order == 4){
+        		
+        		if(area_id !=0 && category_id != 0){
+	        		restaurants = RestaurantAPI.getAreaCategoryRestaurantsByFood(area_id, category_id, price_low, price_high, 1);
+	        	}else if(area_id != 0 && rank_category_id != 0){
+	        		restaurants = RestaurantAPI.getAreaRankCategoryRestaurantsByFood(area_id, rank_category_id, price_low, price_high, 1);
+	        	}else if(area_id != 0 && second_category_id != 0){
+	        		restaurants = RestaurantAPI.getAreaSecondCategoryRestaurantsByFood(area_id, second_category_id, price_low, price_high, 1);
+	        	}else if(area_id != 0 && type_id != 0){
+	        		restaurants = RestaurantAPI.getAreaTypeRestaurantsByFood(area_id, type_id, price_low, price_high, 1);
+	        	}else if(category_id != 0 && area_id == 0){
+	        		restaurants = RestaurantAPI.getCategoryRestaurantsByFood(category_id, price_low, price_high, 1);
+	        	}else if(second_category_id != 0 && area_id == 0){
+	        		restaurants = RestaurantAPI.getSecondCategoryRestaurantsByFood(second_category_id, price_low, price_high, 1);
+	        	}else if(area_id == 0 && type_id != 0){
+	        		restaurants = RestaurantAPI.getTypeRestaurantsByFood(type_id,price_low, price_high, 1);
+	        	}
+
         	}
        
             return null;
@@ -384,6 +403,24 @@ public class GridRestaurantsFragment extends Fragment {
 	        	}else if(area_id == 0 && type_id != 0){
 	        		moreRestaurants = RestaurantAPI.getTypeRestaurantsByPrice(type_id,price_low, price_high, myPage);
 	        	}
+        	}else if(order == 4){
+        		
+        		if(area_id !=0 && category_id != 0){
+        			moreRestaurants = RestaurantAPI.getAreaCategoryRestaurantsByFood(area_id, category_id, price_low, price_high, myPage);
+	        	}else if(area_id != 0 && rank_category_id != 0){
+	        		moreRestaurants = RestaurantAPI.getAreaRankCategoryRestaurantsByFood(area_id, rank_category_id, price_low, price_high, myPage);
+	        	}else if(area_id != 0 && second_category_id != 0){
+	        		moreRestaurants = RestaurantAPI.getAreaSecondCategoryRestaurantsByFood(area_id, second_category_id, price_low, price_high, myPage);
+	        	}else if(area_id != 0 && type_id != 0){
+	        		moreRestaurants = RestaurantAPI.getAreaTypeRestaurantsByFood(area_id, type_id, price_low, price_high, myPage);
+	        	}else if(category_id != 0 && area_id == 0){
+	        		moreRestaurants = RestaurantAPI.getCategoryRestaurantsByFood(category_id, price_low, price_high, myPage);
+	        	}else if(second_category_id != 0 && area_id == 0){
+	        		moreRestaurants = RestaurantAPI.getSecondCategoryRestaurantsByFood(second_category_id, price_low, price_high, myPage);
+	        	}else if(area_id == 0 && type_id != 0){
+	        		moreRestaurants = RestaurantAPI.getTypeRestaurantsByFood(type_id,price_low, price_high, myPage);
+	        	}
+
         	}
             
             for (int i = 0; i < moreRestaurants.size(); i++) {

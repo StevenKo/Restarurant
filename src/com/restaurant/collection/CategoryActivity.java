@@ -70,6 +70,7 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
 	// 1 by distance
 	// 2 by service
 	// 3 by price
+	// 4 by food
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,7 +149,7 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
     	final RadioButton radioPriceRange = (RadioButton) priceRangeLayout.findViewById(R.id.radioPriceRange);
     	final RadioButton radioNoPriceRange = (RadioButton) priceRangeLayout.findViewById(R.id.radioNoPriceRange);
     	
-    	if(sortPosition == 6)
+    	if(sortPosition == 7)
     		radioNoPriceRange.setVisibility(View.GONE);
     	
     	radioPirceGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -188,7 +189,7 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
     public class AlertDialogRadio  extends DialogFragment{
     	
     	AlertPositiveListener alertPositiveListener;
-    	final CharSequence[] items = {"距離(由近到遠) ","服務(由高到低) ", "價格 $0~100", "價格 $100~200","價格 $200~500", "價格 $500~1000", "自訂價格區間"};
+    	final CharSequence[] items = {"距離(由近到遠) ","服務(由高到低) ", "菜色(由高到低)","價格 $0~100", "價格 $100~200","價格 $200~500", "價格 $500~1000", "自訂價格區間"};
     	
     	public void onAttach(android.app.Activity activity) {
             super.onAttach(activity);
@@ -473,30 +474,34 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
 			showPriceRangeDialog();
 			break;
 		case 2:
+			order =4;
+			showPriceRangeDialog();
+			break;
+		case 3:
 			order = 3;
 			price_low = 0;
 			price_high = 100;
 			setPageView();
 			break;
-		case 3:
+		case 4:
 			order = 3;
 			price_low = 100;
 			price_high = 200;
 			setPageView();
 			break;
-		case 4:
+		case 5:
 			order = 3;
 			price_low = 200;
 			price_high = 500;
 			setPageView();
 			break;
-		case 5:
+		case 6:
 			order = 3;
 			price_low = 500;
 			price_high = 1000;
 			setPageView();
 			break;
-        case 6:
+        case 7:
         	order = 3;
         	showPriceRangeDialog();
         	break;
