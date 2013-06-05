@@ -131,8 +131,9 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
         	indicator.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
         		
 	        	@Override
-	        	public void onPageSelected(int postion) {
-	        		rankCategoryId = rankCategories.get(postion).getId();
+	        	public void onPageSelected(int position) {
+	        		if(position != 0)
+	        			rankCategoryId = rankCategories.get(position-1).getId();
 	        	}
 	        });
         }else if(categoryId!=0){

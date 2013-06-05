@@ -189,7 +189,7 @@
     <com.google.ads.AdView android:id="@+id/adView"
                      android:layout_width="fill_parent"
                      android:layout_height="wrap_content"
-                     ads:adUnitId="780ce0c7cae444a2"
+                     ads:adUnitId="a151aea0bb767ab"
                      ads:adSize="SMART_BANNER"
                      ads:testDevices="353918051867212"
                      ads:loadAdOnCreate="true"/>
