@@ -665,6 +665,18 @@ public class RestaurantAPI {
        }
    }
    
+   
+   public static ArrayList<Restaurant> searchRestaurants(String keyword, int page){
+	   String message ="";
+	   message = getMessageFromServer("GET", "/api/v1/restaurants/search?&page="+ page+"&keyword="+keyword , null, null); 
+	   ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+       if (message == null) {
+           return null;
+       } else {
+           return parseRestaurants(message, restaurants);
+       }
+   }
+   
    private static ArrayList<Note> parseNotes(String message, ArrayList<Note> notes) {
        try {
            JSONArray jArray;
