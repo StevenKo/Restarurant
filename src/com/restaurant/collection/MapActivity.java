@@ -66,6 +66,7 @@ public class MapActivity extends SherlockFragmentActivity implements OnMarkerCli
         
         findViews();
         setSpinner();
+        getLocation();
         new DownloadRestaurantsTask().execute();
         
     }
@@ -173,7 +174,6 @@ public class MapActivity extends SherlockFragmentActivity implements OnMarkerCli
         @Override
         protected void onPostExecute(Object result) {
             super.onPostExecute(result);
-            getCameraMoveLocation();
             setMap();
         }
     }
@@ -217,24 +217,12 @@ public class MapActivity extends SherlockFragmentActivity implements OnMarkerCli
         }
     }
     
-    private void getCameraMoveLocation() {
-//    	if(areaId !=0){
-//    		double sumX = 0.0;
-//    		double sumY = 0.0;
-//    		for(int i=0; i < restaurants.size(); i++){
-//    			sumX += restaurants.get(i).getX();
-//    			sumY += restaurants.get(i).getY();
-//    		}
-//    		latitude = sumX/(double)restaurants.size();
-//    		longitude = sumY/(double)restaurants.size();
-//    	}else{
-//    }
+    private void getLocation() {
     		GPSTracker mGPS = new GPSTracker(this);
         	if(mGPS.canGetLocation() ){
         		latitude =mGPS.getLatitude();
         		longitude=mGPS.getLongitude();
         	}else{
-        	// can't get the location
         	}
     	
 		
