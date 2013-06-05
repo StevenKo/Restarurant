@@ -136,6 +136,16 @@ public class RestaurantAPI {
         }
     }
     
+    public static ArrayList<Restaurant> getAreaRestaurantsByFood(int area_id,int price_low, int price_high, int page) {
+        String message = getMessageFromServer("GET", "/api/v1/restaurants/area_restaurants?area_id=" + area_id+"&price_low="+price_low+"&price_high="+price_high+"&is_food_order=true"+ "&page=" + page, null, null);
+        ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+        if (message == null) {
+            return null;
+        } else {
+            return parseAllRestaurants(message, restaurants);
+        }
+    }
+    
    public static ArrayList<Restaurant> getAreaRestaurantsByDistance(int area_id,int price_low, int price_high,double x, double y, int page) {
 	   	String x_string = String.valueOf(x);
 	   	String y_string = String.valueOf(y);
@@ -188,8 +198,28 @@ public class RestaurantAPI {
         }
     }
     
+    public static ArrayList<Restaurant> getCategoryRestaurantsByFood(int category_id, int price_low, int price_high, int page) {
+        String message = getMessageFromServer("GET", "/api/v1/restaurants/category_restaurants?category_id=" + category_id+"&price_low="+price_low+"&price_high="+price_high +"&is_food_order=true"+ "&page=" + page, null, null);
+        ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+        if (message == null) {
+            return null;
+        } else {
+            return parseRestaurants(message, restaurants);
+        }
+    }
+    
     public static ArrayList<Restaurant> getAreaCategoryRestaurantsByService(int area_id,int category_id, int price_low, int price_high, int page) {
         String message = getMessageFromServer("GET", "/api/v1/restaurants/category_restaurants?area_id="+area_id+"&category_id=" + category_id+"&price_low="+price_low+"&price_high="+price_high +"&is_service_order=true"+ "&page=" + page, null, null);
+        ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+        if (message == null) {
+            return null;
+        } else {
+            return parseRestaurants(message, restaurants);
+        }
+    }
+    
+    public static ArrayList<Restaurant> getAreaCategoryRestaurantsByFood(int area_id,int category_id, int price_low, int price_high, int page) {
+        String message = getMessageFromServer("GET", "/api/v1/restaurants/category_restaurants?area_id="+area_id+"&category_id=" + category_id+"&price_low="+price_low+"&price_high="+price_high +"&is_food_order=true"+ "&page=" + page, null, null);
         ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
         if (message == null) {
             return null;
@@ -262,8 +292,28 @@ public class RestaurantAPI {
         }
     }
     
+    public static ArrayList<Restaurant> getSecondCategoryRestaurantsByFood(int second_category_id, int price_low, int price_high, int page) {
+        String message = getMessageFromServer("GET", "/api/v1/restaurants/second_restaurants?sec_c_id=" + second_category_id+"&price_low="+price_low+"&price_high="+price_high +"&is_food_order=true"+ "&page=" + page, null, null);
+        ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+        if (message == null) {
+            return null;
+        } else {
+            return parseRestaurants(message, restaurants);
+        }
+    }
+    
     public static ArrayList<Restaurant> getAreaSecondCategoryRestaurantsByService(int area_id,int second_category_id, int price_low, int price_high, int page) {
         String message = getMessageFromServer("GET", "/api/v1/restaurants/second_restaurants?area_id="+area_id+"&sec_c_id=" + second_category_id+"&price_low="+price_low+"&price_high="+price_high +"&is_service_order=true"+ "&page=" + page, null, null);
+        ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+        if (message == null) {
+            return null;
+        } else {
+            return parseRestaurants(message, restaurants);
+        }
+    }
+    
+    public static ArrayList<Restaurant> getAreaSecondCategoryRestaurantsByFood(int area_id,int second_category_id, int price_low, int price_high, int page) {
+        String message = getMessageFromServer("GET", "/api/v1/restaurants/second_restaurants?area_id="+area_id+"&sec_c_id=" + second_category_id+"&price_low="+price_low+"&price_high="+price_high +"&is_food_order=true"+ "&page=" + page, null, null);
         ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
         if (message == null) {
             return null;
@@ -306,6 +356,91 @@ public class RestaurantAPI {
         }
     }
     
+    public static ArrayList<Restaurant> getRankCategoryRestaurantsByPrice(int rank_category_id, int price_low, int price_high, int page) {
+        String message = getMessageFromServer("GET", "/api/v1/restaurants/rank_restaurants?rank_category_id=" + rank_category_id+"&price_low="+price_low+"&price_high="+price_high + "&page=" + page, null, null);
+        ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+        if (message == null) {
+            return null;
+        } else {
+            return parseRestaurants(message, restaurants);
+        }
+    }
+    
+    public static ArrayList<Restaurant> getAreaRankCategoryRestaurantsByPrice(int area_id,int rank_category_id, int price_low, int price_high, int page) {
+        String message = getMessageFromServer("GET", "/api/v1/restaurants/rank_restaurants?area_id="+area_id+"&rank_category_id=" + rank_category_id+"&price_low="+price_low+"&price_high="+price_high + "&page=" + page, null, null);
+        ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+        if (message == null) {
+            return null;
+        } else {
+            return parseRestaurants(message, restaurants);
+        }
+    }
+    
+    public static ArrayList<Restaurant> getRankCategoryRestaurantsByService(int rank_category_id, int price_low, int price_high, int page) {
+        String message = getMessageFromServer("GET", "/api/v1/restaurants/rank_restaurants?rank_category_id=" + rank_category_id+"&price_low="+price_low+"&price_high="+price_high +"&is_service_order=true"+ "&page=" + page, null, null);
+        ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+        if (message == null) {
+            return null;
+        } else {
+            return parseRestaurants(message, restaurants);
+        }
+    }
+    
+    public static ArrayList<Restaurant> getRankCategoryRestaurantsByFood(int rank_category_id, int price_low, int price_high, int page) {
+        String message = getMessageFromServer("GET", "/api/v1/restaurants/rank_restaurants?rank_category_id=" + rank_category_id+"&price_low="+price_low+"&price_high="+price_high +"&is_food_order=true"+ "&page=" + page, null, null);
+        ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+        if (message == null) {
+            return null;
+        } else {
+            return parseRestaurants(message, restaurants);
+        }
+    }
+    
+    public static ArrayList<Restaurant> getAreaRankCategoryRestaurantsByService(int area_id,int rank_category_id, int price_low, int price_high, int page) {
+        String message = getMessageFromServer("GET", "/api/v1/restaurants/rank_restaurants?area_id="+area_id+"&rank_category_id=" + rank_category_id+"&price_low="+price_low+"&price_high="+price_high +"&is_service_order=true"+ "&page=" + page, null, null);
+        ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+        if (message == null) {
+            return null;
+        } else {
+            return parseRestaurants(message, restaurants);
+        }
+    }
+    
+    public static ArrayList<Restaurant> getAreaRankCategoryRestaurantsByFood(int area_id,int rank_category_id, int price_low, int price_high, int page) {
+        String message = getMessageFromServer("GET", "/api/v1/restaurants/rank_restaurants?area_id="+area_id+"&rank_category_id=" + rank_category_id+"&price_low="+price_low+"&price_high="+price_high +"&is_food_order=true"+ "&page=" + page, null, null);
+        ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+        if (message == null) {
+            return null;
+        } else {
+            return parseRestaurants(message, restaurants);
+        }
+    }
+    
+    public static ArrayList<Restaurant> getRankCategoryRestaurantsByDistance(int rank_category_id, int price_low, int price_high,double x, double y, int page) {
+    	String x_string = String.valueOf(x);
+	   	String y_string = String.valueOf(y);
+        String message = getMessageFromServer("GET", "/api/v1/restaurants/rank_restaurants?rank_category_id=" + rank_category_id+"&price_low="+price_low+"&price_high="+price_high +"&is_dis_order=true&x="+x_string+"&y="+y_string+ "&page=" + page, null, null);
+        ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+        if (message == null) {
+            return null;
+        } else {
+            return parseRestaurants(message, restaurants);
+        }
+    }
+    
+    public static ArrayList<Restaurant> getAreaRankCategoryRestaurantsByDistance(int area_id,int rank_category_id, int price_low, int price_high,double x, double y, int page) {
+    	String x_string = String.valueOf(x);
+	   	String y_string = String.valueOf(y);
+        String message = getMessageFromServer("GET", "/api/v1/restaurants/rank_restaurants?area_id="+area_id+"&rank_category_id=" + rank_category_id+"&price_low="+price_low+"&price_high="+price_high +"&is_dis_order=true&x="+x_string+"&y="+y_string+ "&page=" + page, null, null);
+        ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+        if (message == null) {
+            return null;
+        } else {
+            return parseRestaurants(message, restaurants);
+        }
+    }
+    
+    
     public static ArrayList<Restaurant> getTypeRestaurantsByPrice(int type_id, int price_low, int price_high, int page) {
         String message = getMessageFromServer("GET", "/api/v1/restaurants/type_restaurants?type_id=" + type_id+"&price_low="+price_low+"&price_high="+price_high + "&page=" + page, null, null);
         ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
@@ -336,8 +471,28 @@ public class RestaurantAPI {
         }
     }
     
+    public static ArrayList<Restaurant> getTypeRestaurantsByFood(int type_id, int price_low, int price_high, int page) {
+        String message = getMessageFromServer("GET", "/api/v1/restaurants/type_restaurants?type_id=" + type_id+"&price_low="+price_low+"&price_high="+price_high +"&is_food_order=true"+ "&page=" + page, null, null);
+        ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+        if (message == null) {
+            return null;
+        } else {
+            return parseRestaurants(message, restaurants);
+        }
+    }
+    
     public static ArrayList<Restaurant> getAreaTypeRestaurantsByService(int area_id,int type_id, int price_low, int price_high, int page) {
         String message = getMessageFromServer("GET", "/api/v1/restaurants/type_restaurants?area_id="+area_id+"&type_id=" + type_id+"&price_low="+price_low+"&price_high="+price_high +"&is_service_order=true"+ "&page=" + page, null, null);
+        ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+        if (message == null) {
+            return null;
+        } else {
+            return parseRestaurants(message, restaurants);
+        }
+    }
+    
+    public static ArrayList<Restaurant> getAreaTypeRestaurantsByFood(int area_id,int type_id, int price_low, int price_high, int page) {
+        String message = getMessageFromServer("GET", "/api/v1/restaurants/type_restaurants?area_id="+area_id+"&type_id=" + type_id+"&price_low="+price_low+"&price_high="+price_high +"&is_food_order=true"+ "&page=" + page, null, null);
         ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
         if (message == null) {
             return null;
@@ -369,7 +524,6 @@ public class RestaurantAPI {
             return parseRestaurants(message, restaurants);
         }
     }
-    
     
     public static ArrayList<Restaurant> getAreaSecondCategoryRestaurants(int area_id,int sec_c_id, int page) {
         String message = getMessageFromServer("GET", "/api/v1/restaurants?area_id=" + area_id +"&sec_c_id="+ sec_c_id+ "&page=" + page, null, null);
