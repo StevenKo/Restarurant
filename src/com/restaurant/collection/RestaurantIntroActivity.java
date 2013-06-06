@@ -2,6 +2,9 @@ package com.restaurant.collection;
 
 import java.util.ArrayList;
 
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -10,13 +13,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -25,6 +33,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.restaurant.adapter.RestaurantGridViewAdapter;
 import com.restaurant.collection.api.RestaurantAPI;
 import com.restaurant.collection.db.SQLiteRestaurant;
+import com.restaurant.collection.entity.Area;
 import com.restaurant.collection.entity.Restaurant;
 import com.restaurant.collection.entity.Note;
 import com.restaurant.fragment.RestaurantNotesFragment;
@@ -32,6 +41,7 @@ import com.restaurant.gps.util.GPSTracker;
 import com.viewpagerindicator.CirclePageIndicator;
 
 public class RestaurantIntroActivity extends SherlockFragmentActivity {
+	private static final int ID_IMPEACH = 0;
 	private ViewPager pager;
 	private ImageButton share_btn;
 	private ImageButton direction_button;
@@ -228,7 +238,11 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
         }
     }
 	
-	
+	@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add(0, ID_IMPEACH, 5, "檢舉餐廳").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        return true;
+    }
     
 	@Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
@@ -238,9 +252,40 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
         case android.R.id.home:
             finish();
             break;
+        case ID_IMPEACH:
+        	showImpeachDialog();
+        	break;
             
         }
         return true;
     }
+
+	private void showImpeachDialog() {
+		LayoutInflater inflater = this.getLayoutInflater();
+    	LinearLayout recomendLayout = (LinearLayout) inflater.inflate(R.layout.dialog_impeach,null);
+    	final Spinner areaSpinner = (Spinner) recomendLayout.findViewById(R.id.spinnner);
+    	final EditText impeach_reason = (EditText)recomendLayout.findViewById(R.id.impeach_reason);
+    	
+    	
+    	final String[] items = {"餐廳已歇業","菜色不佳", "服務態度不好"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+        areaSpinner.setAdapter(adapter);
+        
+    	Builder a = new AlertDialog.Builder(this).setTitle("檢舉餐廳").setIcon(R.drawable.icon)
+        .setPositiveButton("確定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            	Intent email = new Intent(Intent.ACTION_SEND);
+            	email.putExtra(Intent.EXTRA_EMAIL, new String[]{"brotherkos@gmail.com"});		  
+            	email.putExtra(Intent.EXTRA_SUBJECT, items[areaSpinner.getSelectedItemPosition()]);
+            	email.putExtra(Intent.EXTRA_TEXT, impeach_reason.getText().toString());
+            	email.setType("message/rfc822");
+            	startActivity(Intent.createChooser(email, "Choose an Email client :"));
+            }
+        }).setNegativeButton("取消", null);
+    	a.setView(recomendLayout);
+    	a.show();
+		
+	}
 
 }

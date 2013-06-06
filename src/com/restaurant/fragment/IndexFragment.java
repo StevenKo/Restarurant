@@ -113,7 +113,7 @@ public final class IndexFragment extends Fragment {
             @Override
             public void onClick(View v) {
             	LayoutInflater inflater = getActivity().getLayoutInflater();
-            	LinearLayout recomendLayout = (LinearLayout) inflater.inflate(R.layout.commend_dialog,null);
+            	LinearLayout recomendLayout = (LinearLayout) inflater.inflate(R.layout.dialog_commend,null);
             	final Spinner areaSpinner = (Spinner) recomendLayout.findViewById(R.id.spinnner);
             	final EditText restaurantName = (EditText)recomendLayout.findViewById(R.id.restaurant_name);
             	final EditText gradeFood = (EditText)recomendLayout.findViewById(R.id.grade_food);
