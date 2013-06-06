@@ -40,7 +40,7 @@
         	              android:id="@+id/author_tip"
         	              android:layout_width="wrap_content"
         	              android:layout_height="wrap_content"
-        	              android:text="補充:"
+        	              android:text="補充說明:"
         	           	  android:textSize="15dp" 
         	              android:textColor="#999999"
         	              android:typeface="serif"
@@ -50,6 +50,7 @@
                         android:id="@+id/impeach_reason"        
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:hint="歡迎補充說明原因，謝謝"
                         >
                         </EditText>
     </LinearLayout>
