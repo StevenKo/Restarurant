@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.restaurant.collection"
-    android:versionCode="1"
+    android:versionCode="3"
     android:versionName="1.0" >
 
     <uses-sdk
@@ -77,19 +77,12 @@
               android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyADPDJQjax4dJZw5p4M-ekOGb2Xwqh_o-Q"/>
+            android:value="AIzaSyDyGW1o99DIjm2TBoHDCsSAzy0J2R4v5yA"/>
     </application>
     <permission
         android:name="moke.test.googlemap.permission.MAPS_RECEIVE"
         android:protectionLevel="signature"/>
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>   
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />    
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="moke.test.googlemap.permission.MAPS_RECEIVE"/>
