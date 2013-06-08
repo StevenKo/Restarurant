@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:id="@+id/recommend_dialog" >
+    
+    <LinearLayout 
+                android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:orientation="horizontal"
+                android:layout_marginLeft="5dp"
+        		        
+        	        >
+        	            <TextView
+        	              android:id="@+id/author_tip"
+        	              android:layout_width="wrap_content"
+        	              android:layout_height="wrap_content"
+        	              android:text="檢舉原因:"
+        	           	  android:textSize="15dp" 
+        	              android:textColor="#999999"
+        	              android:typeface="serif"
+        	              >
+        	            </TextView>
+        	            <Spinner
+                        android:id="@+id/spinnner"        
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        </Spinner>
+    </LinearLayout>
+    
+    <LinearLayout 
+                android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:orientation="horizontal"
+                android:layout_marginLeft="5dp"
+        		        
+        	        >
+        	            <TextView
+        	              android:id="@+id/author_tip"
+        	              android:layout_width="wrap_content"
+        	              android:layout_height="wrap_content"
+        	              android:text="補充說明:"
+        	           	  android:textSize="15dp" 
+        	              android:textColor="#999999"
+        	              android:typeface="serif"
+        	              >
+        	            </TextView>
+        	            <EditText
+                        android:id="@+id/impeach_reason"        
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="歡迎補充說明原因，謝謝"
+                        >
+                        </EditText>
+    </LinearLayout>
+    
+    
+    
+
+</LinearLayout>

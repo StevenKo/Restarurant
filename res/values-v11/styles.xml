@@ -8,7 +8,7 @@
         <!-- API 11 theme customizations can go here. -->
     </style>
 	
-    <style name="StyledIndicators" parent="android:Theme.Holo.Light">
+    <style name="StyledIndicators" parent="Theme.Sherlock.Light.DarkActionBar">
         <item name="vpiTabPageIndicatorStyle">@style/CustomTabPageIndicator</item>
         <item name="vpiTitlePageIndicatorStyle">@style/Widget.MyTitlepageIndicator</item>
         <item name="vpiCirclePageIndicatorStyle">@style/myCirclePageIndicator</item>   

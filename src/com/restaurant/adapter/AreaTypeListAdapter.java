@@ -67,7 +67,7 @@ public class AreaTypeListAdapter extends BaseAdapter {
 
         });
         
-        vi.setBackground(activity.getResources().getDrawable(R.drawable.restaurant_list_selector));
+//        vi.setBackground(activity.getResources().getDrawable(R.drawable.restaurant_list_selector));
 
         return vi;
     }

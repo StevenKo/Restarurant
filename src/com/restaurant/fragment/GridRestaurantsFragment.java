@@ -173,7 +173,8 @@ public class GridRestaurantsFragment extends Fragment {
             public void onClick(View arg0) {
                 progressLayout.setVisibility(View.VISIBLE);
                 layoutReload.setVisibility(View.GONE);
-                new DownloadRestaurantsTask().execute();
+                if(is_show_distance)
+                	new DownloadRestaurantsTask().execute();
             }
         });
 
@@ -320,7 +321,8 @@ public class GridRestaurantsFragment extends Fragment {
                     layoutReload.setVisibility(View.GONE);
                     myGridViewAdapter = new RestaurantGridViewAdapter(getActivity(), restaurants,is_show_distance);
                     myGrid.setAdapter(myGridViewAdapter);
-                    new DownloadRestaurantsDistanceTask().execute();
+                    if(is_show_distance)
+                    	new DownloadRestaurantsDistanceTask().execute();
                 } catch (Exception e) {
 
                 }

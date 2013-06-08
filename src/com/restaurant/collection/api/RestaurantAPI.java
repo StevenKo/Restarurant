@@ -923,7 +923,7 @@ public class RestaurantAPI {
             nameValuePairs.add(new BasicNameValuePair("name", name));
             nameValuePairs.add(new BasicNameValuePair("grade_food", Integer.toString(grade_food)));
             nameValuePairs.add(new BasicNameValuePair("grade_service", Integer.toString(grade_service)));
-            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs,"UTF-8"));
 
             // Execute HTTP Post Request
             HttpResponse response = httpclient.execute(httppost);

@@ -113,7 +113,7 @@ public final class IndexFragment extends Fragment {
             @Override
             public void onClick(View v) {
             	LayoutInflater inflater = getActivity().getLayoutInflater();
-            	LinearLayout recomendLayout = (LinearLayout) inflater.inflate(R.layout.commend_dialog,null);
+            	LinearLayout recomendLayout = (LinearLayout) inflater.inflate(R.layout.dialog_commend,null);
             	final Spinner areaSpinner = (Spinner) recomendLayout.findViewById(R.id.spinnner);
             	final EditText restaurantName = (EditText)recomendLayout.findViewById(R.id.restaurant_name);
             	final EditText gradeFood = (EditText)recomendLayout.findViewById(R.id.grade_food);
@@ -135,20 +135,37 @@ public final class IndexFragment extends Fragment {
                     	final String name = restaurantName.getText().toString();
                     	final String grade_food = gradeFood.getText().toString();
                     	final String grade_service = gradeService.getText().toString();
-                    	new AsyncTask() {
-
-                            @Override
-                            protected Object doInBackground(Object... params) {
-                            	RestaurantAPI.postData( area_id,  name,  Integer.parseInt(grade_food),  Integer.parseInt(grade_service));
-                                return null;
-                            }
-                            
-                            @Override
-                            protected void onPostExecute(Object result) {
-                            	Toast.makeText(getActivity(), "謝謝你的推薦！", Toast.LENGTH_LONG).show();
-                            }
-
-                        }.execute();
+                    	
+                    	if(name.equals("")){
+                        	Toast.makeText(getActivity(), "請輪入餐廳名稱", Toast.LENGTH_LONG).show();
+                    	}else{
+                    		
+                    		try{
+		                    	new AsyncTask() {
+		
+		                            @Override
+		                            protected Object doInBackground(Object... params) {
+		                            	if(grade_food.equals("") && grade_service.equals(""))
+			                            	RestaurantAPI.postData( area_id,  name,  0, 0);
+		                            	else if(!grade_service.equals("") && grade_food.equals(""))
+		                            		RestaurantAPI.postData( area_id,  name,  0, Integer.parseInt(grade_service));
+		                            	else if(!grade_food.equals("") && grade_service.equals(""))
+		                            		RestaurantAPI.postData( area_id,  name,  Integer.parseInt(grade_food), 0);
+		                            	else
+		                            	    RestaurantAPI.postData( area_id,  name,  Integer.parseInt(grade_food),  Integer.parseInt(grade_service));
+		                                return null;
+		                            }
+		                            
+		                            @Override
+		                            protected void onPostExecute(Object result) {
+		                            	Toast.makeText(getActivity(), "謝謝你的推薦！", Toast.LENGTH_LONG).show();
+		                            }
+		
+		                        }.execute();
+                    		}catch(Exception e){
+                    			Toast.makeText(getActivity(), "請輸入整數 1 ~ 100", Toast.LENGTH_LONG).show();
+                    		}
+                    	}
                     	
 
                     }

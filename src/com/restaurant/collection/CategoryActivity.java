@@ -143,7 +143,7 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
 
 	private void showPriceRangeDialog() {
     	LayoutInflater inflater = this.getLayoutInflater();
-    	LinearLayout priceRangeLayout = (LinearLayout) inflater.inflate(R.layout.price_range_dialog,null);
+    	LinearLayout priceRangeLayout = (LinearLayout) inflater.inflate(R.layout.dialog_price_range,null);
     	final EditText rangeStart = (EditText)priceRangeLayout.findViewById(R.id.price_range_start);
     	final EditText rangeEnd = (EditText)priceRangeLayout.findViewById(R.id.price_range_end);
     	RadioGroup radioPirceGroup = (RadioGroup) priceRangeLayout.findViewById(R.id.radioPrice);

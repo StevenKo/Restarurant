@@ -47,7 +47,7 @@ public class CategoryListAdapter extends BaseAdapter {
         TextView text = (TextView) vi.findViewById(R.id.text_list);
         text.setText(data.get(position).getName());
        
-        vi.setBackground(activity.getResources().getDrawable(R.drawable.restaurant_list_selector));
+//        vi.setBackground(activity.getResources().getDrawable(R.drawable.restaurant_list_selector));
         return vi;
     }
 }

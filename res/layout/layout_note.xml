@@ -54,7 +54,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         >
-    <LinearLayout 
+          <LinearLayout 
            android:layout_width="fill_parent"
            android:layout_height="wrap_content"
            android:background="#222222"
@@ -65,25 +65,33 @@
            android:layout_height="wrap_content"
            android:src="@drawable/share"
            android:id="@+id/share_button"
-           android:layout_weight="1"/>
+           android:layout_weight="1"
+           android:background="@drawable/restaurant_list_selector"
+           android:layout_marginRight="1dp"/>
            <ImageButton 
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:src="@drawable/directions"
            android:id="@+id/direction_button"
-           android:layout_weight="1"/>
+           android:layout_weight="1"
+           android:background="@drawable/restaurant_list_selector"
+           android:layout_marginRight="1dp"
+           />
            <ImageButton 
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:src="@drawable/place"
            android:id="@+id/place_button"
-           android:layout_weight="1"/>
+           android:layout_weight="1"
+           android:background="@drawable/restaurant_list_selector"
+           android:layout_marginRight="1dp"/>
            <ImageButton 
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:src="@drawable/favorite"
            android:id="@+id/favorite_button"
-           android:layout_weight="1"/>
+           android:layout_weight="1"
+           android:background="@drawable/restaurant_list_selector"/>
        </LinearLayout>
        
        <WebView  android:id="@+id/web_article"
