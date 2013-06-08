@@ -339,7 +339,7 @@ public class RestaurantAPI {
     public static ArrayList<Restaurant> getAreaSecondCategoryRestaurantsByDistance(int area_id,int second_category_id, int price_low, int price_high,double x, double y, int page) {
     	String x_string = String.valueOf(x);
 	   	String y_string = String.valueOf(y);
-        String message = getMessageFromServer("GET", "/api/v1/restaurants/category_restaurants?area_id="+area_id+"&category_id=" + second_category_id+"&price_low="+price_low+"&price_high="+price_high +"&is_dis_order=true&x="+x_string+"&y="+y_string+ "&page=" + page, null, null);
+        String message = getMessageFromServer("GET", "/api/v1/restaurants/category_restaurants?area_id="+area_id+"&sec_c_id=" + second_category_id+"&price_low="+price_low+"&price_high="+price_high +"&is_dis_order=true&x="+x_string+"&y="+y_string+ "&page=" + page, null, null);
         ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
         if (message == null) {
             return null;
