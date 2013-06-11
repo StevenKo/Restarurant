@@ -238,7 +238,7 @@ public class GridRestaurantsFragment extends Fragment {
         		if(area_id !=0 && category_id != 0){
 	        		restaurants = RestaurantAPI.getAreaCategoryRestaurantsByDistance(area_id, category_id, price_low, price_high, latitude, longitude, 1);
 	        	}else if(area_id != 0 && rank_category_id != 0){
-	        		restaurants = RestaurantAPI.getAreaRankCategoryRestaurantsByDistance(area_id, rank_category_id, price_low, price_high, latitude, latitude, 1);
+	        		restaurants = RestaurantAPI.getAreaRankCategoryRestaurantsByDistance(area_id, rank_category_id, price_low, price_high, latitude, longitude, 1);
 	        	}else if(area_id != 0 && second_category_id != 0){
 	        		restaurants = RestaurantAPI.getAreaSecondCategoryRestaurantsByDistance(area_id, second_category_id, price_low, price_high, latitude, longitude, 1);
 	        	}else if(area_id != 0 && type_id != 0){
@@ -377,7 +377,7 @@ public class GridRestaurantsFragment extends Fragment {
         		if(area_id !=0 && category_id != 0){
         			moreRestaurants = RestaurantAPI.getAreaCategoryRestaurantsByDistance(area_id, category_id, price_low, price_high, latitude, longitude, myPage);
 	        	}else if(area_id != 0 && rank_category_id != 0){
-	        		moreRestaurants = RestaurantAPI.getAreaRankCategoryRestaurantsByDistance(area_id, rank_category_id, price_low, price_high, latitude, latitude, myPage);
+	        		moreRestaurants = RestaurantAPI.getAreaRankCategoryRestaurantsByDistance(area_id, rank_category_id, price_low, price_high, latitude, longitude, myPage);
 	        	}else if(area_id != 0 && second_category_id != 0){
 	        		moreRestaurants = RestaurantAPI.getAreaSecondCategoryRestaurantsByDistance(area_id, second_category_id, price_low, price_high, latitude, longitude, myPage);
 	        	}else if(area_id != 0 && type_id != 0){
