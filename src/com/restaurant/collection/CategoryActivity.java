@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,6 +35,7 @@ import com.restaurant.fragment.CategoryTabFragment;
 import com.restaurant.fragment.SecondCategoryListFragment;
 import com.viewpagerindicator.TitlePageIndicator;
 import android.content.DialogInterface.OnClickListener;
+import android.support.v4.app.DialogFragment;
 
 interface AlertPositiveListener {
     public void onPositiveClick(int position);
@@ -187,7 +187,7 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
     	a.show();
 	}
     
-    public class AlertDialogRadio  extends DialogFragment{
+    public static class AlertDialogRadio  extends DialogFragment{
     	
     	AlertPositiveListener alertPositiveListener;
     	final CharSequence[] items = {"距離(由近到遠) ","服務(由高到低) ", "菜色(由高到低)","價格 $0~100", "價格 $100~200","價格 $200~500", "價格 $500~1000", "自訂價格區間"};
@@ -200,6 +200,14 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
                 // The hosting activity does not implemented the interface AlertPositiveListener
                 throw new ClassCastException(activity.toString() + " must implement AlertPositiveListener");
             }
+        }
+    	
+    	static AlertDialogRadio newInstance(int position) {
+    		AlertDialogRadio f = new AlertDialogRadio();
+            Bundle args = new Bundle();
+            args.putInt("position", position);
+            f.setArguments(args);
+            return f;
         }
     	
     	OnClickListener positiveListener = new OnClickListener() {
@@ -431,12 +439,8 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
 //            startActivity(intent);
 //            break;
         case ID_SORT:
-        	android.app.FragmentManager manager = getFragmentManager();        	 
-            AlertDialogRadio alert = new AlertDialogRadio();
-            Bundle b  = new Bundle();
-            b.putInt("position", sortPosition );
-            alert.setArguments(b);
-            alert.show(manager, "alert_dialog_radio");
+            AlertDialogRadio alert = AlertDialogRadio.newInstance(sortPosition);
+            alert.show(getSupportFragmentManager(), "sort_alert_dialog");
         	break;
         }
         return true;
