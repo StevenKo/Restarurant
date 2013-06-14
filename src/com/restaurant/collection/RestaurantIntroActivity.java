@@ -279,6 +279,7 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
             	email.putExtra(Intent.EXTRA_EMAIL, new String[]{"brotherkos@gmail.com"});		  
             	email.putExtra(Intent.EXTRA_SUBJECT, "嚴選餐廳問題回報:檢舉餐廳" );
             	email.putExtra(Intent.EXTRA_TEXT, 
+            			"檢舉餐廳:" + restaurant.getName() + " " + restaurant.getId() + "\n"+
             			"檢舉原因:" + items[areaSpinner.getSelectedItemPosition()]+"\n"+
             			"補充說明:" + impeach_reason.getText().toString());
             	email.setType("message/rfc822");
