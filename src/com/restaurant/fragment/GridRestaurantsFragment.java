@@ -412,7 +412,7 @@ public class GridRestaurantsFragment extends Fragment {
         		if(area_id !=0 && category_id != 0){
         			moreRestaurants = RestaurantAPI.getAreaCategoryRestaurantsByPrice(area_id, category_id, price_low, price_high, myPage);
 	        	}else if(area_id != 0 && rank_category_id != 0){
-	        		restaurants = RestaurantAPI.getAreaRankCategoryRestaurantsByPrice(area_id, rank_category_id, price_low, price_high, myPage);
+	        		moreRestaurants = RestaurantAPI.getAreaRankCategoryRestaurantsByPrice(area_id, rank_category_id, price_low, price_high, myPage);
 	        	}else if(area_id != 0 && second_category_id != 0){
 	        		moreRestaurants = RestaurantAPI.getAreaSecondCategoryRestaurantsByPrice(area_id, second_category_id, price_low, price_high, myPage);
 	        	}else if(area_id != 0 && type_id != 0){
@@ -445,7 +445,7 @@ public class GridRestaurantsFragment extends Fragment {
         	}
             
             for (int i = 0; i < moreRestaurants.size(); i++) {
-            	restaurants.add(moreRestaurants.get(i));
+        		restaurants.add(moreRestaurants.get(i));
             }
 
             return null;

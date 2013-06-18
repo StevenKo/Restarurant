@@ -942,7 +942,7 @@ public class RestaurantAPI {
 	   String des_string = getDesstring(res);
        String message = getMessageFromServer("GET", "" , null, "http://maps.googleapis.com/maps/api/distancematrix"+"/json?origins="+x_string+","+y_string+"&destinations="+des_string+"&language=zh-TW&sensor=false");
        if (message == null) {
-           return null;
+           return res;
        } else {
            return parseRestaurantsDistance(message, res);
        }
@@ -967,7 +967,11 @@ public class RestaurantAPI {
             }
 			
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
+
+			for(int resIndex=0; resIndex < res.size(); resIndex++){
+				if(res.get(resIndex).getDis().equals(""))
+					res.get(resIndex).setDis("無法估算距離");
+			}
 			e.printStackTrace();
 		}
 		
