@@ -30,7 +30,7 @@ import com.restaurant.collection.entity.Category;
 import com.restaurant.collection.entity.Restaurant;
 import com.restaurant.gps.util.GPSTracker;
 
-public class MapActivity extends SherlockFragmentActivity implements OnMarkerClickListener, OnInfoWindowClickListener {
+public class MapActivity extends SherlockFragmentActivity implements OnInfoWindowClickListener {
 	
 	private static final int    ID_LOAD_MORE = 1;
 	private GoogleMap map;
@@ -256,7 +256,6 @@ public class MapActivity extends SherlockFragmentActivity implements OnMarkerCli
     	      
         }
     	
-    	map.setOnMarkerClickListener(this);
     	map.setOnInfoWindowClickListener(this);
     	if(isColletion)
     	  map.moveCamera( CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude) , 8.0f) );
@@ -290,16 +289,6 @@ public class MapActivity extends SherlockFragmentActivity implements OnMarkerCli
         }
         return true;
     }
-
-
-
-	@Override
-	public boolean onMarkerClick(Marker m) {
-		
-		return false;
-	}
-
-
 
 	@Override
 	public void onInfoWindowClick(Marker m) {
