@@ -268,7 +268,7 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
     	final EditText impeach_reason = (EditText)recomendLayout.findViewById(R.id.impeach_reason);
     	
     	
-    	final String[] items = {"餐廳已歇業","菜色不佳", "服務態度不好"};
+    	final String[] items = {"餐廳已歇業","餐廳已遷址","菜色不佳", "服務人員態度不好","衛生環境不良"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
         areaSpinner.setAdapter(adapter);
         
