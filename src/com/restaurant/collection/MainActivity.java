@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.restaurant.fragment.IndexCategoryTabFragment;
 import com.restaurant.fragment.GridEatNoteFragment;
 import com.restaurant.fragment.GridRestaurantsFragment;
@@ -251,6 +252,18 @@ public class MainActivity extends SherlockFragmentActivity implements OnButtonCl
 		pager.setCurrentItem(0);
 		((IndexCategoryTabFragment)adapter.getItem(0)).setTabHostCurrent(1);
 	}
+	
+	@Override
+    public void onStart() {
+      super.onStart();
+      EasyTracker.getInstance().activityStart(this);
+    }
+
+    @Override
+    public void onStop() {
+      super.onStop();
+      EasyTracker.getInstance().activityStop(this);
+    }
 	
 
 }

@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.restaurant.adapter.RestaurantGridViewAdapter;
 import com.restaurant.collection.api.RestaurantAPI;
 import com.restaurant.collection.entity.Restaurant;
@@ -209,6 +210,18 @@ public class SearchActivity extends SherlockFragmentActivity{
             myGridViewAdapter.notifyDataSetChanged();
             
         }
+    }
+    
+    @Override
+    public void onStart() {
+      super.onStart();
+      EasyTracker.getInstance().activityStart(this);
+    }
+
+    @Override
+    public void onStop() {
+      super.onStop();
+      EasyTracker.getInstance().activityStop(this);
     }
 
 }

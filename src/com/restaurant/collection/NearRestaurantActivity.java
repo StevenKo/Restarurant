@@ -19,6 +19,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.restaurant.collection.api.RestaurantAPI;
 import com.restaurant.collection.entity.Area;
 import com.restaurant.collection.entity.Category;
@@ -180,5 +181,17 @@ public class NearRestaurantActivity extends SherlockFragmentActivity{
             return 1;
         }
 	}
+	
+	@Override
+    public void onStart() {
+      super.onStart();
+      EasyTracker.getInstance().activityStart(this);
+    }
+
+    @Override
+    public void onStop() {
+      super.onStop();
+      EasyTracker.getInstance().activityStop(this);
+    }
 
 }

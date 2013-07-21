@@ -23,6 +23,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.restaurant.collection.db.SQLiteRestaurant;
 import com.restaurant.collection.entity.Note;
 import com.restaurant.gps.util.GPSTracker;
@@ -199,23 +200,35 @@ public class RestaurantNoteActivity extends SherlockActivity{
 	
 
 	@Override
-	    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+    public boolean onMenuItemSelected(int featureId, MenuItem item) {
 
-	        int itemId = item.getItemId();
-	        switch (itemId) {
-	        case android.R.id.home:
-	            finish();
-	            break;
-	        case ID_RESTAURANT:
-	        	Intent intent = new Intent(RestaurantNoteActivity.this, RestaurantIntroActivity.class);
-            	Bundle bundle = new Bundle();
-            	bundle.putInt("ResturantId", note.getRestaurantId());
-            	bundle.putString("ResturantName", "餐廳介紹");
-            	intent.putExtras(bundle);
-            	startActivity(intent);
-	        	break;
-	        }
-	        return true;
-	    }
+        int itemId = item.getItemId();
+        switch (itemId) {
+        case android.R.id.home:
+            finish();
+            break;
+        case ID_RESTAURANT:
+        	Intent intent = new Intent(RestaurantNoteActivity.this, RestaurantIntroActivity.class);
+        	Bundle bundle = new Bundle();
+        	bundle.putInt("ResturantId", note.getRestaurantId());
+        	bundle.putString("ResturantName", "餐廳介紹");
+        	intent.putExtras(bundle);
+        	startActivity(intent);
+        	break;
+        }
+        return true;
+    }
+	
+	@Override
+    public void onStart() {
+      super.onStart();
+      EasyTracker.getInstance().activityStart(this);
+    }
+
+    @Override
+    public void onStop() {
+      super.onStop();
+      EasyTracker.getInstance().activityStop(this);
+    }
 
 }

@@ -27,6 +27,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.restaurant.collection.entity.Area;
 import com.restaurant.collection.entity.Category;
 import com.restaurant.collection.entity.Type;
@@ -511,4 +512,16 @@ public class CategoryActivity extends SherlockFragmentActivity implements OnItem
         }	
 		
 	}
+	
+	@Override
+    public void onStart() {
+      super.onStart();
+      EasyTracker.getInstance().activityStart(this);
+    }
+
+    @Override
+    public void onStop() {
+      super.onStop();
+      EasyTracker.getInstance().activityStop(this);
+    }
 }
