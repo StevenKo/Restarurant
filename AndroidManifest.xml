@@ -78,6 +78,15 @@
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyDyGW1o99DIjm2TBoHDCsSAzy0J2R4v5yA"/>
+        
+        <activity
+            android:name="com.vpon.widget.VponActivity" 
+            android:configChanges="orientation|keyboardHidden|navigation|keyboard|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:theme="@android:style/Theme.Translucent"
+            android:hardwareAccelerated="true"
+            >
+        </activity>
+        
     </application>
     <permission
         android:name="moke.test.googlemap.permission.MAPS_RECEIVE"
