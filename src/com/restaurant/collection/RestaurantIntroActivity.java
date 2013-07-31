@@ -81,7 +81,19 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
         getCurrentLocation();
         
         new DownloadRestaurantTask().execute();
+        new UpdateServerCollectTask().execute();
         
+    }
+    
+    private class UpdateServerCollectTask extends AsyncTask {
+
+		@Override
+		protected Object doInBackground(Object... params) {
+			
+			RestaurantAPI.sendRestaurant(restaurant.getId(), MainActivity.getRegistrationId(RestaurantIntroActivity.this));
+			return null;
+		}
+    	
     }
     
     private void getCurrentLocation() {

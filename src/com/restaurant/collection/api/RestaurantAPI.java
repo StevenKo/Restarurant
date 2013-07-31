@@ -14,10 +14,12 @@ import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
@@ -990,5 +992,117 @@ public class RestaurantAPI {
 		return des_string;
 	}
 	
+	public static boolean sendRegistrationId(String regid) {
+		try{
+			DefaultHttpClient httpClient = new DefaultHttpClient();
+			String url = HOST + "/api/v1/users.json?regid="+regid;						
+			if(DEBUG)
+				Log.d(TAG, "URL : " + url);
+
+			HttpPost httpPost = new HttpPost(url);
+			HttpResponse response = httpClient.execute(httpPost);
+
+			StatusLine statusLine =  response.getStatusLine();
+			if (statusLine.getStatusCode() == 200){
+				return true;
+			}else{
+				return false;
+			}
+		} 
+	    catch (Exception e) {
+			return false;
+		} 
+	}
 	
+	public static boolean sendCollectNotes(String notes,String regid){
+    	try{
+			DefaultHttpClient httpClient = new DefaultHttpClient();
+			String url = HOST + "/api/v1/users/update_collect_notes.json?notes="+notes+"&regid="+regid;						
+			if(DEBUG)
+				Log.d(TAG, "URL : " + url);
+
+			HttpPut httpPut = new HttpPut(url);
+			HttpResponse response = httpClient.execute(httpPut);
+
+			StatusLine statusLine =  response.getStatusLine();
+			if (statusLine.getStatusCode() == 200){
+				return true;
+			}else{
+				return false;
+			}
+		} 
+	    catch (Exception e) {
+			return false;
+		} 
+
+    }
+	
+	public static boolean sendCollectRestaurants(String restaurants,String regid){
+    	try{
+			DefaultHttpClient httpClient = new DefaultHttpClient();
+			String url = HOST + "/api/v1/users/update_collect_restaurants.json?restaurants="+restaurants+"&regid="+regid;						
+			if(DEBUG)
+				Log.d(TAG, "URL : " + url);
+
+			HttpPut httpPut = new HttpPut(url);
+			HttpResponse response = httpClient.execute(httpPut);
+
+			StatusLine statusLine =  response.getStatusLine();
+			if (statusLine.getStatusCode() == 200){
+				return true;
+			}else{
+				return false;
+			}
+		} 
+	    catch (Exception e) {
+			return false;
+		} 
+
+    }
+	
+	public static boolean sendRestaurant(int restaurant,String regid){
+    	try{
+			DefaultHttpClient httpClient = new DefaultHttpClient();
+			String url = HOST + "/api/v1/users/update_looked_restaurants.json?regid="+regid+"&restaurant="+restaurant;						
+			if(DEBUG)
+				Log.d(TAG, "URL : " + url);
+
+			HttpPut httpPut = new HttpPut(url);
+			HttpResponse response = httpClient.execute(httpPut);
+
+			StatusLine statusLine =  response.getStatusLine();
+			if (statusLine.getStatusCode() == 200){
+				return true;
+			}else{
+				return false;
+			}
+		} 
+	    catch (Exception e) {
+			return false;
+		} 
+
+    }
+	
+	public static boolean sendNote(int note,String regid){
+    	try{
+			DefaultHttpClient httpClient = new DefaultHttpClient();
+			String url = HOST + "/api/v1/users/update_looked_notes.json?regid="+regid+"&note="+note;						
+			if(DEBUG)
+				Log.d(TAG, "URL : " + url);
+
+			HttpPut httpPut = new HttpPut(url);
+			HttpResponse response = httpClient.execute(httpPut);
+
+			StatusLine statusLine =  response.getStatusLine();
+			if (statusLine.getStatusCode() == 200){
+				return true;
+			}else{
+				return false;
+			}
+		} 
+	    catch (Exception e) {
+			return false;
+		} 
+
+    }
 }

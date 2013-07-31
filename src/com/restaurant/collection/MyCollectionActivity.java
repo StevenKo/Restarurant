@@ -3,6 +3,7 @@ package com.restaurant.collection;
 import java.util.ArrayList;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -17,7 +18,11 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.restaurant.collection.CategoryActivity.CategoryPagerAdapter;
+import com.restaurant.collection.api.RestaurantAPI;
+import com.restaurant.collection.db.SQLiteRestaurant;
 import com.restaurant.collection.entity.Category;
+import com.restaurant.collection.entity.Note;
+import com.restaurant.collection.entity.Restaurant;
 import com.restaurant.fragment.CategoryTabFragment;
 import com.restaurant.fragment.GridEatNoteFragment;
 import com.restaurant.fragment.GridRestaurantsFragment;
@@ -56,7 +61,35 @@ public class MyCollectionActivity extends SherlockFragmentActivity{
         		ActivityCompat.invalidateOptionsMenu(MyCollectionActivity.this);
         	}
         });
+        
+        new UpdateServerCollectTask().execute();
 
+    }
+	
+	private class UpdateServerCollectTask extends AsyncTask {
+
+		@Override
+		protected Object doInBackground(Object... params) {
+			
+			SQLiteRestaurant db = new SQLiteRestaurant(MyCollectionActivity.this);
+    		ArrayList<Restaurant> db_restaurants = db.getAllRestaurants();
+       		ArrayList<Note> db_notes = db.getAllNotes();
+    		
+			String restaurants = "";
+			for(Restaurant restaurant :db_restaurants){
+				restaurants += restaurant.getId() + ",";
+			}
+			
+			String notes = "";
+			for(Note note :db_notes){
+				notes += note.getId() + ",";
+			}
+			
+			RestaurantAPI.sendCollectNotes(notes, MainActivity.getRegistrationId(MyCollectionActivity.this));
+			RestaurantAPI.sendCollectRestaurants(restaurants, MainActivity.getRegistrationId(MyCollectionActivity.this));
+			return null;
+		}
+    	
     }
 	
 	@Override

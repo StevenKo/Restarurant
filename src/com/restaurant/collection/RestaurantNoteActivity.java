@@ -24,6 +24,7 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.restaurant.collection.api.RestaurantAPI;
 import com.restaurant.collection.db.SQLiteRestaurant;
 import com.restaurant.collection.entity.Note;
 import com.restaurant.gps.util.GPSTracker;
@@ -57,7 +58,7 @@ public class RestaurantNoteActivity extends SherlockActivity{
         double noteX = mBundle.getDouble("NoteX");
         double noteY = mBundle.getDouble("NoteY");
         String notePic = mBundle.getString("NotePic");
-         note = new Note(noteId, rId,noteTitle, "", notePic, "",noteLink, noteX, noteY);
+        note = new Note(noteId, rId,noteTitle, "", notePic, "",noteLink, noteX, noteY);
          
 //         int id, int restaurant_id,String title, String author, String pic_url, String pub_date, String link, double x_lan, double y_long
         
@@ -75,6 +76,19 @@ public class RestaurantNoteActivity extends SherlockActivity{
         getCurrentLocation();
         setButtons();
         
+        new UpdateServerCollectTask().execute();
+        
+    }
+	
+	private class UpdateServerCollectTask extends AsyncTask {
+
+		@Override
+		protected Object doInBackground(Object... params) {
+			
+			RestaurantAPI.sendNote(note.getId(), MainActivity.getRegistrationId(RestaurantNoteActivity.this));
+			return null;
+		}
+    	
     }
 	
 	private void getCurrentLocation() {

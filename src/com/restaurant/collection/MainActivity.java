@@ -1,11 +1,17 @@
 package com.restaurant.collection;
 
+import java.io.IOException;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,6 +19,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.telephony.TelephonyManager;
 import android.text.InputType;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -23,6 +30,8 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.restaurant.collection.api.RestaurantAPI;
 import com.restaurant.fragment.IndexCategoryTabFragment;
 import com.restaurant.fragment.GridEatNoteFragment;
 import com.restaurant.fragment.GridRestaurantsFragment;
@@ -44,6 +53,27 @@ public class MainActivity extends SherlockFragmentActivity implements OnButtonCl
     private ViewPager           pager;
     private AlertDialog.Builder aboutUsDialog;
 	private MenuItem itemSearch;
+	
+	
+	//gcm
+    public static final String EXTRA_MESSAGE = "message";
+    private static final String PROPERTY_ON_SERVER_EXPIRATION_TIME = "onServerExpirationTimeMs";
+    public static final String PROPERTY_REG_ID = "registration_id";
+    private static final String PROPERTY_APP_VERSION = "appVersion";
+    /**
+     * Default lifespan (7 days) of a reservation until it is considered expired.
+     */
+    public static final long REGISTRATION_EXPIRY_TIME_MS = 1000 * 3600 * 24 * 7;
+    
+    /**
+     * Substitute you own sender ID here.
+     */
+    String SENDER_ID = "1037018589447";
+	private Context context;
+	String regid;
+	GoogleCloudMessaging gcm;
+	static final String TAG = "GCMDemo";
+	public final static String              keyPref         = "pref";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +93,14 @@ public class MainActivity extends SherlockFragmentActivity implements OnButtonCl
 
         pager.setCurrentItem(1);
         setAboutUsDialog();
+        
+        context = getApplicationContext();
+        regid = getRegistrationId(context);
+
+        if (regid.length() == 0) {
+            registerBackground();
+        }
+        gcm = GoogleCloudMessaging.getInstance(this);
     }
 
     @Override
@@ -263,6 +301,84 @@ public class MainActivity extends SherlockFragmentActivity implements OnButtonCl
     public void onStop() {
       super.onStop();
       EasyTracker.getInstance().activityStop(this);
+    }
+    
+    
+// gcm use start from here
+    
+    public static String getRegistrationId(Context context) {
+        final SharedPreferences prefs = getGCMPreferences(context);
+        String registrationId = prefs.getString(PROPERTY_REG_ID, "");
+        if (registrationId.length() == 0) {
+            Log.v(TAG, "Registration not found.");
+            return "";
+        }
+        // check if app was updated; if so, it must clear registration id to
+        // avoid a race condition if GCM sends a message
+        int registeredVersion = prefs.getInt(PROPERTY_APP_VERSION, Integer.MIN_VALUE);
+        int currentVersion = getAppVersion(context);
+        if (registeredVersion != currentVersion || isRegistrationExpired(context)) {
+            Log.v(TAG, "App version changed or registration expired.");
+            return "";
+        }
+        return registrationId;
+    }
+    
+    private static SharedPreferences getGCMPreferences(Context context) {
+        return context.getSharedPreferences(keyPref, 0);
+    }
+    
+    private static int getAppVersion(Context context) {
+        try {
+            PackageInfo packageInfo = context.getPackageManager()
+                    .getPackageInfo(context.getPackageName(), 0);
+            return packageInfo.versionCode;
+        } catch (NameNotFoundException e) {
+            // should never happen
+            throw new RuntimeException("Could not get package name: " + e);
+        }
+    }
+    
+    private static boolean isRegistrationExpired(Context context) {
+        final SharedPreferences prefs = getGCMPreferences(context);
+        // checks if the information is not stale
+        long expirationTime =
+                prefs.getLong(PROPERTY_ON_SERVER_EXPIRATION_TIME, -1);
+        return System.currentTimeMillis() > expirationTime;
+    }
+    
+    private void registerBackground() {
+        new AsyncTask() {
+
+			@Override
+			protected String doInBackground(Object... params) {
+				String msg = "";
+	            try {
+	                if (gcm == null) {
+	                    gcm = GoogleCloudMessaging.getInstance(context);
+	                }
+	                regid = gcm.register(SENDER_ID);
+	                msg = "Device registered, registration id=" + regid;
+	                RestaurantAPI.sendRegistrationId(regid);
+	                
+	                setRegistrationId(context, regid);
+	            } catch (IOException ex) {
+	                msg = "Error :" + ex.getMessage();
+	            }
+	            return msg;
+			}
+
+			private void setRegistrationId(Context context, String regid) {
+				final SharedPreferences prefs = getGCMPreferences(context);
+				SharedPreferences.Editor editor = prefs.edit();
+				editor.putString(PROPERTY_REG_ID, regid);
+				editor.putInt(PROPERTY_APP_VERSION, getAppVersion(context));
+				editor.putLong(PROPERTY_ON_SERVER_EXPIRATION_TIME, REGISTRATION_EXPIRY_TIME_MS + System.currentTimeMillis());
+				editor.commit();
+				
+			}
+            
+        }.execute(null, null, null);
     }
 	
 
