@@ -48,27 +48,27 @@ public class GcmBroadcastReceiver extends BroadcastReceiver{
         
         openActivity = Integer.parseInt(intent.getStringExtra("activity"));
         
-//        switch(openActivity){
-//        	case 0:
-//        		contentIntent = PendingIntent.getActivity(ctx, 0, new Intent(ctx, NewAlbumActivity.class), 0);
-//        		break;
-//        	case 1:
-//        		contentIntent = PendingIntent.getActivity(ctx, 0, new Intent(ctx, HotAlbumActivity.class), 0);
-//        		break;
-//        	case 2:
-//        		contentIntent = PendingIntent.getActivity(ctx, 0, new Intent(ctx, TopListActivity.class), 0);
-//        		break;
-//        	case 3:
-//        		contentIntent = PendingIntent.getActivity(ctx, 0, new Intent(ctx, RecommendSongActivity.class), 0);
-//        		break;
-//        	case 4:
-//        		Intent activity_intent2 = new Intent(ctx, TopListSongsActivity.class);
-//        		activity_intent2.putExtra("TopListName",intent.getStringExtra("top_list_name"));
-//        		activity_intent2.putExtra("TopListId",Integer.parseInt(intent.getStringExtra("top_list_id")));
-//        		contentIntent = PendingIntent.getActivity(ctx, 0, activity_intent2, 0);
-//        		break;
-//        	
-//        }
+        switch(openActivity){
+        	case 0:
+        		Intent activity_intent = new Intent(ctx, RestaurantIntroActivity.class);
+        		activity_intent.putExtra("ResturantName",intent.getStringExtra("resturant_name"));
+        		activity_intent.putExtra("ResturantId",Integer.parseInt(intent.getStringExtra("resturant_id")));
+        		contentIntent = PendingIntent.getActivity(ctx, 0, activity_intent, 0);
+        		break;
+        	case 1:
+        		Intent activity_intent2 = new Intent(ctx, RestaurantNoteActivity.class);
+        		activity_intent2.putExtra("NoteTitle",intent.getStringExtra("note_title"));
+        		activity_intent2.putExtra("NoteLink",intent.getStringExtra("note_link"));
+        		activity_intent2.putExtra("NotePic",intent.getStringExtra("note_pic"));
+        		activity_intent2.putExtra("NoteId",Integer.parseInt(intent.getStringExtra("note_id")));
+        		activity_intent2.putExtra("RestaurantId",Integer.parseInt(intent.getStringExtra("restaurant_id")));
+        		activity_intent2.putExtra("NoteX",Double.parseDouble(intent.getStringExtra("note_x")));
+        		activity_intent2.putExtra("NoteY",Double.parseDouble(intent.getStringExtra("note_y")));
+        		
+        		contentIntent = PendingIntent.getActivity(ctx, 0, activity_intent2, 0);
+        		break;
+        	
+        }
         
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(ctx)
