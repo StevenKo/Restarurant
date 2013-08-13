@@ -53,7 +53,7 @@ public class GcmBroadcastReceiver extends BroadcastReceiver{
         		Intent activity_intent = new Intent(ctx, RestaurantIntroActivity.class);
         		activity_intent.putExtra("ResturantName",intent.getStringExtra("resturant_name"));
         		activity_intent.putExtra("ResturantId",Integer.parseInt(intent.getStringExtra("resturant_id")));
-        		contentIntent = PendingIntent.getActivity(ctx, 0, activity_intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        		contentIntent = PendingIntent.getActivity(ctx, 0, activity_intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_ONE_SHOT);
         		break;
         	case 1:
         		Intent activity_intent2 = new Intent(ctx, RestaurantNoteActivity.class);
@@ -65,7 +65,7 @@ public class GcmBroadcastReceiver extends BroadcastReceiver{
         		activity_intent2.putExtra("NoteX",Double.parseDouble(intent.getStringExtra("note_x")));
         		activity_intent2.putExtra("NoteY",Double.parseDouble(intent.getStringExtra("note_y")));
         		
-        		contentIntent = PendingIntent.getActivity(ctx, 0, activity_intent2, PendingIntent.FLAG_UPDATE_CURRENT);
+        		contentIntent = PendingIntent.getActivity(ctx, 0, activity_intent2, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_ONE_SHOT);
         		break;
         	
         }
