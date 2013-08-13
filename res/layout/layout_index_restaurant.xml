@@ -186,13 +186,7 @@
    
     </LinearLayout>
     
-    <com.google.ads.AdView android:id="@+id/adView"
-                     android:layout_width="fill_parent"
-                     android:layout_height="wrap_content"
-                     ads:adUnitId="0663e8467d9a4229"
-                     ads:adSize="BANNER"
-                     ads:testDevices="353918051867212"
-                     ads:loadAdOnCreate="true"/>
+
     
     
 

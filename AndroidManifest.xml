@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.restaurant.collection"
-    android:versionCode="13"
-    android:versionName="1.8"
+    android:versionCode="14"
+    android:versionName="1.9"
     android:installLocation="auto" >
 
     <uses-sdk
@@ -87,6 +87,12 @@
             android:hardwareAccelerated="true"
             >
         </activity>
+        
+        <!--HODo Ad 設定  -->
+    	<activity android:name="com.hodo.ADActivity"/>
+        <activity 
+        	android:name="com.hodo.SplashaActivity"
+            android:theme="@android:style/Theme.Translucent"/>
         
         <receiver
             android:name=".GcmBroadcastReceiver"

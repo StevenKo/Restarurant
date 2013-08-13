@@ -16,6 +16,7 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" 
@@ -48,6 +49,16 @@
         android:layout_weight="1"
         android:background="@color/pager_background" 
         />
+    
+    <com.google.ads.AdView android:id="@+id/adView"
+                     android:layout_width="fill_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_alignParentBottom="true"
+                     ads:adUnitId="f8713b9023ad40d0"
+                     ads:adSize="BANNER"
+                     ads:testDevices="353918051867212"
+                     ads:loadAdOnCreate="true"
+                     android:background="@color/main_background"/>
   
 
 </LinearLayout>

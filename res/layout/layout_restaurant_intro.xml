@@ -284,7 +284,7 @@
                      android:layout_width="fill_parent"
                      android:layout_height="wrap_content"
                      android:layout_alignParentBottom="true"
-                     ads:adUnitId="0663e8467d9a4229"
+                     ads:adUnitId="f8713b9023ad40d0"
                      ads:adSize="BANNER"
                      ads:testDevices="353918051867212"
                      ads:loadAdOnCreate="true"/>

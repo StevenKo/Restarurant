@@ -62,6 +62,5 @@ public class IndexCategoryTabFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mTabHost = null;
     }
 }
