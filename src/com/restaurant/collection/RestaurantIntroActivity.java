@@ -289,7 +289,7 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             	Intent email = new Intent(Intent.ACTION_SEND);
-            	email.putExtra(Intent.EXTRA_EMAIL, new String[]{"brotherkos@gmail.com"});		  
+            	email.putExtra(Intent.EXTRA_EMAIL, new String[]{"service@kosbrother.com"});		  
             	email.putExtra(Intent.EXTRA_SUBJECT, "嚴選餐廳問題回報:檢舉餐廳" );
             	email.putExtra(Intent.EXTRA_TEXT, 
             			"檢舉餐廳:" + restaurant.getName() + " " + restaurant.getId() + "\n"+
