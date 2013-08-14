@@ -105,7 +105,7 @@
                      android:layout_height="wrap_content"
                      android:layout_alignParentBottom="true"
                      ads:adUnitId="f8713b9023ad40d0"
-                     ads:adSize="BANNER"
+                     ads:adSize="SMART_BANNER"
                      ads:testDevices="353918051867212"
                      ads:loadAdOnCreate="true"/>
        
