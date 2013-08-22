@@ -13,6 +13,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -59,6 +60,7 @@ public class MainActivity extends SherlockFragmentActivity implements OnButtonCl
     public static final String EXTRA_MESSAGE = "message";
     private static final String PROPERTY_ON_SERVER_EXPIRATION_TIME = "onServerExpirationTimeMs";
     public static final String PROPERTY_REG_ID = "registration_id";
+    public static final String PROPERTY_DEVICE_ID = "device_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
     /**
      * Default lifespan (7 days) of a reservation until it is considered expired.
@@ -96,8 +98,9 @@ public class MainActivity extends SherlockFragmentActivity implements OnButtonCl
         
         context = getApplicationContext();
         regid = getRegistrationId(context);
+        String device_id = getDeviceId(context);
 
-        if (regid.length() == 0) {
+        if (regid.length() == 0 || device_id.length() == 0) {
             registerBackground();
         }
         gcm = GoogleCloudMessaging.getInstance(this);
@@ -324,6 +327,12 @@ public class MainActivity extends SherlockFragmentActivity implements OnButtonCl
         return registrationId;
     }
     
+    public static String getDeviceId(Context context) {
+        final SharedPreferences prefs = getGCMPreferences(context);
+        String deviceId = prefs.getString(PROPERTY_DEVICE_ID, "");
+        return deviceId;
+    }
+    
     private static SharedPreferences getGCMPreferences(Context context) {
         return context.getSharedPreferences(keyPref, 0);
     }
@@ -359,19 +368,21 @@ public class MainActivity extends SherlockFragmentActivity implements OnButtonCl
 	                }
 	                regid = gcm.register(SENDER_ID);
 	                msg = "Device registered, registration id=" + regid;
-	                RestaurantAPI.sendRegistrationId(regid);
+	                String deviceId = Settings.Secure.getString(MainActivity.this.getContentResolver(),Settings.Secure.ANDROID_ID); 
+	                RestaurantAPI.sendRegistrationId(regid,deviceId);
 	                
-	                setRegistrationId(context, regid);
+	                setRegistrationIdAndDeviceId(context, regid,deviceId);
 	            } catch (IOException ex) {
 	                msg = "Error :" + ex.getMessage();
 	            }
 	            return msg;
 			}
 
-			private void setRegistrationId(Context context, String regid) {
+			private void setRegistrationIdAndDeviceId(Context context, String regid,String deviceId) {
 				final SharedPreferences prefs = getGCMPreferences(context);
 				SharedPreferences.Editor editor = prefs.edit();
 				editor.putString(PROPERTY_REG_ID, regid);
+				editor.putString(PROPERTY_DEVICE_ID, deviceId);
 				editor.putInt(PROPERTY_APP_VERSION, getAppVersion(context));
 				editor.putLong(PROPERTY_ON_SERVER_EXPIRATION_TIME, REGISTRATION_EXPIRY_TIME_MS + System.currentTimeMillis());
 				editor.commit();

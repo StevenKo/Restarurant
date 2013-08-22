@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -85,8 +86,8 @@ public class MyCollectionActivity extends SherlockFragmentActivity{
 				notes += note.getId() + ",";
 			}
 			
-			RestaurantAPI.sendCollectNotes(notes, MainActivity.getRegistrationId(MyCollectionActivity.this));
-			RestaurantAPI.sendCollectRestaurants(restaurants, MainActivity.getRegistrationId(MyCollectionActivity.this));
+			RestaurantAPI.sendCollectNotes(notes, Settings.Secure.getString(MyCollectionActivity.this.getContentResolver(),Settings.Secure.ANDROID_ID));
+			RestaurantAPI.sendCollectRestaurants(restaurants, Settings.Secure.getString(MyCollectionActivity.this.getContentResolver(),Settings.Secure.ANDROID_ID));
 			return null;
 		}
     	

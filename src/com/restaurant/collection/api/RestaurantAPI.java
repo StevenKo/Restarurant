@@ -992,10 +992,10 @@ public class RestaurantAPI {
 		return des_string;
 	}
 	
-	public static boolean sendRegistrationId(String regid) {
+	public static boolean sendRegistrationId(String regid,String deviceId) {
 		try{
 			DefaultHttpClient httpClient = new DefaultHttpClient();
-			String url = HOST + "/api/v1/users.json?regid="+regid;						
+			String url = HOST + "/api/v1/users.json?regid="+regid+"&device_id="+deviceId;						
 			if(DEBUG)
 				Log.d(TAG, "URL : " + url);
 
@@ -1014,10 +1014,10 @@ public class RestaurantAPI {
 		} 
 	}
 	
-	public static boolean sendCollectNotes(String notes,String regid){
+	public static boolean sendCollectNotes(String notes,String deviceId){
     	try{
 			DefaultHttpClient httpClient = new DefaultHttpClient();
-			String url = HOST + "/api/v1/users/update_collect_notes.json?notes="+notes+"&regid="+regid;						
+			String url = HOST + "/api/v1/users/update_collect_notes.json?notes="+notes+"&device_id="+deviceId;						
 			if(DEBUG)
 				Log.d(TAG, "URL : " + url);
 
@@ -1037,10 +1037,10 @@ public class RestaurantAPI {
 
     }
 	
-	public static boolean sendCollectRestaurants(String restaurants,String regid){
+	public static boolean sendCollectRestaurants(String restaurants,String deviceId){
     	try{
 			DefaultHttpClient httpClient = new DefaultHttpClient();
-			String url = HOST + "/api/v1/users/update_collect_restaurants.json?restaurants="+restaurants+"&regid="+regid;						
+			String url = HOST + "/api/v1/users/update_collect_restaurants.json?restaurants="+restaurants+"&device_id="+deviceId;						
 			if(DEBUG)
 				Log.d(TAG, "URL : " + url);
 
@@ -1060,10 +1060,10 @@ public class RestaurantAPI {
 
     }
 	
-	public static boolean sendRestaurant(int restaurant,String regid){
+	public static boolean sendRestaurant(int restaurant,String deviceId){
     	try{
 			DefaultHttpClient httpClient = new DefaultHttpClient();
-			String url = HOST + "/api/v1/users/update_looked_restaurants.json?regid="+regid+"&restaurant="+restaurant;						
+			String url = HOST + "/api/v1/users/update_looked_restaurants.json?device_id="+deviceId+"&restaurant="+restaurant;						
 			if(DEBUG)
 				Log.d(TAG, "URL : " + url);
 
@@ -1083,10 +1083,10 @@ public class RestaurantAPI {
 
     }
 	
-	public static boolean sendNote(int note,String regid){
+	public static boolean sendNote(int note,String deviceId){
     	try{
 			DefaultHttpClient httpClient = new DefaultHttpClient();
-			String url = HOST + "/api/v1/users/update_looked_notes.json?regid="+regid+"&note="+note;						
+			String url = HOST + "/api/v1/users/update_looked_notes.json?device_id="+deviceId+"&note="+note;						
 			if(DEBUG)
 				Log.d(TAG, "URL : " + url);
 

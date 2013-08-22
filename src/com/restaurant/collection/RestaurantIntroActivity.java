@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -90,7 +91,7 @@ public class RestaurantIntroActivity extends SherlockFragmentActivity {
 		@Override
 		protected Object doInBackground(Object... params) {
 			
-			RestaurantAPI.sendRestaurant(restaurant.getId(), MainActivity.getRegistrationId(RestaurantIntroActivity.this));
+			RestaurantAPI.sendRestaurant(restaurant.getId(), Settings.Secure.getString(RestaurantIntroActivity.this.getContentResolver(),Settings.Secure.ANDROID_ID));
 			return null;
 		}
     	
